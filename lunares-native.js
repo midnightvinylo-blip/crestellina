@@ -10,10 +10,11 @@ class LunaresAgent {
         this.vapiBase = 'https://api.vapi.ai';
         this.supabaseUrl = 'https://yeutntfuyisclbfyxqzp.supabase.co/functions/v1/vapi-agent';
 
-        // Claves públicas de VAPI — seguras para el cliente, no requieren backend
+        // Claves públicas - Seguras para el cliente
         this.env = {
             VAPI_PUBLIC_KEY: 'cf0cc954-9812-4f8f-9f77-221228c4411b',
             VAPI_ASSISTANT_ID: '17e3214b-0a36-47d8-bac8-0407c88a36c5',
+            SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldXRudGZ1eWlzY2xiZnl4cXpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMzQyOTksImV4cCI6MjA4ODcxMDI5OX0.2A2FngSJeNOiul0qAseNpdpyuqTXL_C9awxd_EJq7sM',
             ...(window.LUNARES_ENV || {})
         };
 
@@ -57,33 +58,40 @@ class LunaresAgent {
             return;
         }
 
-        // Fix for "exports is not defined" error in browser
-        window.exports = window.exports || {};
-
-        return new Promise((resolve) => {
-            const s = document.createElement('script');
-            // Cache busting and standard JS bundle
-            s.src = `https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js?v=${Date.now()}`;
-            s.async = true;
-            s.onload = () => {
-                // Vapi can be attached to window or window.exports
-                const VapiClass = window.Vapi || window.exports.default || window.exports.Vapi;
-                
-                if (typeof VapiClass === 'function') {
-                    this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
-                    this.setupVapiHandlers();
-                    console.log('[Lunares Native] 📡 SDK de Vapi listo.');
-                } else {
-                    console.error('[Lunares Native] ❌ No se encontró el constructor de Vapi:', { windowVapi: window.Vapi, exports: window.exports });
-                }
-                resolve();
-            };
-            s.onerror = (err) => {
-                console.error('[Lunares Native] ❌ Error cargando SDK de Vapi:', err);
-                resolve();
-            };
-            document.head.appendChild(s);
-        });
+        try {
+            // ESM dynamic import is the cleanest way in 2026 for browsers
+            const module = await import('https://cdn.jsdelivr.net/npm/@vapi-ai/web/+esm');
+            const Vapi = module.default || module.Vapi || module;
+            
+            if (typeof Vapi === 'function') {
+                this.vapi = new Vapi(this.env.VAPI_PUBLIC_KEY);
+                this.setupVapiHandlers();
+                console.log('[Lunares Native] 📡 SDK de Vapi (ESM) cargado con éxito.');
+            }
+        } catch (err) {
+            console.warn('[Lunares Native] ⚠️ Falló carga ESM, re-intentando UMD...');
+            // Fallback for weird environments
+            return new Promise((resolve) => {
+                window.exports = window.exports || {};
+                const s = document.createElement('script');
+                s.src = `https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js?v=${Date.now()}`;
+                s.async = true;
+                s.onload = () => {
+                    const VapiClass = window.Vapi || window.exports.default || window.exports.Vapi;
+                    if (typeof VapiClass === 'function') {
+                        this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
+                        this.setupVapiHandlers();
+                        console.log('[Lunares Native] 📡 SDK de Vapi (UMD) listo.');
+                    }
+                    resolve();
+                };
+                s.onerror = () => {
+                    console.error('[Lunares Native] ❌ Fallo total cargando Vapi');
+                    resolve();
+                };
+                document.head.appendChild(s);
+            });
+        }
     }
 
     async loadPrompts() {
@@ -347,7 +355,11 @@ class LunaresAgent {
         try {
             const res = await fetch(this.supabaseUrl, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'apikey': this.env.SUPABASE_ANON_KEY,
+                    'Authorization': `Bearer ${this.env.SUPABASE_ANON_KEY}`
+                },
                 body: JSON.stringify({ query: q })
             });
 
