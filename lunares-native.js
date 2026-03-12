@@ -50,35 +50,17 @@ class LunaresAgent {
         }
     }
 
-    loadVapiSDK() {
-        return new Promise((resolve) => {
-            // Check if already loaded
-            if (window.Vapi) {
-                this.vapi = new window.Vapi(this.env.VAPI_PUBLIC_KEY);
-                this.setupVapiHandlers();
-                resolve();
-                return;
-            }
-
-            const s = document.createElement('script');
-            // Using a more robust CDN build for Vapi
-            s.src = 'https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js';
-            s.async = true;
-            s.onload = () => {
-                if (window.Vapi) {
-                    // Some builds export as window.Vapi, others as window.Vapi.default
-                    const VapiClass = window.Vapi.default || window.Vapi;
-                    this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
-                    this.setupVapiHandlers();
-                }
-                resolve();
-            };
-            s.onerror = (err) => {
-                console.error('[Lunares Native] ❌ Failed to load Vapi SDK script:', err);
-                resolve(); // Resolve anyway to unblock init, startVoiceCall will check this.vapi
-            };
-            document.head.appendChild(s);
-        });
+    async loadVapiSDK() {
+        try {
+            // Dynamic ESM import — works natively in all modern browsers
+            const module = await import('https://cdn.jsdelivr.net/npm/@vapi-ai/web/+esm');
+            const VapiClass = module.default || module.Vapi;
+            this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
+            this.setupVapiHandlers();
+            console.log('[Lunares Native] 📡 VAPI SDK loaded & connected');
+        } catch (err) {
+            console.error('[Lunares Native] ❌ VAPI SDK load failed:', err);
+        }
     }
 
     async loadPrompts() {
@@ -291,31 +273,10 @@ class LunaresAgent {
 
         try {
             const assistantId = this.env.VAPI_ASSISTANT_ID;
-
-            if (assistantId) {
-                console.log(`[Lunares Native] 📡 Starting call using Assistant ID: ${assistantId}`);
-                // When using assistantId, Vapi will call our Supabase Server URL
-                // Ensure you have set the Server URL in Vapi dashboard to:
-                // https://yeutntfuyisclbfyxqzp.supabase.co/functions/v1/vapi-agent
-                await this.vapi.start(assistantId);
-            } else {
-                console.log('[Lunares Native] 📡 Starting call using dynamic config from Supabase');
-                // Optional: We can fetch the config from Supabase before starting
-                const res = await fetch(this.supabaseUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: { type: 'assistant-request' } })
-                });
-                const data = await res.json();
-                if (data.assistant) {
-                    await this.vapi.start(data.assistant);
-                } else {
-                    throw new Error('No assistant config returned from Supabase');
-                }
-            }
+            console.log(`[Lunares Native] 📡 Starting VAPI call with Assistant ID: ${assistantId}`);
+            await this.vapi.start(assistantId);
         } catch (err) {
             console.error('[Lunares Native] Call Error:', err);
-            this.vapi = null; // Reset to allow retry
             this.isConnecting = false;
             this.elements.container.classList.remove('voice-mode');
             this.elements.micBtn.classList.remove('recording');

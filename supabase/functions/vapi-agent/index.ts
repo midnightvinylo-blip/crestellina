@@ -121,6 +121,19 @@ serve(async (req) => {
     return new Response('ok', { headers: corsHeaders })
   }
 
+  // ─────────────────────────────────────────────────────────────────
+  // 0. CONFIG REQUEST (GET) — El frontend obtiene las claves desde el backend
+  // ─────────────────────────────────────────────────────────────────
+  if (req.method === 'GET') {
+    return new Response(
+      JSON.stringify({
+        VAPI_PUBLIC_KEY: Deno.env.get('VAPI_PUBLIC_KEY'),
+        VAPI_ASSISTANT_ID: Deno.env.get('VAPI_ASSISTANT_ID')
+      }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
+
   try {
     const payload = await req.json()
     console.log("Payload received:", JSON.stringify(payload).substring(0, 200))
