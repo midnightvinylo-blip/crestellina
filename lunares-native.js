@@ -59,34 +59,35 @@ class LunaresAgent {
         }
 
         try {
-            // ESM dynamic import is the cleanest way in 2026 for browsers
-            const module = await import('https://cdn.jsdelivr.net/npm/@vapi-ai/web/+esm');
-            const Vapi = module.default || module.Vapi || module;
+            // esm.sh is the gold standard for npm-to-ESM transformations in the browser
+            const { default: Vapi } = await import('https://esm.sh/@vapi-ai/web@2.5.2');
             
             if (typeof Vapi === 'function') {
                 this.vapi = new Vapi(this.env.VAPI_PUBLIC_KEY);
                 this.setupVapiHandlers();
-                console.log('[Lunares Native] 📡 SDK de Vapi (ESM) cargado con éxito.');
+                console.log('[Lunares Native] 📡 SDK de Vapi cargado vía ESM.');
+            } else {
+                throw new Error('No constructor found');
             }
         } catch (err) {
-            console.warn('[Lunares Native] ⚠️ Falló carga ESM, re-intentando UMD...');
-            // Fallback for weird environments
+            console.error('[Lunares Native] ❌ Error cargando Vapi (ESM):', err);
+            // Ultra-fallback if ESM fails (classic script)
             return new Promise((resolve) => {
                 window.exports = window.exports || {};
                 const s = document.createElement('script');
-                s.src = `https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js?v=${Date.now()}`;
+                s.src = `https://unpkg.com/@vapi-ai/web@2.5.2/dist/vapi.js`;
                 s.async = true;
                 s.onload = () => {
                     const VapiClass = window.Vapi || window.exports.default || window.exports.Vapi;
                     if (typeof VapiClass === 'function') {
                         this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
                         this.setupVapiHandlers();
-                        console.log('[Lunares Native] 📡 SDK de Vapi (UMD) listo.');
+                        console.log('[Lunares Native] 📡 SDK de Vapi (Script) listo.');
                     }
                     resolve();
                 };
                 s.onerror = () => {
-                    console.error('[Lunares Native] ❌ Fallo total cargando Vapi');
+                    console.error('[Lunares Native] ❌ Fallo total de Vapi');
                     resolve();
                 };
                 document.head.appendChild(s);
@@ -216,8 +217,49 @@ class LunaresAgent {
         });
 
         this.vapi.on('error', (err) => {
-            console.error('[Lunares Native] Vapi Error:', err);
             this.showBubble('😔 Algo ha fallado... ¿probamos otra vez? 🐾');
+        });
+
+        // Tool call handler — intercepts navigate_to / scroll_to_element from the AI
+        this.vapi.on('message', (msg) => {
+            if (msg.type === 'function-call' || msg.type === 'tool-calls') {
+                // Determine whether it's an old function-call or the new tool-calls list
+                const callList = msg.type === 'function-call' && msg.functionCall 
+                    ? [msg.functionCall] 
+                    : (msg.toolWithToolCallList || msg.toolCalls || []);
+
+                callList.forEach(item => {
+                    const call = item.toolCall || item; 
+                    const name = call.name || call.function?.name;
+                    let args = call.parameters || call.function?.arguments || {};
+                    
+                    if (typeof args === 'string') {
+                        try { args = JSON.parse(args); } catch(e){}
+                    }
+
+                    if (name === 'navigate_to' && args.sectionId) {
+                        this.navigateToSection(args.sectionId);
+                    } else if (name === 'scroll_to_element' && args.elementId) {
+                        this.guidedScrollTo(args.elementId);
+                    }
+
+                    // Respond to Vapi so it doesn't hang!
+                    const resultText = `Se ha completado la acción ${name} hacia ${args.sectionId || args.elementId || ''}.`;
+                    
+                    if (call.id) {
+                        this.vapi.send({
+                            type: 'tool-call-result',
+                            toolCallResult: { toolCallId: call.id, result: resultText }
+                        });
+                    } else {
+                        // Fallback for function-call
+                        this.vapi.send({
+                            type: 'add-message',
+                            message: { role: 'function', name: name, content: resultText }
+                        });
+                    }
+                });
+            }
         });
     }
 
@@ -297,17 +339,68 @@ class LunaresAgent {
             return;
         }
 
-        // Show bubble momentarily before hiding it via voice-mode (although voice-mode hides it so we might not see this)
-        // Wait, voice mode hides the bubble, so we should just change mic icon to indicate loading:
         this.elements.micBtn.classList.add('recording');
         this.elements.micBtn.style.opacity = '0.5';
 
         try {
-            const assistantId = "17e3214b-0a36-47d8-bac8-0407c88a36c5";
-            console.log(`[Lunares Native] 📡 Iniciando llamada Vapi: ${assistantId}`);
-            await this.vapi.start(assistantId);
+            const assistantId = this.env.VAPI_ASSISTANT_ID;
+
+            // Build the override: local prompt prevails over dashboard
+            const fullPrompt = this.systemPrompt + (this.knowledge ? '\n\n---\nBASE DE CONOCIMIENTOS:\n' + this.knowledge : '');
+
+            const assistantOverrides = {
+                firstMessage: "¡Hola! Soy Lunares, soy la guardiana de mis hermanas las cabras y tu guía aquí en la web. Aquí es donde empieza tu experiencia en Crestellina. ¿Por dónde quieres empezar? ¿Quieres que te cuente más sobre nosotros e historia, llevarte a conocer nuestras experiencias para que sepas de qué se tratan, o prefieres ir a ver directamente nuestros quesos que huelen de maravilla?",
+                model: {
+                    provider: 'google',
+                    model: 'gemini-2.0-flash',
+                    messages: [
+                        { role: 'system', content: fullPrompt }
+                    ],
+                    tools: [
+                        {
+                            type: 'function',
+                            async: false,
+                            function: {
+                                name: 'navigate_to',
+                                description: 'Navega a la sección principal de la web solicitada',
+                                parameters: {
+                                    type: 'object',
+                                    properties: {
+                                        sectionId: { 
+                                            type: 'string', 
+                                            enum: ['inicio', 'nosotros', 'experiencias', 'tienda', 'contacto'],
+                                            description: 'ID de la sección' 
+                                        }
+                                    },
+                                    required: ['sectionId']
+                                }
+                            }
+                        },
+                        {
+                            type: 'function',
+                            async: false,
+                            function: {
+                                name: 'scroll_to_element',
+                                description: 'Desplaza la vista a un elemento específico dentro de una sección.',
+                                parameters: {
+                                    type: 'object',
+                                    properties: {
+                                        elementId: { 
+                                            type: 'string', 
+                                            enum: ['familia-juan-padre', 'familia-ana-mateo', 'familia-juan-hijo', 'familia-ana-hijo', 'familia-cristina', 'familia-juan-corbacho', 'historia', 'packs', 'catalogo', 'card-cabrero', 'card-chivitos'],
+                                            description: 'ID del elemento en la página' 
+                                        }
+                                    },
+                                    required: ['elementId']
+                                }
+                            }
+                        }
+                    ]
+                }
+            };
+
+            await this.vapi.start(assistantId, assistantOverrides);
         } catch (err) {
-            console.error('[Lunares Native] Call Error:', err);
             this.isConnecting = false;
             this.elements.container.classList.remove('voice-mode');
             this.elements.micBtn.classList.remove('recording');
@@ -409,6 +502,52 @@ class LunaresAgent {
             };
             qrContainer.appendChild(btn);
         });
+    }
+
+    // ── SPA Navigation Methods ──────────────────────────────────
+
+    navigateToSection(sectionId) {
+        const el = document.getElementById(sectionId);
+        if (!el) return;
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Update URL aesthetically via History API
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, '', '#' + sectionId);
+        }
+    }
+
+    guidedScrollTo(elementId) {
+        const target = document.getElementById(elementId);
+        if (!target) return;
+
+        const targetY = target.getBoundingClientRect().top + window.scrollY - 100; // 100px offset for header
+        const startY = window.scrollY;
+        const distance = targetY - startY;
+        const speed = 2; // px per frame
+        const totalFrames = Math.abs(distance) / speed;
+        let frame = 0;
+
+        if (this._scrollRAF) cancelAnimationFrame(this._scrollRAF);
+
+        const step = () => {
+            frame++;
+            const progress = Math.min(frame / totalFrames, 1);
+            // Ease-in-out cubic
+            const ease = progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+            window.scrollTo(0, startY + distance * ease);
+
+            if (progress < 1) {
+                this._scrollRAF = requestAnimationFrame(step);
+            } else {
+                // Update URL aesthetically
+                if (window.history && window.history.pushState) {
+                    window.history.pushState(null, '', '#' + elementId);
+                }
+            }
+        };
+        this._scrollRAF = requestAnimationFrame(step);
     }
 
     setTalking(t) {
