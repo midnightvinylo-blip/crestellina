@@ -51,16 +51,39 @@ class LunaresAgent {
     }
 
     async loadVapiSDK() {
-        try {
-            // Dynamic ESM import — works natively in all modern browsers
-            const module = await import('https://cdn.jsdelivr.net/npm/@vapi-ai/web/+esm');
-            const VapiClass = module.default || module.Vapi;
-            this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
+        if (window.Vapi) {
+            this.vapi = new window.Vapi(this.env.VAPI_PUBLIC_KEY);
             this.setupVapiHandlers();
-            console.log('[Lunares Native] 📡 VAPI SDK loaded & connected');
-        } catch (err) {
-            console.error('[Lunares Native] ❌ VAPI SDK load failed:', err);
+            return;
         }
+
+        // Fix for "exports is not defined" error in browser
+        window.exports = window.exports || {};
+
+        return new Promise((resolve) => {
+            const s = document.createElement('script');
+            // Cache busting and standard JS bundle
+            s.src = `https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/vapi.js?v=${Date.now()}`;
+            s.async = true;
+            s.onload = () => {
+                // Vapi can be attached to window or window.exports
+                const VapiClass = window.Vapi || window.exports.default || window.exports.Vapi;
+                
+                if (typeof VapiClass === 'function') {
+                    this.vapi = new VapiClass(this.env.VAPI_PUBLIC_KEY);
+                    this.setupVapiHandlers();
+                    console.log('[Lunares Native] 📡 SDK de Vapi listo.');
+                } else {
+                    console.error('[Lunares Native] ❌ No se encontró el constructor de Vapi:', { windowVapi: window.Vapi, exports: window.exports });
+                }
+                resolve();
+            };
+            s.onerror = (err) => {
+                console.error('[Lunares Native] ❌ Error cargando SDK de Vapi:', err);
+                resolve();
+            };
+            document.head.appendChild(s);
+        });
     }
 
     async loadPrompts() {
@@ -272,8 +295,8 @@ class LunaresAgent {
         this.elements.micBtn.style.opacity = '0.5';
 
         try {
-            const assistantId = this.env.VAPI_ASSISTANT_ID;
-            console.log(`[Lunares Native] 📡 Starting VAPI call with Assistant ID: ${assistantId}`);
+            const assistantId = "17e3214b-0a36-47d8-bac8-0407c88a36c5";
+            console.log(`[Lunares Native] 📡 Iniciando llamada Vapi: ${assistantId}`);
             await this.vapi.start(assistantId);
         } catch (err) {
             console.error('[Lunares Native] Call Error:', err);
