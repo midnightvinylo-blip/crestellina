@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quesería Crestellina - El Sabor de la Herencia</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Lucide Icons for better reliability -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"],
+                        "sans": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass {
+            background: rgba(34, 30, 16, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(244, 192, 37, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-background-dark">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <!-- Navigation -->
+        <header class="fixed top-0 z-[100] w-full glass px-6 lg:px-20 py-4">
+            <div class="w-full flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
+                    <div class="text-primary">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col items-start pt-1">
+                        <span
+                            class="text-[7px] uppercase tracking-[0.4em] text-slate-400 font-bold leading-none -mb-1">Desde
+                            1930</span>
+                        <h2 class="text-3xl font-black text-primary leading-none lowercase tracking-tighter">crestellina
+                        </h2>
+                        <span
+                            class="text-[7px] uppercase tracking-[0.1em] text-slate-400 font-bold mt-0.5 leading-none">Sencillos
+                            por Naturaleza</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                        href="index.html">Inicio</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="experiencias.html">Experiencias</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="tienda.html">Tienda</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="nosotros.html">Nosotros</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="ubicacion.html">Ubicación</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-full hover:bg-primary/10 text-slate-300 transition-colors">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </button>
+                    <div
+                        class="h-10 w-10 rounded-full border-2 border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-colors">
+                        <img class="h-full w-full object-cover"
+                            src="assets/media/avatar_usuario.webp"
+                            alt="Usuario" />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sección Hero -->
+        <section class="relative h-[90vh] w-full overflow-hidden mt-[80px]">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+                style="background-image: linear-gradient(to bottom, rgba(34,30,16,0.3), rgba(34,30,16,0.9)), url('assets/media/sl-quesos-artesanales-crestellina-3.webp');">
+            </div>
+            <div
+                class="relative h-full w-full px-6 lg:px-20 flex flex-col justify-center items-start animate-fade-in">
+                <span
+                    class="inline-block px-4 py-1 rounded-full bg-primary text-background-dark text-xs font-bold uppercase tracking-widest mb-6 border border-primary/50 shadow-lg shadow-primary/20">
+                    Tradición Artesanal
+                </span>
+                <h1 class="text-6xl lg:text-8xl font-black text-white leading-[1] mb-6 max-w-4xl tracking-tighter">
+                    El Sabor <br /> de Nuestra <span class="text-primary italic font-serif">Herencia</span>
+                </h1>
+                <p class="text-xl lg:text-2xl text-slate-200 max-w-2xl mb-12 leading-relaxed opacity-90 font-light">
+                    Descubre el alma de la Sierra de Casares en cada bocado. Quesos elaborados con pasión, respetando el
+                    ciclo natural de nuestro rebaño.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <a href="tienda.html"
+                        class="inline-flex items-center justify-center gap-3 px-10 py-5 bg-primary text-background-dark font-black rounded-xl hover:scale-105 transition-all shadow-xl shadow-primary/20 text-lg group">
+                        Descubrir Nuestros Quesos <i data-lucide="arrow-right"
+                            class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="nosotros.html"
+                        class="px-10 py-5 border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white hover:text-background-dark hover:border-white transition-all backdrop-blur-sm">
+                        Nuestra Historia
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Sección 2: Vivir (Teaser Experiencias) -->
+        <section class="py-32 bg-background-light dark:bg-background-dark relative overflow-hidden">
+            <div class="w-full px-6 lg:px-20 flex flex-col items-center text-center">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4">El Oficio</span>
+                <h2 class="text-5xl lg:text-7xl font-black mb-8 tracking-tighter">Vivir la <span
+                        class="text-primary italic font-serif">Artesanía</span></h2>
+                <p
+                    class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mb-12">
+                    Sumérgete en el taller donde el tiempo se detiene. Aprende a crear tu propio queso con las manos en
+                    la masa y descubre los secretos custodiados por nuestra sierra.
+                </p>
+                <div
+                    class="w-full aspect-video md:aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-2xl relative group mb-12">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                        src="assets/media/cuajada_manual.webp" alt="Experiencia Quesera" />
+                    <div
+                        class="absolute inset-0 bg-background-dark/20 group-hover:bg-background-dark/10 transition-colors duration-500">
+                    </div>
+                </div>
+                <a href="experiencias.html"
+                    class="inline-flex items-center gap-4 px-10 py-5 bg-background-dark dark:bg-white text-white dark:text-background-dark font-black rounded-xl hover:scale-105 transition-all shadow-xl text-lg group">
+                    Ver Experiencias <i data-lucide="arrow-right"
+                        class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Sección de Reseñas / Voces del Valle -->
+        <section class="py-32 bg-background-light dark:bg-background-dark relative overflow-hidden">
+            <div class="w-full px-6 lg:px-20">
+                <div class="flex flex-col md:flex-row gap-12 items-center md:items-start justify-between mb-20">
+                    <div class="flex-1 text-center md:text-left">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4 block">Lo que dicen de nosotros</span>
+                        <h2 class="text-5xl lg:text-7xl font-black mb-6 tracking-tighter">Voces del <span class="text-primary italic font-serif">Valle</span></h2>
+                    </div>
+                    <div class="flex items-center gap-6 bg-slate-900/5 dark:bg-slate-50/5 rounded-3xl p-6 border border-primary/10">
+                        <div class="flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl w-24 h-24 shadow-xl">
+                            <span class="text-4xl font-black text-primary leading-none">4.8</span>
+                            <div class="flex text-primary text-xs mt-2">
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-bold text-lg mb-1">Excelente</p>
+                            <p class="text-sm opacity-70">Basado en más de 250<br/>reseñas reales en Google</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-5 h-5 mt-3 opacity-80" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reviews-carousel" class="flex overflow-x-auto pb-12 -mx-6 px-6 lg:mx-0 lg:px-0 gap-6 no-scrollbar cursor-grab active:cursor-grabbing">
+                    
+                    <!-- Reseña 1 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Irene+Gomez&background=0D8ABC&color=fff&rounded=true" alt="Irene Gomez" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Irene Gómez</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Maravillosa experiencia. Compramos el pack degustación de quesos y están espectaculares. El entorno es inmejorable y nos atendieron fenomenal explicando todo."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 2 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Javier+Ruiz&background=db2777&color=fff&rounded=true" alt="Javier Ruiz" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Javier Ruíz</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Una experiencia muy enriquecedora y educativa. El entorno de la sierra de Crestellina es precioso y los dueños muy amables y apasionados por lo que hacen."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 3 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Maria+Jose&background=10b981&color=fff&rounded=true" alt="Maria Jose" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">María José</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Compramos yogures ecológicos y el queso semicurado. El sabor es de los mejores que he probado, súper auténtico. Trato muy cercano."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 4 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=David+Garcia&background=f59e0b&color=fff&rounded=true" alt="David Garcia" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">David García</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Un rincón mágico. Poder interactuar con los animales y conocer la historia familiar que hay detrás de estos quesos no tiene precio. Recomendable 100%."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 5 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Sonia+Torres&background=8b5cf6&color=fff&rounded=true" alt="Sonia Torres" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Sonia Torres</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Productos de una calidad brutal. El entorno de Casares y el trato tan amable te hacen sentir como en casa. Nos llevamos de todo. ¡Volveremos seguro!"
+                        </p>
+                    </div>
+
+                    <!-- Reseña 6 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Irene+Gomez&background=0D8ABC&color=fff&rounded=true" alt="Irene Gomez" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Irene Gómez</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Maravillosa experiencia. Compramos el pack degustación de quesos y están espectaculares. El entorno es inmejorable y nos atendieron fenomenal explicando todo."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 7 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Javier+Ruiz&background=db2777&color=fff&rounded=true" alt="Javier Ruiz" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Javier Ruíz</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Una experiencia muy enriquecedora y educativa. El entorno de la sierra de Crestellina es precioso y los dueños muy amables y apasionados por lo que hacen."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 8 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Maria+Jose&background=10b981&color=fff&rounded=true" alt="Maria Jose" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">María José</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Compramos yogures ecológicos y el queso semicurado. El sabor es de los mejores que he probado, súper auténtico. Trato muy cercano."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 9 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=David+Garcia&background=f59e0b&color=fff&rounded=true" alt="David Garcia" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">David García</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Un rincón mágico. Poder interactuar con los animales y conocer la historia familiar que hay detrás de estos quesos no tiene precio. Recomendable 100%."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 10 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Sonia+Torres&background=8b5cf6&color=fff&rounded=true" alt="Sonia Torres" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Sonia Torres</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Productos de una calidad brutal. El entorno de Casares y el trato tan amable te hacen sentir como en casa. Nos llevamos de todo. ¡Volveremos seguro!"
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const carousel = document.getElementById('reviews-carousel');
+                if (!carousel) return;
+                let isPaused = false;
+                
+                // Adjust scroll speed (lower = slower)
+                const scrollSpeed = 1;
+                
+                const autoScroll = () => {
+                    if (!isPaused) {
+                        carousel.scrollLeft += scrollSpeed;
+                        // Reset if we reach the end to create a loop
+                        if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 1)) {
+                            // Go back to the start instantly (smooth makes it bounce visually)
+                            carousel.scrollTo({ left: 0, behavior: 'auto' });
+                        }
+                    }
+                };
+
+                // Run interval for smooth scrolling
+                let scrollInterval = setInterval(autoScroll, 20);
+
+                // Pause on manual interaction
+                carousel.addEventListener('mouseenter', () => isPaused = true);
+                carousel.addEventListener('mouseleave', () => isPaused = false);
+                carousel.addEventListener('touchstart', () => isPaused = true);
+                carousel.addEventListener('touchend', () => isPaused = false);
+            });
+        </script>
+
+        <!-- Sección 3: Nuestra Despensa (Teaser Tienda) -->
+        <section class="py-32 bg-primary/5 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[150px] rounded-full"></div>
+            <div class="w-full px-6 lg:px-20">
+                <div class="flex flex-col items-center text-center mb-20">
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4">Directo de la Sierra</span>
+                    <h2 class="text-5xl lg:text-7xl font-black mb-6 tracking-tighter">Nuestra <span
+                            class="text-primary italic font-serif">Despensa</span></h2>
+                    <p class="text-xl text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto">Descubre nuestros quesos elaborados artesanalmente con leche de cabra payoya en pastoreo libre. Una tradición familiar directa a tu mesa.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                    <!-- Product 1 -->
+                    <div
+                        class="group relative bg-background-light dark:bg-slate-900/40 rounded-3xl overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                        <div class="h-80 overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src="assets/media/queso_fresco.webp"
+                                alt="Fresco" />
+                        </div>
+                        <div class="p-8 text-center">
+                            <h3 class="text-2xl font-black mb-2">Queso Fresco Ecológico</h3>
+                            <span class="text-primary font-black text-xl">€8.18</span>
+                        </div>
+                    </div>
+                    <!-- Product 2 -->
+                    <div
+                        class="group relative bg-background-light dark:bg-slate-900/40 rounded-3xl overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                        <div class="h-80 overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src="assets/media/queso_semicurado_romero.webp"
+                                alt="Semicurado" />
+                        </div>
+                        <div class="p-8 text-center">
+                            <h3 class="text-2xl font-black mb-2">Semicurado Ecológico</h3>
+                            <span class="text-primary font-black text-xl">€9.10</span>
+                        </div>
+                    </div>
+                    <!-- Product 3 -->
+                    <div
+                        class="group relative bg-background-light dark:bg-slate-900/40 rounded-3xl overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                        <div class="h-80 overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src="assets/media/queso_curado.webp"
+                                alt="Curado" />
+                        </div>
+                        <div class="p-8 text-center">
+                            <h3 class="text-2xl font-black mb-2">Queso Curado Ecológico</h3>
+                            <span class="text-primary font-black text-xl">€10.56</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="tienda.html"
+                        class="inline-flex items-center gap-4 px-10 py-5 bg-primary text-background-dark font-black rounded-xl hover:scale-105 transition-all shadow-xl shadow-primary/20 text-lg group">
+                        Visitar la Despensa <i data-lucide="arrow-right"
+                            class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4: La Familia (Teaser Equipo) -->
+        <section class="py-32 px-6 lg:px-20 relative overflow-hidden flex items-center justify-center min-h-[60vh]">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-background-dark/80 backdrop-blur-sm z-10 transition-colors"></div>
+                <img class="w-full h-full object-cover opacity-60"
+                    src="assets/media/im-equipo-crestallina-1.webp" alt="Familia Crestellina" />
+            </div>
+            <div class="relative z-20 max-w-3xl mx-auto text-center">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4 block">4
+                    Generaciones</span>
+                <h2 class="text-5xl lg:text-7xl font-black text-white mb-6 tracking-tighter">La <span
+                        class="text-primary italic font-serif">Familia</span></h2>
+                <p class="text-xl text-slate-300 font-light leading-relaxed mb-10">Desde las manos de nuestro bisabuelo
+                    hasta hoy, cada cuña de queso encierra nuestra devoción. Conoce a las personas que maduran esta
+                    herencia.</p>
+                <a href="nosotros.html"
+                    class="inline-flex items-center gap-4 px-10 py-5 border-2 border-primary text-primary font-black rounded-xl hover:bg-primary hover:text-background-dark transition-all shadow-xl text-lg group">
+                    Nuestro Legado <i data-lucide="arrow-right"
+                        class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer id="contacto" class="bg-background-dark text-slate-400 py-24 px-6 lg:px-20 border-t border-primary/10">
+            <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <svg class="w-14 h-14 text-primary" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                        <div class="flex flex-col items-start pt-1">
+                            <span
+                                class="text-[8px] uppercase tracking-[0.4em] text-slate-500 font-bold leading-none -mb-1">Desde
+                                1930</span>
+                            <h2 class="text-4xl font-black text-white leading-none lowercase tracking-tighter">
+                                crestellina</h2>
+                            <span
+                                class="text-[8px] uppercase tracking-[0.1em] text-slate-500 font-bold mt-0.5 leading-none">Sencillos
+                                por Naturaleza</span>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Desde 1930, elaboramos los quesos más puros de Andalucía. Un compromiso innegociable con el
+                        bienestar animal y la herencia artesana.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/Crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Explorar</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                                href="index.html">Inicio</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="tienda.html">Nuestros Quesos</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="experiencias.html">Experiencias</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="nosotros.html">Nuestra Historia</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Contacto y Horario</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="opacity-70">Telf. 952 895 167</li>
+                        <li class="opacity-70 mt-4 block leading-relaxed">Abierto todos los días:<br />- Mañanas
+                            10:00-14:00<br />- Tardes 15:00-19:00 h.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Ubicación</h4>
+                    <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="block h-40 w-full relative rounded-2xl overflow-hidden border border-primary/20 grayscale hover:grayscale-0 transition-all duration-700 group">
+                        <div
+                            class="absolute inset-0 z-10 bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" class="pointer-events-none" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="w-full mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-bold opacity-50">
+                <p>© 2024 Quesería Crestellina. Elaborado con pasión en la Sierra.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-primary">Cookies</a>
+                    <a href="#" class="hover:text-primary">Privacidad</a>
+                    <a href="#" class="hover:text-primary">Términos</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="lunares-native.js"></script>
+</body>
+
+</html>

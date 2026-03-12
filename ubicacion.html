@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nuestra Historia - Quesería Crestellina</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Lucide Icons for better reliability -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"],
+                        "sans": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass {
+            background: rgba(34, 30, 16, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(244, 192, 37, 0.1);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-background-dark">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <!-- Navigation -->
+        <header class="fixed top-0 z-[100] w-full glass px-6 lg:px-20 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
+                    <div class="text-primary">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col items-start pt-1">
+                        <span
+                            class="text-[7px] uppercase tracking-[0.4em] text-slate-400 font-bold leading-none -mb-1">Desde
+                            1930</span>
+                        <h2 class="text-3xl font-black text-primary leading-none lowercase tracking-tighter">crestellina
+                        </h2>
+                        <span
+                            class="text-[7px] uppercase tracking-[0.1em] text-slate-400 font-bold mt-0.5 leading-none">Sencillos
+                            por Naturaleza</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="index.html">Inicio</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="experiencias.html">Experiencias</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="tienda.html">Tienda</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="nosotros.html">Nosotros</a>
+                    <a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                        href="ubicacion.html">Ubicación</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-full hover:bg-primary/10 text-slate-300 transition-colors">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </button>
+                    <div
+                        class="h-10 w-10 rounded-full border-2 border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-colors">
+                        <img class="h-full w-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-assets/media/AB6AXuCKvB73Rt43KHgiQbG9L5cHnUeNfEc0Og0xAiR7KuQ-6Woho7LUaLEizZWsC3JCau26HfOAqFjRcO5e4Gvb1MGP9BPc-LAZvO12jWwSyq_82UZGnPzYT2rgLZ2pg0iIW3511I_-Yz6lDa9FRID76ZxLAHy9tYrceuG1t9IxHRB_0hcRfMfoxGqgeQGvDhT-wm-vNiI_-Nm76grd9bIiCSuOicI0detkyN-_lI49gqQwHf3iNRvpFpSjQRNf0I0-Kjl0aMwGuvg0SFTP"
+                            alt="Usuario" />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="relative w-full h-[50vh] min-h-[400px] overflow-hidden group mt-[80px]">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-[5s] group-hover:scale-105"
+                style="background-image: linear-gradient(to top, rgba(34, 30, 16, 0.95) 0%, rgba(34, 30, 16, 0.2) 60%), url('assets/media/sl-quesos-artesanales-crestellina-3.webp');">
+            </div>
+            <div class="max-w-7xl mx-auto h-full px-6 md:px-20 relative z-10 flex flex-col justify-end pb-16 space-y-4">
+                <span
+                    class="inline-block w-fit px-4 py-1 bg-primary text-background-dark text-[10px] font-black rounded-full uppercase tracking-[0.3em] shadow-lg shadow-primary/20">Visítanos</span>
+                <h1 class="text-white text-6xl lg:text-7xl font-black leading-none tracking-tighter">Dónde <span
+                        class="text-primary italic">Estamos</span></h1>
+                <p class="text-slate-200 text-lg max-w-xl font-light leading-relaxed">Te esperamos en el corazón de la
+                    Sierra de Casares, donde la naturaleza dicta el ritmo de nuestro trabajo.</p>
+            </div>
+        </section>
+
+        <main class="max-w-7xl mx-auto w-full px-6 md:px-20 py-20">
+            <div class="grid lg:grid-cols-2 gap-20 items-start">
+                <!-- Información de Contacto -->
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <h2 class="text-4xl font-black tracking-tighter italic">Ven a Conocernos</h2>
+                        <p class="text-slate-600 dark:text-slate-400 text-xl font-light leading-relaxed">
+                            Nuestra finca se encuentra en un entorno privilegiado en la Sierra de Casares.
+                            Estamos encantados de recibir visitas para compras directas o para disfrutar de
+                            nuestras experiencias programadas.
+                        </p>
+                    </div>
+
+                    <div class="grid gap-6">
+                        <!-- Dirección -->
+                        <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                            target="_blank"
+                            class="flex items-center gap-6 p-8 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <div
+                                class="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all flex-shrink-0">
+                                <i data-lucide="map-pin" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Dirección</h4>
+                                <p class="text-slate-400 font-medium leading-relaxed">
+                                    Ctra. Manilva-Gaucín, Km 13.5<br>
+                                    Casares (Málaga)
+                                </p>
+                                <span
+                                    class="text-primary text-xs font-bold uppercase tracking-widest mt-2 inline-flex items-center gap-1">
+                                    Ver en Maps <i data-lucide="external-link" class="w-3 h-3"></i>
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- Horario -->
+                        <div
+                            class="flex items-center gap-6 p-8 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <div
+                                class="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all flex-shrink-0">
+                                <i data-lucide="clock" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Horario</h4>
+                                <p class="text-slate-400 font-medium leading-relaxed">
+                                    Abierto todos los días<br>
+                                    — Mañanas: 10:00 - 14:00<br>
+                                    — Tardes: 15:00 - 19:00 h.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <a href="tel:+34952895167"
+                            class="flex items-center gap-6 p-8 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <div
+                                class="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all flex-shrink-0">
+                                <i data-lucide="phone" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Teléfono</h4>
+                                <p class="text-slate-400 font-medium">952 895 167</p>
+                                <span
+                                    class="text-primary text-xs font-bold uppercase tracking-widest mt-1 inline-block">
+                                    Llamar ahora
+                                </span>
+                            </div>
+                        </a>
+
+                        <!-- Email -->
+                        <a href="mailto:info@queseriacrestellina.com"
+                            class="flex items-center gap-6 p-8 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <div
+                                class="size-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-background-dark transition-all flex-shrink-0">
+                                <i data-lucide="mail" class="w-7 h-7"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Email</h4>
+                                <p class="text-slate-400 font-medium">info@queseriacrestellina.com</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Mapa Interactivo -->
+                <div class="space-y-8 sticky top-32">
+                    <!-- Mapa embebido real centrado en Quesería Crestellina -->
+                    <div class="rounded-[3rem] overflow-hidden border-2 border-primary/20 shadow-2xl relative"
+                        style="height: 480px;">
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade" class="w-full h-full">
+                        </iframe>
+                        <!-- Overlay sutil -->
+                        <div class="absolute inset-0 pointer-events-none border-[3px] border-primary/10 rounded-[3rem]">
+                        </div>
+                    </div>
+
+                    <!-- Botón Google Maps -->
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="w-full flex items-center justify-center gap-3 px-8 py-5 bg-primary text-background-dark font-black rounded-2xl hover:scale-[1.02] transition-transform shadow-2xl shadow-primary/20 text-lg">
+                        <i data-lucide="map" class="w-6 h-6"></i>
+                        Abrir en Google Maps
+                        <i data-lucide="external-link" class="w-5 h-5"></i>
+                    </a>
+
+                    <div class="p-6 rounded-[2rem] bg-primary/5 border border-primary/10 text-center">
+                        <p class="text-slate-400 text-sm font-medium leading-relaxed">
+                            Recomendamos visitarnos en transporte propio. El acceso a la finca
+                            está señalizado desde la carretera Manilva-Gaucín.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Footer -->
+        <footer id="contacto" class="bg-background-dark text-slate-400 py-24 px-6 lg:px-20 border-t border-primary/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <svg class="w-14 h-14 text-primary" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                        <div class="flex flex-col items-start pt-1">
+                            <span
+                                class="text-[8px] uppercase tracking-[0.4em] text-slate-500 font-bold leading-none -mb-1">Desde
+                                1930</span>
+                            <h2 class="text-4xl font-black text-white leading-none lowercase tracking-tighter">
+                                crestellina</h2>
+                            <span
+                                class="text-[8px] uppercase tracking-[0.1em] text-slate-500 font-bold mt-0.5 leading-none">Sencillos
+                                por Naturaleza</span>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Desde 1930, elaboramos los quesos más puros de Andalucía. Un compromiso innegociable con el
+                        bienestar animal y la herencia artesana.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/Crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Explorar</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="index.html">Inicio</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="tienda.html">Nuestros Quesos</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="experiencias.html">Experiencias</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="nosotros.html">Nuestra Historia</a></li>
+                        <li><a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                                href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Contacto y Horario</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="opacity-70">Telf. 952 895 167</li>
+                        <li class="opacity-70 mt-4 block leading-relaxed">Abierto todos los días:<br />- Mañanas
+                            10:00-14:00<br />- Tardes 15:00-19:00 h.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Ubicación</h4>
+                    <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="block h-40 w-full relative rounded-2xl overflow-hidden border border-primary/20 grayscale hover:grayscale-0 transition-all duration-700 group">
+                        <div
+                            class="absolute inset-0 z-10 bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" class="pointer-events-none" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="max-w-7xl mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-bold opacity-50">
+                <p>© 2024 Quesería Crestellina. Elaborado con pasión en la Sierra.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-primary">Cookies</a>
+                    <a href="#" class="hover:text-primary">Privacidad</a>
+                    <a href="#" class="hover:text-primary">Términos</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="main.js"></script>
+    <script src="lunares-native.js"></script>
+</body>
+
+</html>

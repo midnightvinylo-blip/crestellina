@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Catálogo - Quesería Crestellina</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Lucide Icons for better reliability -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"],
+                        "sans": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass {
+            background: rgba(34, 30, 16, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(244, 192, 37, 0.1);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-background-dark">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <!-- Navigation -->
+        <header class="fixed top-0 z-[100] w-full glass px-6 lg:px-20 py-4">
+            <div class="w-full flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
+                    <div class="text-primary">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col items-start pt-1">
+                        <span
+                            class="text-[7px] uppercase tracking-[0.4em] text-slate-400 font-bold leading-none -mb-1">Desde
+                            1930</span>
+                        <h2 class="text-3xl font-black text-primary leading-none lowercase tracking-tighter">crestellina
+                        </h2>
+                        <span
+                            class="text-[7px] uppercase tracking-[0.1em] text-slate-400 font-bold mt-0.5 leading-none">Sencillos
+                            por Naturaleza</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="index.html">Inicio</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="experiencias.html">Experiencias</a>
+                    <a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                        href="tienda.html">Tienda</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="nosotros.html">Nosotros</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="ubicacion.html">Ubicación</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-full hover:bg-primary/10 text-slate-300 transition-colors">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </button>
+                    <div
+                        class="h-10 w-10 rounded-full border-2 border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-colors">
+                        <img class="h-full w-full object-cover"
+                            src="assets/media/avatar_usuario.webp"
+                            alt="Usuario" />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="w-full px-6 md:px-20 py-20 mt-[80px]">
+            <!-- Sección Hero -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 mb-20 animate-fade-in">
+                <div class="flex flex-col gap-6 max-w-2xl">
+                    <h1 class="text-6xl font-black leading-none tracking-tighter">Joyas <br /><span
+                            class="text-primary italic">Gastronómicas</span></h1>
+                    <p class="text-slate-600 dark:text-slate-400 text-xl font-light leading-relaxed">Queso de cabra
+                        artesanal desde el corazón de Casares. Elaborado a mano con métodos que desafían el tiempo.</p>
+                </div>
+                <div class="flex gap-4">
+                    <!-- Botón de favoritos eliminado -->
+                </div>
+            </div>
+
+            <!-- Pestañas de Categoría eliminadas -->
+
+            <!-- Sección Destacada: Pack Degustación -->
+            <section id="packs" class="mb-32">
+                <div
+                    class="relative overflow-hidden rounded-[2.5rem] bg-slate-900 border border-primary/10 p-12 lg:p-20 shadow-2xl">
+                    <div class="absolute top-0 right-0 w-full h-full opacity-20 pointer-events-none"
+                        style="background-image: radial-gradient(circle at top right, #f4c025, transparent);"></div>
+                    <div class="flex flex-col md:flex-row gap-20 items-center relative z-10">
+                        <div class="w-full md:w-1/2 flex flex-col gap-8">
+                            <div
+                                class="inline-flex px-4 py-1 rounded-full bg-primary text-background-dark text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg shadow-primary/20">
+                                Selección Destacada</div>
+                            <h2 class="text-5xl lg:text-6xl font-black text-white leading-none tracking-tighter">Pack
+                                <br />Degustación <br /><span class="text-primary italic">Crestellina</span>
+                            </h2>
+                            <p class="text-xl text-slate-300 font-light leading-relaxed">Un viaje sensorial a través de
+                                los sabores de Casares. Incluye nuestras piezas más galardonadas, desde la suavidad del
+                                fresco hasta la intensidad del reserva.</p>
+
+                            <div class="grid grid-cols-2 gap-6">
+                                <div
+                                    class="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                                    <i data-lucide="wind" class="w-8 h-8 text-primary"></i>
+                                    <div>
+                                        <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">
+                                            Aroma</p>
+                                        <p class="text-sm font-bold text-white">Bosque mediterráneo</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                                    <i data-lucide="utensils" class="w-8 h-8 text-primary"></i>
+                                    <div>
+                                        <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">
+                                            Textura</p>
+                                        <p class="text-sm font-bold text-white">Evolución artesana</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-8 mt-6">
+                                <span class="text-4xl font-black text-primary">€45.00</span>
+                                <button
+                                    class="flex-1 flex items-center justify-center gap-3 rounded-2xl h-16 bg-primary text-background-dark hover:scale-[1.02] transition-all font-black text-lg shadow-2xl shadow-primary/20">
+                                    <i data-lucide="shopping-cart" class="w-6 h-6"></i> Comprar Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <div class="aspect-square w-full rounded-3xl bg-cover bg-center shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-700 hover:scale-105"
+                                style='background-image: url("assets/media/pack_degustacion.webp");'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cuadrícula de Productos -->
+            <div id="catalogo" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+                <!-- Product Card 1: Queso Fresco -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/queso_fresco.webp");'>
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Queso Fresco Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo</p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€8.18</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Artesano</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Ecológico</span>
+                        </div>
+                        <button
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-primary text-background-dark hover:bg-white transition-all font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/10">
+                            <i data-lucide="plus" class="w-5 h-5"></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 2: Semicurado (Agotado) -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 opacity-90">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/queso_semicurado_romero.webp");'>
+                        </div>
+                        <div class="absolute inset-0 bg-background-dark/20 backdrop-blur-[2px]"></div>
+                        <div class="absolute top-6 left-6 py-1.5 px-4 bg-background-dark/80 backdrop-blur-md rounded-xl text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                            Agotado
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Semicurado Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo</p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€9.10</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Equilibrado</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Ecológico</span>
+                        </div>
+                        <button disabled
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-slate-700/50 text-slate-400 cursor-not-allowed font-black text-sm uppercase tracking-[0.2em]">
+                            Próximamente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 3: Curado (Agotado) -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 opacity-90">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/queso_curado.webp");'>
+                        </div>
+                        <div class="absolute inset-0 bg-background-dark/20 backdrop-blur-[2px]"></div>
+                        <div class="absolute top-6 left-6 py-1.5 px-4 bg-background-dark/80 backdrop-blur-md rounded-xl text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                            Agotado
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Queso Curado Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo</p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€10.56</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Intenso</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Ecológico</span>
+                        </div>
+                        <button disabled
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-slate-700/50 text-slate-400 cursor-not-allowed font-black text-sm uppercase tracking-[0.2em]">
+                            Próximamente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 4: Yogur -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/Yogur-tres-tamanos_1.webp");'>
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Yogur Natural Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo</p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€2.50</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Natural</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">En Tarro</span>
+                        </div>
+                        <button
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-primary text-background-dark hover:bg-white transition-all font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/10">
+                            <i data-lucide="plus" class="w-5 h-5"></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 5: Tarjeta Regalo -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/prd-gift-quesos-crestellina-1.webp");'>
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Tarjeta Regalo</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">El Regalo Perfecto</p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€10.00</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Regalable</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Digital</span>
+                        </div>
+                        <button
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-primary text-background-dark hover:bg-white transition-all font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/10">
+                            <i data-lucide="gift" class="w-5 h-5"></i> Elegir Importe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- Footer -->
+        <footer id="contacto" class="bg-background-dark text-slate-400 py-24 px-6 lg:px-20 border-t border-primary/10">
+            <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <svg class="w-14 h-14 text-primary" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                        <div class="flex flex-col items-start pt-1">
+                            <span
+                                class="text-[8px] uppercase tracking-[0.4em] text-slate-500 font-bold leading-none -mb-1">Desde
+                                1930</span>
+                            <h2 class="text-4xl font-black text-white leading-none lowercase tracking-tighter">
+                                crestellina</h2>
+                            <span
+                                class="text-[8px] uppercase tracking-[0.1em] text-slate-500 font-bold mt-0.5 leading-none">Sencillos
+                                por Naturaleza</span>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Desde 1930, elaboramos los quesos más puros de Andalucía. Un compromiso innegociable con el
+                        bienestar animal y la herencia artesana.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/Crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Explorar</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="index.html">Inicio</a></li>
+                        <li><a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                                href="tienda.html">Nuestros Quesos</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="experiencias.html">Experiencias</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="nosotros.html">Nuestra Historia</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Contacto y Horario</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="opacity-70">Telf. 952 895 167</li>
+                        <li class="opacity-70 mt-4 block leading-relaxed">Abierto todos los días:<br />- Mañanas
+                            10:00-14:00<br />- Tardes 15:00-19:00 h.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Ubicación</h4>
+                    <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="block h-40 w-full relative rounded-2xl overflow-hidden border border-primary/20 grayscale hover:grayscale-0 transition-all duration-700 group">
+                        <div
+                            class="absolute inset-0 z-10 bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" class="pointer-events-none" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="w-full mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-bold opacity-50">
+                <p>© 2024 Quesería Crestellina. Elaborado con pasión en la Sierra.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-primary">Cookies</a>
+                    <a href="#" class="hover:text-primary">Privacidad</a>
+                    <a href="#" class="hover:text-primary">Términos</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="main.js"></script>
+    <script src="lunares-native.js"></script>
+</body>
+
+</html>

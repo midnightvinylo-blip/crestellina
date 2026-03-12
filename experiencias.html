@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Experiencias - Quesería Crestellina</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Lucide Icons for better reliability -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"],
+                        "sans": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass {
+            background: rgba(34, 30, 16, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(244, 192, 37, 0.1);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-background-dark">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <!-- Navigation -->
+        <header class="fixed top-0 z-[100] w-full glass px-6 lg:px-20 py-4">
+            <div class="max-w-7xl mx-auto flex items-center justify-between">
+                <a href="index.html" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
+                    <div class="text-primary">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col items-start pt-1">
+                        <span
+                            class="text-[7px] uppercase tracking-[0.4em] text-slate-400 font-bold leading-none -mb-1">Desde
+                            1930</span>
+                        <h2 class="text-3xl font-black text-primary leading-none lowercase tracking-tighter">crestellina
+                        </h2>
+                        <span
+                            class="text-[7px] uppercase tracking-[0.1em] text-slate-400 font-bold mt-0.5 leading-none">Sencillos
+                            por Naturaleza</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="index.html">Inicio</a>
+                    <a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                        href="experiencias.html">Experiencias</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="tienda.html">Tienda</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="nosotros.html">Nosotros</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="ubicacion.html">Ubicación</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-full hover:bg-primary/10 text-slate-300 transition-colors">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </button>
+                    <div
+                        class="h-10 w-10 rounded-full border-2 border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-colors">
+                        <img class="h-full w-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-assets/media/AB6AXuCKvB73Rt43KHgiQbG9L5cHnUeNfEc0Og0xAiR7KuQ-6Woho7LUaLEizZWsC3JCau26HfOAqFjRcO5e4Gvb1MGP9BPc-LAZvO12jWwSyq_82UZGnPzYT2rgLZ2pg0iIW3511I_-Yz6lDa9FRID76ZxLAHy9tYrceuG1t9IxHRB_0hcRfMfoxGqgeQGvDhT-wm-vNiI_-Nm76grd9bIiCSuOicI0detkyN-_lI49gqQwHf3iNRvpFpSjQRNf0I0-Kjl0aMwGuvg0SFTP"
+                            alt="Usuario" />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="w-full mt-[80px] overflow-x-hidden">
+            <!-- ===== SCROLL EXPANSION HERO ===== -->
+            <div id="scroll-hero">
+                <section class="relative flex flex-col items-center justify-start min-h-[100dvh]">
+                    <div class="relative w-full flex flex-col items-center min-h-[100dvh]">
+
+                        <!-- Background image that fades as video expands -->
+                        <div id="hero-bg-wrapper" class="absolute inset-0 z-0 h-full">
+                            <img src="assets/media/tt1920x1080-crestellina-nuestros-productos-1.webp"
+                                alt="Background" class="w-screen h-screen object-cover object-center" />
+                            <div class="absolute inset-0 bg-black/50"></div>
+                        </div>
+
+                        <div class="container mx-auto flex flex-col items-center justify-start relative z-10">
+                            <div class="flex flex-col items-center justify-center w-full h-[100dvh] relative">
+
+                                <!-- Video Container - expands on scroll -->
+                                <div id="video-container"
+                                    class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden"
+                                    style="width:300px;height:400px;max-width:95vw;max-height:85vh;box-shadow:0 0 50px rgba(0,0,0,0.4);transition:border-radius 0.3s;">
+                                    <video id="hero-video" src="assets/media/quesos.webm" autoplay loop playsinline
+                                        class="w-full h-full object-cover"></video>
+                                    <!-- Dark overlay on video -->
+                                    <div id="video-overlay" class="absolute inset-0 bg-black/60 pointer-events-none">
+                                    </div>
+                                    <!-- Mute/Unmute button -->
+                                    <button id="mute-btn"
+                                        class="absolute top-4 right-4 z-30 bg-black/60 hover:bg-black/90 text-white hover:text-primary backdrop-blur-md border border-white/10 w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                                        aria-label="Silenciar/Activar sonido">
+                                        <i data-lucide="volume-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Hero Titles that slide apart on scroll -->
+                                <div
+                                    class="flex flex-col items-center justify-center text-center gap-2 w-full relative z-10 pointer-events-none px-4">
+                                    <h1 id="hero-t1"
+                                        class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none"
+                                        style="transition:none;">
+                                        S&eacute; <span class="text-primary italic font-serif">Quesero</span>
+                                    </h1>
+                                    <p id="hero-t2"
+                                        class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none"
+                                        style="transition:none;">
+                                        Por un D&iacute;a
+                                    </p>
+                                    <p id="hero-hint"
+                                        class="mt-8 text-sm uppercase tracking-[0.4em] text-white/60 font-bold transition-opacity duration-300">
+                                        — Scroll para descubrir —
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- ===== FIN SCROLL EXPANSION HERO ===== -->
+
+            <!-- Contenedor Detalles y Reservas (hidden until hero is expanded) -->
+            <div id="hero-content" class="max-w-7xl mx-auto w-full px-6 md:px-20 py-20 flex flex-col gap-16"
+                style="opacity:0;pointer-events:none;transition:opacity 0.7s;">
+
+                <!-- Selección de Experiencias -->
+                <div class="flex flex-col gap-12 mb-4">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4 block">Para todos los públicos</span>
+                        <h2 class="text-4xl lg:text-6xl font-black tracking-tighter">Dos <span class="text-primary italic font-serif">Caminos</span> a Elegir</h2>
+                    </div>
+
+                                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Experiencia 1: Cabrero y Quesero -->
+                        <div id="card-cabrero" onclick="selectExp('cabrero')" class="group relative bg-slate-900 border-2 border-white/5 hover:border-primary/40 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all cursor-pointer">
+                            <div class="h-80 overflow-hidden relative">
+                                <img id="img-cabrero" src="assets/media/cabrero_quesero_exp.webp" alt="Cabrero y Quesero por un Día" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-6 left-8 right-8 flex justify-between items-end pointer-events-none">
+                                    <span class="bg-primary text-background-dark font-black px-4 py-2 rounded-xl text-sm shadow-xl shadow-primary/20">Desde 40€ / Pers.</span>
+                                </div>
+                            </div>
+                            <div class="p-8 pt-6 flex flex-col gap-4">
+                                <h3 class="text-3xl font-black text-white leading-tight">Cabrero y Quesero <span class="text-primary block italic font-serif">por un Día</span></h3>
+                                <div class="flex gap-4">
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300"><i data-lucide="clock" class="w-4 h-4 text-primary"></i> 3 Horas</span>
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300"><i data-lucide="users" class="w-4 h-4 text-primary"></i> Todos los públicos</span>
+                                </div>
+                            </div>
+                            <!-- Seleccionado badge -->
+                            <div id="badge-cabrero" class="hidden absolute top-6 right-6 bg-primary text-background-dark text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg">Seleccionada</div>
+                            <div id="overlay-cabrero" class="hidden absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                        </div>
+
+                        <!-- Experiencia 2: Chivitos -->
+                        <div id="card-chivitos" onclick="selectExp('chivitos')" class="group relative bg-slate-900 border-2 border-white/5 hover:border-primary/40 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all cursor-pointer">
+                            <div class="h-80 overflow-hidden relative">
+                                <img id="img-chivitos" src="assets/media/chivitos_exp.webp" alt="Conoce los Chivitos de Crestellina" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-6 left-8 right-8 flex justify-between items-end pointer-events-none">
+                                    <span class="bg-white text-background-dark font-black px-4 py-2 rounded-xl text-sm shadow-xl hover:bg-primary transition-colors">Desde 24€ / Pers.</span>
+                                </div>
+                            </div>
+                            <div class="p-8 pt-6 flex flex-col gap-4">
+                                <h3 class="text-3xl font-black text-white leading-tight">Conoce los Chivitos <span class="text-slate-400 block italic font-serif opacity-80">de Crestellina</span></h3>
+                                <div class="flex gap-4 cursor-pointer">
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300 transition-colors"><i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 2 Horas</span>
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300 transition-colors"><i data-lucide="users" class="w-4 h-4 text-slate-400"></i> Ideal Familias</span>
+                                </div>
+                            </div>
+                            <!-- Seleccionado badge -->
+                            <div id="badge-chivitos" class="hidden absolute top-6 right-6 bg-primary text-background-dark text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg">Seleccionada</div>
+                            <div id="overlay-chivitos" class="hidden absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenedor dinámico (oculto por defecto) -->
+                <div id="exp-config-area" class="hidden flex-col gap-12 mt-8 opacity-0 transition-opacity duration-700">
+                    
+                    <hr class="border-white/5 w-full max-w-3xl mx-auto my-4" />
+
+                    <!-- Desglose de Experiencia a todo ancho -->
+                    <div class="w-full relative">
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 relative z-10">
+                            <div class="lg:col-span-3 flex flex-col gap-8">
+                                <h3 id="dyn-title" class="text-4xl lg:text-5xl font-black tracking-tighter leading-tight">Título <span class="text-primary italic font-serif">Dinámico</span></h3>
+                                <div id="dyn-desc" class="text-slate-400 text-lg font-light leading-relaxed space-y-4">
+                                    Descripción...
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2 flex flex-col gap-8">
+                                <!-- Grid Info -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="p-6 rounded-3xl bg-background-dark/80 border border-primary/10 flex flex-col gap-2">
+                                        <i data-lucide="clock" class="w-6 h-6 text-primary"></i>
+                                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Duración</span>
+                                        <span id="dyn-duration" class="text-white font-bold text-lg">-</span>
+                                    </div>
+                                    <div class="p-6 rounded-3xl bg-background-dark/80 border border-primary/10 flex flex-col gap-2">
+                                        <i data-lucide="users" class="w-6 h-6 text-primary"></i>
+                                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Capacidad</span>
+                                        <span id="dyn-capacity" class="text-white font-bold text-lg">-</span>
+                                    </div>
+                                </div>
+                                <!-- Qué Incluye -->
+                                <div class="bg-primary/5 rounded-3xl p-8 border border-primary/20">
+                                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-xs border-b border-primary/10 pb-4">¿Qué incluye?</h4>
+                                    <ul id="dyn-includes" class="space-y-4 text-sm text-slate-300">
+                                        <!-- Dinámico -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración Reserva -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mt-8">
+                        <!-- Selector de Asistentes -->
+                        <div class="flex flex-col gap-6" id="tickets-container">
+                        </div>
+
+                        <!-- Tarjeta de Reserva -->
+                    <!-- Contenedor Reserva -->
+                    <div class="flex flex-col gap-8 w-full mt-4">
+                        <h4 class="text-2xl font-black flex items-center justify-between tracking-tighter">
+                            Reserva tu Plaza
+                            <span class="text-sm text-primary font-black uppercase tracking-widest">Abril
+                                2024</span>
+                        </h4>
+                        <div
+                            class="grid grid-cols-7 gap-3 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 opacity-70">
+                            <div>LU</div>
+                            <div>MA</div>
+                            <div>MI</div>
+                            <div>JU</div>
+                            <div>VI</div>
+                            <div>SA</div>
+                            <div>DO</div>
+                            <!-- Marcador de Cuadrícula de Calendario -->
+                            <div class="py-3 text-slate-700">29</div>
+                            <div class="py-3 text-slate-700">30</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white">
+                                1</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                2</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                3</div>
+                            <div
+                                class="py-3 rounded-xl bg-primary text-background-dark font-black cursor-pointer shadow-lg shadow-primary/20">
+                                4</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold border border-primary/20">
+                                5</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white">
+                                6</div>
+                            <div
+                                class="py-3 rounded-xl bg-primary/5 border border-primary/20 text-primary cursor-pointer font-black">
+                                7</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white">
+                                8</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                9</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                10</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold border border-primary/20">
+                                11</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                12</div>
+                        </div>
+                        <div class="space-y-4">
+                            <button
+                                class="w-full bg-primary hover:bg-white text-background-dark font-black py-5 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 text-sm uppercase tracking-widest">
+                                <i data-lucide="ticket" class="w-5 h-5"></i> Confirmar Reserva
+                            </button>
+                            <button
+                                class="w-full bg-transparent border-2 border-primary/30 text-primary hover:bg-primary/10 font-black py-5 rounded-2xl transition-all text-sm uppercase tracking-widest">
+                                Regalar Experiencia
+                            </button>
+                        </div>
+                        <p
+                            class="text-[10px] text-center text-slate-500 font-bold uppercase tracking-widest opacity-60 italic">
+                            Cancelación flexible hasta 48h antes.</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </main>
+        <!-- Footer -->
+        <footer id="contacto" class="bg-background-dark text-slate-400 py-24 px-6 lg:px-20 border-t border-primary/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <svg class="w-14 h-14 text-primary" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                        <div class="flex flex-col items-start pt-1">
+                            <span
+                                class="text-[8px] uppercase tracking-[0.4em] text-slate-500 font-bold leading-none -mb-1">Desde
+                                1930</span>
+                            <h2 class="text-4xl font-black text-white leading-none lowercase tracking-tighter">
+                                crestellina</h2>
+                            <span
+                                class="text-[8px] uppercase tracking-[0.1em] text-slate-500 font-bold mt-0.5 leading-none">Sencillos
+                                por Naturaleza</span>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Desde 1930, elaboramos los quesos más puros de Andalucía. Un compromiso innegociable con el
+                        bienestar animal y la herencia artesana.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/Crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Explorar</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="index.html">Inicio</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="tienda.html">Nuestros Quesos</a></li>
+                        <li><a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                                href="experiencias.html">Experiencias</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="nosotros.html">Nuestra Historia</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Contacto y Horario</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="opacity-70">Telf. 952 895 167</li>
+                        <li class="opacity-70 mt-4 block leading-relaxed">Abierto todos los días:<br />- Mañanas
+                            10:00-14:00<br />- Tardes 15:00-19:00 h.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Ubicación</h4>
+                    <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="block h-40 w-full relative rounded-2xl overflow-hidden border border-primary/20 grayscale hover:grayscale-0 transition-all duration-700 group">
+                        <div
+                            class="absolute inset-0 z-10 bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" class="pointer-events-none" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="max-w-7xl mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-bold opacity-50">
+                <p>© 2024 Quesería Crestellina. Elaborado con pasión en la Sierra.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-primary">Cookies</a>
+                    <a href="#" class="hover:text-primary">Privacidad</a>
+                    <a href="#" class="hover:text-primary">Términos</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="main.js"></script>
+
+    <script>
+            // ===== SCROLL EXPANSION HERO LOGIC (experiencias.html only) =====
+            (function () {
+                var videoCont = document.getElementById('video-container');
+                var bgWrapper = document.getElementById('hero-bg-wrapper');
+                var overlay = document.getElementById('video-overlay');
+                var video = document.getElementById('hero-video');
+                var muteBtn = document.getElementById('mute-btn');
+                var t1 = document.getElementById('hero-t1');
+                var t2 = document.getElementById('hero-t2');
+                var hint = document.getElementById('hero-hint');
+                var content = document.getElementById('hero-content');
+
+                if (!videoCont) return; // only run on experiencias.html
+
+                var scrollProg = 0;
+                var expanded = false;
+                var touchStartY = 0;
+                var isMobile = window.innerWidth < 768;
+
+                // Intentar autoplay con sonido al entrar
+                video.muted = false;
+                var playPromise = video.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(function(error) {
+                        // Si el navegador bloquea el autoplay con sonido, forzamos inicio mutado para que haya vídeo
+                        video.muted = true;
+                        video.play();
+                        muteBtn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4"></i>';
+                        if (window.lucide) lucide.createIcons();
+                    });
+                }
+
+                function updateUI() {
+                    var vw = window.innerWidth;
+                    var vh = window.innerHeight;
+
+                    var maxW = isMobile ? vw * 0.95 : vw;
+                    var maxH = isMobile ? vh * 0.85 : vh;
+
+                    var baseW = 300, baseH = 400;
+                    var w = baseW + scrollProg * (maxW - baseW);
+                    var h = baseH + scrollProg * (maxH - baseH);
+
+                    videoCont.style.width = w + 'px';
+                    videoCont.style.height = h + 'px';
+
+                    // Expand to full → remove border-radius
+                    var br = (1 - scrollProg) * 16;
+                    videoCont.style.borderRadius = br + 'px';
+
+                    // Fade bg
+                    bgWrapper.style.opacity = Math.max(0, 1 - scrollProg * 1.5);
+
+                    // Lighten video overlay as it expands
+                    var overlayAlpha = 0.6 - scrollProg * 0.45;
+                    overlay.style.opacity = Math.max(0.05, overlayAlpha);
+
+                    // Slide titles apart
+                    var tx = scrollProg * (isMobile ? 160 : 120);
+                    t1.style.transform = 'translateX(-' + tx + 'vw)';
+                    t2.style.transform = 'translateX(' + tx + 'vw)';
+
+                    // Hint fade out
+                    hint.style.opacity = Math.max(0, 1 - scrollProg * 3);
+
+                    // Fully expanded
+                    if (scrollProg >= 1 && !expanded) {
+                        expanded = true;
+                        content.style.opacity = '1';
+                        content.style.pointerEvents = 'auto';
+                    } else if (scrollProg < 0.98 && expanded) {
+                        expanded = false;
+                        content.style.opacity = '0';
+                        content.style.pointerEvents = 'none';
+                    }
+                }
+
+                // Mute toggle
+                muteBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    video.muted = !video.muted;
+                    muteBtn.innerHTML = video.muted
+                        ? '<i data-lucide="volume-x" class="w-4 h-4"></i>'
+                        : '<i data-lucide="volume-2" class="w-4 h-4"></i>';
+                    if (window.lucide) lucide.createIcons();
+                });
+
+                // Wheel handler
+                window.addEventListener('wheel', function (e) {
+                    if (expanded && e.deltaY > 0) return; // normal scroll down after expand
+                    if (expanded && e.deltaY < 0 && window.scrollY <= 5) {
+                        expanded = false; e.preventDefault(); return;
+                    }
+                    if (!expanded) {
+                        e.preventDefault();
+                        window.scrollTo(0, 0);
+                        scrollProg = Math.min(1, Math.max(0, scrollProg + e.deltaY * 0.001));
+                        updateUI();
+                    }
+                }, { passive: false });
+
+                // Touch handlers
+                window.addEventListener('touchstart', function (e) {
+                    touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                window.addEventListener('touchmove', function (e) {
+                    if (!touchStartY) return;
+                    var dy = touchStartY - e.touches[0].clientY;
+                    if (expanded && dy > 0) return;
+                    if (expanded && dy < -20 && window.scrollY <= 5) {
+                        expanded = false; e.preventDefault(); return;
+                    }
+                    if (!expanded) {
+                        e.preventDefault();
+                        window.scrollTo(0, 0);
+                        var factor = dy < 0 ? 0.008 : 0.005;
+                        scrollProg = Math.min(1, Math.max(0, scrollProg + dy * factor));
+                        updateUI();
+                        touchStartY = e.touches[0].clientY;
+                    }
+                }, { passive: false });
+
+                // Lock scroll until expanded
+                window.addEventListener('scroll', function () {
+                    if (!expanded) window.scrollTo(0, 0);
+                });
+
+                window.addEventListener('resize', function () {
+                    isMobile = window.innerWidth < 768;
+                    updateUI();
+                });
+
+                // Initial render
+                updateUI();
+            })();
+    </script>
+
+    <script>
+    const expData = {
+        cabrero: {
+            title: "Cabrero y Quesero <span class='text-primary block italic font-serif opacity-90'>por un Día</span>",
+            desc: "<p>Desde la mezcla de los ingredientes hasta la elaboración de un queso fresco con receta tradicional familiar. Durante la actividad también conoceremos de primera mano nuestro entorno protegido así como nuestra historia de 90 años de legado.</p><p>También tendréis que acompañar a las estrellas de nuestra quesería, las cabras payoyas para el ordeño manual tradicional antes de que salgan a la sierra a pastar.</p><p>Terminaréis vuestro propio queso para llevarlo a casa, también veremos el vídeo del proceso en fábrica y no podía faltar para terminar una cata de quesos maridada con vino local.</p>",
+            duration: "3 Horas aprox.",
+            capacity: "Todos los públicos",
+            price: "Desde 40€",
+            includes: [
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Elaboración de tu propio queso fresco.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Ordeño manual tradicional a las cabras.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Cata de quesos profesional maridada con vino.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Visita al rebaño y audiovisuales.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Te llevas tu propio queso artesano a casa.</li>"
+            ],
+            ticketsHtml: `
+                <h4 class="text-xl font-bold uppercase tracking-widest text-white border-b border-white/10 pb-4">Asistentes</h4>
+                <!-- Adultos -->
+                <div class="flex items-center justify-between bg-slate-900 p-6 rounded-2xl border border-white/5">
+                    <div>
+                        <p class="font-bold text-white">Adultos (+12 años)</p>
+                        <p class="text-primary text-sm font-bold">40€</p>
+                    </div>
+                    <div class="flex items-center gap-4 bg-background-dark p-2 rounded-xl">
+                        <button onclick="updateTicket('adult', -1)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-colors">-</button>
+                        <span id="ticket-val-adult" class="w-4 text-center font-bold">2</span>
+                        <button onclick="updateTicket('adult', 1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">+</button>
+                    </div>
+                </div>
+                <!-- Niños (4-11) -->
+                <div class="flex items-center justify-between bg-slate-900 p-6 rounded-2xl border border-white/5">
+                    <div>
+                        <p class="font-bold text-white">Niños (4 a 11 años)</p>
+                        <p class="text-slate-400 text-sm">20€</p>
+                    </div>
+                    <div class="flex items-center gap-4 bg-background-dark p-2 rounded-xl">
+                        <button onclick="updateTicket('kid', -1)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-colors">-</button>
+                        <span id="ticket-val-kid" class="w-4 text-center font-bold">0</span>
+                        <button onclick="updateTicket('kid', 1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">+</button>
+                    </div>
+                </div>
+                <!-- Bebés -->
+                <div class="flex items-center justify-between bg-slate-900 p-6 rounded-2xl border border-white/5">
+                    <div>
+                        <p class="font-bold text-white">Bebés (0 a 3 años)</p>
+                        <p class="text-slate-400 text-sm hover:text-white transition-colors">Gratis</p>
+                    </div>
+                    <div class="flex items-center gap-4 bg-background-dark p-2 rounded-xl">
+                        <button onclick="updateTicket('baby', -1)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-colors">-</button>
+                        <span id="ticket-val-baby" class="w-4 text-center font-bold">0</span>
+                        <button onclick="updateTicket('baby', 1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">+</button>
+                    </div>
+                </div>
+            `
+        },
+        chivitos: {
+            title: "Conoce los Chivitos <span class='text-primary block italic font-serif opacity-90'>de Crestellina</span>",
+            desc: "<p>Una experiencia de lo más familiar e inmersiva. Ideal para disfrutar con los más pequeños y conecten con la naturaleza y la nobleza de los animales al aire libre.</p><p>Esta actividad está adaptada para conocer a los chivitos y sus cuidados de primera mano. Podremos conocer a las grandes protagonistas: las cabras payoyas... y podréis darles el biberón a los chivitos más pequeños y cariñosos de la granja.</p><p>Al terminar el recorrido habrá una estupenda sesión gastronómica degustando nuestros mejores quesos artesanos en un ambiente relajado y natural.</p>",
+            duration: "2 Horas aprox.",
+            capacity: "Mínimo 2 px.",
+            price: "Desde 24€",
+            includes: [
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Visita adaptada a un entorno natural inmejorable.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Actividad inmersiva: dar biberón a los chivitos bebés.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Degustación de nuestra selección de quesos artesanos.</li>",
+                "<li class='flex gap-3'><i data-lucide='check' class='text-primary w-5 h-5 shrink-0'></i> Interacción pacífica y didáctica con el rebaño.</li>"
+            ],
+             ticketsHtml: `
+                <h4 class="text-xl font-bold uppercase tracking-widest text-white border-b border-white/10 pb-4">Asistentes</h4>
+                <!-- General -->
+                <div class="flex items-center justify-between bg-slate-900 p-6 rounded-2xl border border-white/5">
+                    <div>
+                        <p class="font-bold text-white">General (+4 años)</p>
+                        <p class="text-primary text-sm font-bold">24€</p>
+                    </div>
+                    <div class="flex items-center gap-4 bg-background-dark p-2 rounded-xl">
+                        <button onclick="updateTicket('general', -1)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-colors">-</button>
+                        <span id="ticket-val-general" class="w-4 text-center font-bold">2</span>
+                        <button onclick="updateTicket('general', 1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">+</button>
+                    </div>
+                </div>
+                <!-- Bebés -->
+                <div class="flex items-center justify-between bg-slate-900 p-6 rounded-2xl border border-white/5">
+                    <div>
+                        <p class="font-bold text-white">Bebés (0 a 3 años)</p>
+                        <p class="text-slate-400 text-sm hover:text-white transition-colors">Gratis</p>
+                    </div>
+                    <div class="flex items-center gap-4 bg-background-dark p-2 rounded-xl">
+                        <button onclick="updateTicket('baby', -1)" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white/10 text-white transition-colors">-</button>
+                        <span id="ticket-val-baby" class="w-4 text-center font-bold">0</span>
+                        <button onclick="updateTicket('baby', 1)" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors">+</button>
+                    </div>
+                </div>
+            `
+        }
+    };
+
+    window.updateTicket = function(id, delta) {
+        const el = document.getElementById('ticket-val-' + id);
+        if (el) {
+            let val = parseInt(el.innerText) + delta;
+            // Prevent going below 0, max 15 people
+            if (val < 0) val = 0;
+            if (val > 15) val = 15;
+            el.innerText = val;
+        }
+    };
+
+    window.selectExp = function(type) {
+        const data = expData[type];
+        
+        // Toggle active classes
+        const allTypes = ['cabrero', 'chivitos'];
+        allTypes.forEach(t => {
+            const card = document.getElementById('card-' + t);
+            const badge = document.getElementById('badge-' + t);
+            const overlay = document.getElementById('overlay-' + t);
+            const img = document.getElementById('img-' + t);
+            if (t === type) {
+                card.classList.add('border-primary');
+                card.classList.remove('border-white/5', 'opacity-80');
+                badge.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+                img.classList.remove('grayscale-[30%]');
+            } else {
+                card.classList.remove('border-primary');
+                card.classList.add('border-white/5', 'opacity-80');
+                badge.classList.add('hidden');
+                overlay.classList.add('hidden');
+                img.classList.add('grayscale-[30%]');
+            }
+        });
+
+        // Populate dynamic data
+        document.getElementById('dyn-title').innerHTML = data.title;
+        document.getElementById('dyn-desc').innerHTML = data.desc;
+        document.getElementById('dyn-duration').innerText = data.duration;
+        document.getElementById('dyn-capacity').innerText = data.capacity;
+        document.getElementById('dyn-includes').innerHTML = data.includes.join('');
+        document.getElementById('tickets-container').innerHTML = data.ticketsHtml;
+        
+        if (window.lucide) {
+            lucide.createIcons();
+        }
+
+        const container = document.getElementById('exp-config-area');
+        container.classList.remove('hidden');
+        container.classList.add('flex');
+        
+        // Force reflow and transition
+        void container.offsetWidth;
+        container.classList.remove('opacity-0');
+        container.classList.add('opacity-100');
+
+        setTimeout(() => {
+            container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+    };
+    </script>
+    <script src="lunares-native.js"></script>
+</body>
+</html>

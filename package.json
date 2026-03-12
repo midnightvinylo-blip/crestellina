@@ -1,0 +1,22 @@
+{
+  "name": "queseria-crestellina",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node server.js",
+    "serve": "serve -l 3000 ."
+  },
+  "dependencies": {
+    "@deepgram/sdk": "^5.0.0",
+    "@google/generative-ai": "^0.24.1",
+    "animate.css": "^4.1.1",
+    "axios": "^1.13.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "lucide-react": "^0.577.0",
+    "serve": "^14.2.4",
+    "ws": "^8.19.0"
+  },
+  "devDependencies": {
+    "supabase": "^2.78.1"
+  }
+}
