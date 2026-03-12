@@ -274,27 +274,43 @@
                                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#f4c025" />
                             </marker>
                         </defs>
-                        <!-- Biológico: Padres (Centro ~600) a Hijos -->
-                        <path class="tree-line-wavy" d="M 600 150 Q 600 220 300 220 Q 150 220 150 290"
-                            marker-end="url(#arrow)" />
-                        <path class="tree-line-wavy" d="M 600 150 Q 600 220 450 220 L 450 290"
-                            marker-end="url(#arrow)" />
+                        <!-- Unión de Padres (L1) -->
+                        <path class="tree-line-extended" d="M 450 140 L 750 140" />
 
-                        <!-- Conexión sutil debajo uniendo a los 4 miembros L2 -->
-                        <path class="tree-line-extended" d="M 150 480 L 150 540 L 1050 540 L 1050 480" />
-                        <path class="tree-line-extended" d="M 450 480 L 450 540" />
-                        <path class="tree-line-extended" d="M 750 480 L 750 540" />
+                        <!-- Bajada central desde Padres hacia centro de Hijos (150-450) -->
+                        <path class="tree-line-extended" d="M 600 140 L 600 180 L 300 180 L 300 240" />
 
-                        <!-- Flecha única desde el centro inferior hacia los mastines -->
-                        <path class="tree-line-extended" d="M 600 540 L 600 590" marker-end="url(#arrow)" />
+                        <!-- Línea horizontal bajo Padres que conecta a los Hijos (150 a 450) -->
+                        <path class="tree-line-extended" d="M 150 240 L 450 240" />
+
+                        <!-- Extensión de esa línea hacia la Derecha para unirse al Equipo (450 a 1050) -->
+                        <path class="tree-line-extended" d="M 450 240 L 1050 240" />
+
+                        <!-- Bajadas hacia cada foto de L2 -->
+                        <path class="tree-line-extended" d="M 150 240 L 150 270" marker-end="url(#arrow)" />
+                        <path class="tree-line-extended" d="M 450 240 L 450 270" marker-end="url(#arrow)" />
+                        <path class="tree-line-extended" d="M 750 240 L 750 270" marker-end="url(#arrow)" />
+                        <path class="tree-line-extended" d="M 1050 240 L 1050 270" marker-end="url(#arrow)" />
+
+                        <!-- Líneas verticales que bajan de las cuatro fotos hacia la base -->
+                        <path class="tree-line-extended" d="M 150 440 L 150 480" />
+                        <path class="tree-line-extended" d="M 450 440 L 450 480" />
+                        <path class="tree-line-extended" d="M 750 440 L 750 480" />
+                        <path class="tree-line-extended" d="M 1050 440 L 1050 480" />
+
+                        <!-- Línea colectora horizontal debajo de los cuatro -->
+                        <path class="tree-line-extended" d="M 150 480 L 1050 480" />
+
+                        <!-- Bajada directa a los mastines -->
+                        <path class="tree-line-extended" d="M 600 480 L 600 510" marker-end="url(#arrow)" />
                     </svg>
 
                     <!-- L1: LOS FUNDADORES -->
                     <div class="flex flex-col items-center mb-20">
                         <div class="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24 relative">
-                            <!-- Conector de Unión -->
+                            <!-- Conector de Unión (reemplazado por SVG) -->
                             <div
-                                class="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent z-0">
+                                class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent z-0">
                             </div>
 
                             <!-- Juan Ocaña Padre -->
@@ -427,26 +443,19 @@
                     </div>
 
                     <!-- L3: LOS MASTINES (UNIÓN DEL EQUIPO) -->
-                    <div class="mt-36 flex flex-col items-center relative z-10 w-full mb-20 px-4">
-                        <div
-                            class="bg-primary text-background-dark text-[10px] sm:text-[12px] font-black tracking-[0.3em] uppercase px-8 py-3 rounded-full z-30 shadow-[0_0_30px_rgba(244,192,37,0.4)] whitespace-nowrap mb-16">
-                            Guardianes del Legado
-                        </div>
-
-                        <div class="relative w-full max-w-2xl group flex flex-col items-center">
-                            <!-- Marco único que contiene ambos perros -->
-                            <div
-                                class="mastiff-frame w-full aspect-[16/9] sm:aspect-[2/1] rounded-[2rem] sm:rounded-[3rem] bg-slate-900/50 relative overflow-hidden group-hover:shadow-[0_0_40px_rgba(244,192,37,0.4)] transition-all duration-700 border-4 border-primary">
+                    <div class="mt-24 flex justify-center relative z-10 w-full mb-12 px-4">
+                        <div class="relative w-full max-w-sm group flex justify-center">
+                            <!-- Marco único dimensionado coherentemente a las otras fotos -->
+                            <div class="relative rounded-2xl sm:rounded-[2rem] border-2 border-primary/20 p-2 bg-background-dark shadow-2xl group-hover:border-primary transition-all duration-700 w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
                                 <img src="assets/media/mastines.webp" alt="Lunares y Juan José"
-                                    class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
-
-                                <!-- Identificadores visuales escalonados en la foto -->
+                                    class="w-full h-full object-cover rounded-xl sm:rounded-2xl transition-transform duration-700 group-hover:scale-105" />
+                                
                                 <button onclick="openModal('juan-jose')"
-                                    class="absolute top-4 left-4 sm:top-6 sm:left-6 bg-background-dark/90 backdrop-blur-md border border-primary/50 px-5 py-2 rounded-full text-white font-black text-[10px] sm:text-xs uppercase tracking-widest hover:text-primary transition-all duration-300 hover:scale-105 hover:border-primary shadow-xl">
+                                    class="absolute top-4 left-4 sm:top-5 sm:left-5 bg-background-dark/80 text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-widest px-3 py-1.5 border border-primary/40 rounded-full hover:border-primary hover:text-primary backdrop-blur-sm transition-all shadow-md">
                                     ↖ Juan José
                                 </button>
                                 <button onclick="openModal('lunares')"
-                                    class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-background-dark/90 backdrop-blur-md border border-primary/50 px-5 py-2 rounded-full text-white font-black text-[10px] sm:text-xs uppercase tracking-widest hover:text-primary transition-all duration-300 hover:scale-105 hover:border-primary shadow-xl">
+                                    class="absolute bottom-4 right-4 sm:bottom-5 sm:right-5 bg-background-dark/80 text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-widest px-3 py-1.5 border border-primary/40 rounded-full hover:border-primary hover:text-primary backdrop-blur-sm transition-all shadow-md">
                                     Lunares ↘
                                 </button>
                             </div>
