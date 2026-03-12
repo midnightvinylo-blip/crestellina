@@ -8,9 +8,14 @@ class LunaresAgent {
     constructor(config = {}) {
         this.assets = config.assets || './';
         this.vapiBase = 'https://api.vapi.ai';
-        this.env = window.LUNARES_ENV || {};
         this.supabaseUrl = 'https://yeutntfuyisclbfyxqzp.supabase.co/functions/v1/vapi-agent';
 
+        // Claves públicas de VAPI — seguras para el cliente, no requieren backend
+        this.env = {
+            VAPI_PUBLIC_KEY: 'cf0cc954-9812-4f8f-9f77-221228c4411b',
+            VAPI_ASSISTANT_ID: '17e3214b-0a36-47d8-bac8-0407c88a36c5',
+            ...(window.LUNARES_ENV || {})
+        };
 
         // State
         this.dailyCall = null;
@@ -27,27 +32,11 @@ class LunaresAgent {
     }
 
     async init() {
-        console.log('[Lunares Native] 🐾 Initializing UI...');
+        console.log('[Lunares Native] 🐾 Initializing...');
 
         // BUILD UI IMMEDIATELY so the FAB appears without delay
         this.buildUI();
         this.wireEvents();
-
-        // Fetch Single Source of Truth from Server (.env)
-        try {
-            const configRes = await fetch('/api/config');
-            if (configRes.ok) {
-                const serverEnv = await configRes.json();
-                this.env = { ...this.env, ...serverEnv };
-                console.log('[Lunares Native] 📡 Configuration synced from .env');
-            }
-        } catch (e) {
-            console.warn('[Lunares Native] ⚠️ Failed to sync config, falling back to local.', e);
-        }
-
-        if (!this.env.VAPI_PUBLIC_KEY) {
-            console.warn('[Lunares Native] ⚠️ VAPI_PUBLIC_KEY missing. Voice might not work.');
-        }
 
         // Load SDKs and data in the background
         try {
@@ -57,7 +46,7 @@ class LunaresAgent {
             ]);
             console.log('[Lunares Native] 🐾 Assets and SDKs ready.');
         } catch (err) {
-            console.error('[Lunares Native] ❌ Initialization background tasks encountered an error:', err);
+            console.error('[Lunares Native] ❌ Init error:', err);
         }
     }
 
