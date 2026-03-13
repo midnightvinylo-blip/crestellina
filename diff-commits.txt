@@ -1,0 +1,2 @@
+2b626a8 feat(ai): refined prompt to enforce navigation before speaking and maintain a purely non-dramatic storytelling flow
+57a5877 feat(ai): refined prompt flow and reduced dog metaphors, added specific family member scrolling

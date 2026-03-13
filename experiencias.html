@@ -89,7 +89,7 @@
                     <a class="text-sm font-medium text-white hover:text-primary transition-colors"
                         href="nosotros.html">Nosotros</a>
                     <a class="text-sm font-medium text-white hover:text-primary transition-colors"
-                        href="ubicacion.html">Ubicación</a>
+                        href="contacto.html">Contacto</a>
                 </nav>
                 <div class="flex items-center gap-4">
                     <button class="p-2 rounded-full hover:bg-primary/10 text-slate-300 transition-colors">
@@ -125,7 +125,7 @@
                                 <div id="video-container"
                                     class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden"
                                     style="width:300px;height:400px;max-width:95vw;max-height:85vh;box-shadow:0 0 50px rgba(0,0,0,0.4);transition:border-radius 0.3s;">
-                                    <video id="hero-video" src="assets/media/quesos.webm" autoplay loop playsinline
+                                    <video id="hero-video" src="assets/media/quesos.webm" autoplay loop muted playsinline
                                         class="w-full h-full object-cover"></video>
                                     <!-- Dark overlay on video -->
                                     <div id="video-overlay" class="absolute inset-0 bg-black/60 pointer-events-none">
@@ -406,7 +406,7 @@
                                 href="nosotros.html">Nuestra Historia</a>
                         </li>
                         <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
-                                href="ubicacion.html">Ubicación</a></li>
+                                href="contacto.html">Contacto</a></li>
                     </ul>
                 </div>
                 <div>
@@ -421,8 +421,7 @@
                 </div>
                 <div>
                     <h4
-                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
-                        Ubicación</h4>
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">Contacto</h4>
                     <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
                     <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
                         target="_blank"
@@ -471,19 +470,10 @@
                 var touchStartY = 0;
                 var isMobile = window.innerWidth < 768;
 
-                // Intentar autoplay con sonido al entrar
-                video.muted = false;
-                var playPromise = video.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(function(error) {
-                        // Si el navegador bloquea el autoplay con sonido, forzamos inicio mutado para que haya vídeo
-                        video.muted = true;
-                        video.play();
-                        muteBtn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4"></i>';
-                        if (window.lucide) lucide.createIcons();
-                    });
-                }
-
+                // Start muted by default to not interrupt SPA AI experience
+                video.muted = true;
+                video.play().catch(function(){});
+                muteBtn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4"></i>';
                 function updateUI() {
                     var vw = window.innerWidth;
                     var vh = window.innerHeight;

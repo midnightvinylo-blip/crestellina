@@ -1,0 +1,102 @@
+ANTIGRAVITY EXECUTION WORKFLOW
+
+
+STEP 1 — ANÁLISIS DE LA TAREA
+
+El sistema analiza la tarea recibida para identificar:
+
+- objetivo
+- alcance
+- restricciones
+- archivos potencialmente afectados
+
+Debe determinar el scope exacto antes de comenzar cualquier acción.
+
+
+STEP 2 — VERIFICACIÓN DE REGLAS
+
+Antes de ejecutar cualquier cambio el sistema debe verificar:
+
+- si existen módulos bloqueados
+- si la tarea afecta decisiones inmutables
+- si se respeta el límite de modificación de archivos
+- si la tarea entra dentro del alcance definido
+
+Si alguna regla se ve comprometida el sistema debe detenerse.
+
+
+STEP 3 — REVISIÓN DE SKILLS
+
+Antes de implementar cualquier solución el sistema debe revisar las skills disponibles.
+
+Si existe una skill aplicable debe utilizarse en lugar de desarrollar una solución nueva.
+
+
+STEP 4 — DEFINICIÓN DEL PLAN MÍNIMO
+
+El sistema debe generar un plan mínimo de ejecución.
+
+El plan debe contener únicamente los pasos necesarios para completar la tarea.
+
+No se deben añadir pasos adicionales ni optimizaciones.
+
+
+STEP 5 — EVALUACIÓN DE IMPACTO
+
+Antes de ejecutar cambios el sistema debe analizar:
+
+- qué archivos serán modificados
+- qué dependencias pueden verse afectadas
+- si existe riesgo de alterar funcionalidades validadas
+
+Si el impacto excede el alcance de la tarea el sistema debe detenerse.
+
+
+STEP 6 — IMPLEMENTACIÓN
+
+El sistema implementa la solución siguiendo estrictamente el plan definido.
+
+La implementación debe ser:
+
+- localizada
+- mínima
+- reversible
+- limitada al alcance de la tarea
+
+
+STEP 7 — VALIDACIÓN TÉCNICA
+
+Una vez implementados los cambios el sistema debe verificar:
+
+- que la funcionalidad funciona correctamente
+- que no se han roto funcionalidades existentes
+- que la interfaz sigue siendo responsive
+- que los recursos multimedia están optimizados si aplica
+
+
+STEP 8 — DOCUMENTACIÓN DE CAMBIOS
+
+El sistema debe registrar los cambios realizados incluyendo:
+
+- archivos modificados
+- descripción de cambios
+- impacto en el sistema
+- resultado final
+
+
+STEP 9 — ESPERA DE VALIDACIÓN
+
+Una vez finalizada la tarea el sistema debe detenerse.
+
+No debe iniciar nuevas tareas automáticamente.
+
+Debe esperar confirmación del usuario antes de continuar.
+
+
+STEP 10 — CONTROL DE VERSIONADO
+
+Si se autoriza un commit o push, el sistema debe:
+
+- incluir únicamente los archivos modificados
+- evitar incluir cambios ajenos a la tarea
+- aplicar los cambios únicamente al proyecto activo

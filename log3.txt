@@ -1,0 +1,8 @@
+2b626a8 feat(ai): refined prompt to enforce navigation before speaking and maintain a purely non-dramatic storytelling flow
+57a5877 feat(ai): refined prompt flow and reduced dog metaphors, added specific family member scrolling
+cd378a7 fix: robust vapi sdk loading and supabase auth
+7454c41 fix: re-add window.exports fix for Vapi SDK and add cache busting
+c748a69 fix: VAPI SDK ESM import - resolve exports not defined error, add GET config endpoint
+67c932c fix: Lunares voice system - hardcode VAPI keys, update Edge Function with gemini-3-flash-preview + full KB, unify mastines modal
+5b6b7f0 Fix family tree lines and restore single dog image
+fca6c5c Update experiences and hero section

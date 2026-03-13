@@ -1,0 +1,221 @@
+﻿                        class="absolute -bottom-10 -left-10 w-60 h-60 bg-primary rounded-[3rem_0.5rem_3rem_0.5rem] flex flex-col items-center justify-center p-8 text-background-dark font-black text-4xl tracking-tighter leading-none shadow-2xl rotate-3 group-hover:rotate-0 transition-transform border-4 border-background-dark">
+                        <span class="text-xs uppercase tracking-[0.3em] mb-3 opacity-70">Nuestro Compromiso</span>
+                        100% Artesanal
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ÃRBOL GENEALÃ“GICO / EQUIPO ===== -->
+            <div class="py-24 relative overflow-hidden" id="equipo">
+                <!-- DecoraciÃ³n de fondo -->
+                <div class="absolute inset-0 pointer-events-none opacity-5">
+                    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full h-[1px] bg-primary"></div>
+                </div>
+
+                <div class="text-center mb-24 relative z-10 px-4">
+                    <p class="text-primary text-[10px] font-black uppercase tracking-[0.5em] mb-4">Herencia Viva</p>
+                    <h2 class="text-6xl font-black tracking-tighter leading-none italic uppercase">Nuestra <span
+                            class="text-primary">Familia</span></h2>
+                    <p class="text-slate-400 text-lg mt-6 max-w-2xl mx-auto font-light leading-relaxed">
+                        Un legado que fluye como la leche, de generaciÃ³n en generaciÃ³n, y un equipo que hoy es el latido
+                        de Crestellina.
+                    </p>
+                </div>
+
+                <!-- CONTENEDOR DEL ÃRBOL -->
+                <div class="max-w-6xl mx-auto px-4 relative pb-20">
+
+                    <!-- SVG Conectores (Wavy Lines) -->
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" style="z-index: 0;"
+                        viewBox="0 0 1200 800" preserveAspectRatio="none">
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4"
+                                orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#f4c025" />
+                            </marker>
+                        </defs>
+                        <!-- LÃ­nea recta y muy fina entre los centros de las fotos de los padres -->
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none" d="M 470 110 L 730 110" />
+
+                        <!-- BiolÃ³gico: Padres (Centro 600, 110) a Hijos (150 y 450) - Ondulantes y Negritas -->
+                        <!-- Bajamos por el medio hasta y=250 para evitar los nombres de los padres -->
+                        <path class="outline-none stroke-primary stroke-[3] fill-none" d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 150 250, 150 320" marker-end="url(#arrow)" />
+                        <path class="outline-none stroke-primary stroke-[3] fill-none" d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 450 250, 450 320" marker-end="url(#arrow)" />
+
+                        <!-- No biolÃ³gico: Padres (Centro 600, 110) a Equipo (750 y 1050) - Ondulante fina -->
+                        <path class="outline-none stroke-primary/30 stroke-1 fill-none" d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 750 250, 750 320" marker-end="url(#arrow)" />
+                        <path class="outline-none stroke-primary/30 stroke-1 fill-none" d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 1050 250, 1050 320" marker-end="url(#arrow)" />
+
+                        <!-- LÃ­neas ondulantes finas para conectar las FOTOS del equipo (y=440) con los perros (y=620) -->
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none" d="M 150 440 C 150 540, 600 540, 600 620" />
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none" d="M 450 440 C 450 540, 600 540, 600 620" />
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none" d="M 750 440 C 750 540, 600 540, 600 620" />
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none" d="M 1050 440 C 1050 540, 600 540, 600 620" />
+                    </svg>
+
+                    <!-- L1: LOS FUNDADORES -->
+                    <div class="flex flex-col items-center mb-20">
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24 relative">
+                            <!-- Conector de UniÃ³n (reemplazado por SVG) -->
+                            <div
+                                class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent z-0">
+                            </div>
+
+                            <!-- Juan OcaÃ±a Padre -->
+                            <div class="relative group z-10 flex flex-col items-center">
+                                <button onclick="toggleAccordion('juan-padre')"
+                                    class="flex flex-col items-center gap-6 transition-all duration-500 hover:scale-105">
+                                    <div
+                                        class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-2 border-primary/20 p-2 bg-background-dark shadow-2xl group-hover:border-primary transition-all duration-700 relative overflow-hidden">
+                                        <img src="assets/media/im-equipo-juan-ocana-padre-1.webp"
+                                            alt="Juan OcaÃ±a QuirÃ³s"
+                                            class="w-full h-full object-cover rounded-full grayscale transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="text-white font-black text-xl tracking-tighter italic">Juan OcaÃ±a
+                                            QuirÃ³s</h3>
+                                        <p
+                                            class="text-primary/60 text-[10px] uppercase font-bold tracking-[0.3em] mt-1">
+                                            Fundador Â· In Memoriam</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Ana Mateo -->
+                            <div class="relative group z-10 flex flex-col items-center">
+                                <button onclick="toggleAccordion('ana-madre')"
+                                    class="flex flex-col items-center gap-6 transition-all duration-500 hover:scale-105">
+                                    <div
+                                        class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-2 border-primary/20 p-2 bg-background-dark shadow-2xl group-hover:border-primary transition-all duration-700 relative overflow-hidden">
+                                        <img src="assets/media/im-equipo-ana-mateo-2.webp"
+                                            alt="Ana Mateo QuiÃ±ones"
+                                            class="w-full h-full object-cover rounded-full transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="text-white font-black text-xl tracking-tighter italic">Ana Mateo
+                                            QuiÃ±ones</h3>
+                                        <p
+                                            class="text-primary/60 text-[10px] uppercase font-bold tracking-[0.3em] mt-1">
+                                            Maestra Quesera</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Conector central placeholder (mantenemos para mobile) -->
+                        <div class="h-16 w-px bg-primary/20 mt-8 mb-4 lg:hidden"></div>
+                    </div>
+
+                    <!-- L2: HIJOS Y EQUIPO CORE -->
+                    <div class="relative">
+                        <!-- Conectores mobile -->
+                        <div class="h-px w-full bg-primary/10 absolute top-0 lg:hidden"></div>
+
+                        <div class="pt-20 grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+
+                            <!-- Juan Hijo -->
+                            <div class="relative flex flex-col items-center z-20">
+                                <button onclick="toggleAccordion('juan-hijo')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-primary/20 p-1 bg-background-dark rotate-3 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary">
+                                        <img src="assets/media/im-equipo-juan-ocana-1.webp"
+                                            alt="Juan OcaÃ±a Mateo"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Juan OcaÃ±a
+                                            Mateo</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">DirecciÃ³n
+                                            & Ventas</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Ana Hija -->
+                            <div class="relative flex flex-col items-center z-20">
+                                <button onclick="toggleAccordion('ana-hija')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-primary/20 p-1 bg-background-dark -rotate-3 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary">
+                                        <img src="assets/media/im-equipo-ana-ocana-1.webp"
+                                            alt="Ana OcaÃ±a Mateo"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Ana OcaÃ±a
+                                            Mateo</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">ProducciÃ³n
+                                            & Detalle</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div class="relative flex flex-col items-center">
+                                <button onclick="toggleAccordion('cristina')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-white/5 p-1 bg-background-dark rotate-6 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary/40">
+                                        <img src="assets/media/im-equipo-cristina-rodriguez-2.webp"
+                                            alt="Cristina RodrÃ­guez"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Cristina
+                                            RodrÃ­guez</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">
+                                            Experiencias</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div class="relative flex flex-col items-center">
+                                <button onclick="toggleAccordion('corbacho')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-white/5 p-1 bg-background-dark -rotate-6 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary/40">
+                                        <img src="assets/media/im-equipo-juan-corbacho-1.webp"
+                                            alt="Juan Corbacho"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Juan
+                                            Corbacho</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">El Cabrero
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- L3: LOS MASTINES (UNIÃ“N DEL EQUIPO) -->
+                    <div class="mt-24 flex justify-center relative z-10 w-full mb-12 px-4">
+                        <div class="relative w-full max-w-sm group flex justify-center">
+                            <!-- Marco Ãºnico dimensionado coherentemente a las otras fotos, totalmente limpio -->
+                            <button onclick="openModal('mastines')" class="relative rounded-[2rem] sm:rounded-[3rem] bg-transparent w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden group/mastines">
+                                <img src="assets/media/mastines.webp" alt="Lunares y Juan JosÃ©"
+                                    class="w-full h-full object-cover transition-transform duration-1000 group-hover/mastines:scale-110" />
+                                
+                                <!-- Etiquetas de nombres sutiles -->
+                                <div class="absolute top-4 left-4 sm:top-6 sm:left-6 bg-background-dark/40 text-[7px] sm:text-[9px] font-bold text-white/80 uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none">
+                                    â†– Juan JosÃ©
+                                </div>
+                                <div class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-background-dark/40 text-[7px] sm:text-[9px] font-bold text-white/80 uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none">
+                                    Lunares â†˜
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== NUESTRO ENTORNO ===== -->
+            <div class="py-24 bg-slate-900/40 relative overflow-hidden">
+                <div class="w-full px-6 lg:px-20 relative z-10">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="order-2 lg:order-1 relative">
+                            <div class="absolute -inset-10 bg-primary/5 rounded-[4rem] blur-3xl"></div>
+                            <div
+                                class="relative rounded-[3rem] overflow-hidden border border-white/5 aspect-[4/5] lg:aspect-square group">

@@ -23,8 +23,12 @@ class LunaresAgent {
         this.currentCallId = null;
         this.isActive = false;
         this.isTalking = false;
-        this.systemPrompt = '';
         this.knowledge = '';
+        this.systemPrompt = '';
+        this.firstVoiceMessagePlayed = false;
+        this.isNarrating = false; // Bloqueo de UI para relatos largos
+        this.currentNarrativeAction = null; // Seguimiento de la sección actual
+        this.isScrollingLock = false;
 
         // DOM refs
         this.elements = {};
@@ -39,6 +43,10 @@ class LunaresAgent {
         this.buildUI();
         this.wireEvents();
 
+        // Check for auto-start redirection
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoStart = urlParams.get('vapi') === 'start';
+
         // Load SDKs and data in the background
         try {
             await Promise.all([
@@ -46,6 +54,25 @@ class LunaresAgent {
                 this.loadPrompts().catch(e => console.error('Prompts load failed:', e))
             ]);
             console.log('[Lunares Native] 🐾 Assets and SDKs ready.');
+            
+            if (autoStart) {
+                const choice = urlParams.get('choice');
+                console.log('[Lunares Native] 🚀 Auto-starting voice call...', choice ? `Choice: ${choice}` : 'Initial');
+                
+                // Forzar UI visible inmediatamente
+                const { container, fab } = this.elements;
+                container.classList.add('open');
+                fab.classList.add('active');
+
+                // Si hay elección, entramos en modo narrativo
+                if (choice) {
+                    this.isNarrating = true;
+                    this.currentNarrativeAction = choice;
+                }
+
+                // Iniciar llamada
+                this.startVoiceCall(choice);
+            }
         } catch (err) {
             console.error('[Lunares Native] ❌ Init error:', err);
         }
@@ -134,20 +161,17 @@ class LunaresAgent {
             </svg>
             <div id="lunares-virtual-modal">
                 <div id="lunares-left-panel">
-                    <div id="lunares-speech-bubble" class="visible">Hola, soy Lunares. Soy la guardiana de Crestellina y tu guía en esta web. ¿En qué puedo ayudarte?</div>
+                    <div id="lunares-speech-bubble" class="visible">Hola, soy Lunares, la mastina guardiana de Sierra Crestellina. Es un placer tenerte aquí. ¿En qué puedo ayudarte hoy?</div>
                     
                     <div id="lunares-dialog-card">
-                        <div id="lunares-card-header">
-                            <button id="lunares-mute-btn" class="lunares-icon-btn" title="Activar/Desactivar Sonido">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-                            </button>
-                            <button id="lunares-cc-btn" class="lunares-icon-btn active" title="Activar/Desactivar Subtítulos">CC</button>
-                        </div>
                         <div id="lunares-quick-replies"></div>
                         <div id="lunares-input-bar">
-                            <button id="lunares-mic-btn" title="Modo Conversación">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top: 2px;"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
-                            </button>
+                            <div id="lunares-mic-container">
+                                <button id="lunares-mic-btn" title="Habla conmigo">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+                                    <div class="lunares-mic-ripple"></div>
+                                </button>
+                            </div>
                             <textarea id="lunares-text-input" rows="1" placeholder="Escribe a Lunares..."></textarea>
                             <button id="lunares-send-btn">ENVIAR</button>
                         </div>
@@ -183,8 +207,6 @@ class LunaresAgent {
             vidTalk: container.querySelector('#lunares-video-hablando'),
             quickReplies: container.querySelector('#lunares-quick-replies'),
             card: container.querySelector('#lunares-dialog-card'),
-            ccBtn: container.querySelector('#lunares-cc-btn'),
-            muteBtn: container.querySelector('#lunares-mute-btn'),
             closeBtn: container.querySelector('#lunares-close-btn')
         };
 
@@ -194,39 +216,99 @@ class LunaresAgent {
     }
 
     setupVapiHandlers() {
-        this.vapi.on('call-start', () => this.onCallStart());
-        this.vapi.on('call-end', () => this.onCallEnd());
-        this.vapi.on('speech-start', () => this.setTalking(true));
-        this.vapi.on('speech-end', () => this.setTalking(false));
+        this.vapi.on('call-start', () => {
+            this.onCallStart();
+            console.log('[Lunares Native] 🚀 Call started. Narrative Mode:', this.isNarrating);
+        });
+        
+        this.vapi.on('call-end', () => {
+            this.isNarrating = false;
+            this.onCallEnd();
+        });
+        
+        this.vapi.on('speech-start', () => {
+            this.setTalking(true);
+            this.elements.quickReplies.classList.remove('voice-choices');
+        });
 
-        this.vapi.on('message', (msg) => {
-            if (msg.type === 'transcript') {
-                const text = msg.transcript;
-                const role = msg.role;
-                const type = msg.transcriptType;
+        this.vapi.on('speech-end', () => {
+            this.setTalking(false);
+            
+            // 🐾 NUDGE AUTÓNOMO: Solo si estamos narrando proactivamente
+            if (this.isNarrating && this.isActive) {
+                // Si lo último que dijo parece una pregunta o invitación a elegir, no "empujamos"
+                const lastText = (this.lastAssistantTranscript || '').toLowerCase();
+                const looksLikeClosure = this.checkClosingPhrases(lastText);
 
-                if (role === 'assistant') {
-                    this.showBubble(text);
-                    if (type === 'final') {
-                        this.updateHistory(`Lunares: ${text}`);
-                    }
-                } else if (role === 'user' && type === 'final') {
-                    this.updateHistory(`Tú: ${text}`);
+                if (!looksLikeClosure) {
+                    console.log('[Lunares Native] 🌀 Silence detected. Nudging for continuity...');
+                    setTimeout(() => {
+                        if (!this.isTalking && this.isActive && this.isNarrating) {
+                            // Verificamos de nuevo antes de enviar para evitar colisiones
+                            this.vapi.send({
+                                type: 'add-message',
+                                message: {
+                                    role: 'user',
+                                    content: "(Relato en curso: Continúa con el siguiente bloque de la sección sin pausas. Sigue adelante.)"
+                                }
+                            });
+                        }
+                    }, 1200); // 🚀 1.2s para dar margen a la IA
+                } else {
+                    console.log('[Lunares Native] 🛑 Closure detected in speech-end. Nudge cancelled.');
+                    this.isNarrating = false; // Confirmamos el fin de la narración
                 }
+                return;
+            }
+
+            if (this.isActive) {
+                this.firstVoiceMessagePlayed = true; 
+                setTimeout(() => {
+                    // Acción inmediata solo si no está hablando y no estamos en modo narrativo bloqueado
+                    if (!this.isTalking && this.isActive && !this.isNarrating) {
+                        this.showVoiceWelcomeOptions(this.currentNarrativeAction);
+                    }
+                }, 200); 
             }
         });
 
-        this.vapi.on('error', (err) => {
-            this.showBubble('😔 Algo ha fallado... ¿probamos otra vez? 🐾');
-        });
+        this.vapi.on('message', (message) => {
+            if (message.type === 'transcript') {
+                const text = message.transcript.toLowerCase();
+                const role = message.role;
+                const type = message.transcriptType;
 
-        // Tool call handler — intercepts navigate_to / scroll_to_element from the AI
-        this.vapi.on('message', (msg) => {
-            if (msg.type === 'function-call' || msg.type === 'tool-calls') {
-                // Determine whether it's an old function-call or the new tool-calls list
-                const callList = msg.type === 'function-call' && msg.functionCall 
-                    ? [msg.functionCall] 
-                    : (msg.toolWithToolCallList || msg.toolCalls || []);
+                if (role === 'assistant') {
+                    this.lastAssistantTranscript = message.transcript; // Rastro para el Nudge
+
+                    // Mostrar burbuja solo si CC está activado y el texto no está vacío
+                    if (message.transcript.trim().length > 0) {
+                        this.showBubble(message.transcript);
+                    }
+
+                    // 🐾 DETECCIÓN TEMPRANA DE CIERRE (Partial & Final)
+                    if (this.isNarrating && this.checkClosingPhrases(text)) {
+                        console.log('[Lunares Native] ✅ Fin del relato (early):', text.substring(0, 30));
+                        this.isNarrating = false;
+                        if (type === 'final') {
+                            setTimeout(() => this.showVoiceWelcomeOptions(this.currentNarrativeAction), 500);
+                        }
+                    }
+
+                    if (type === 'final') {
+                        this.updateHistory(`Lunares: ${message.transcript}`);
+                        this.autoScrollByTranscript(text);
+                    }
+                } else if (role === 'user' && type === 'final') {
+                    this.updateHistory(`Tú: ${message.transcript}`);
+                }
+            }
+
+            // Tool call handler
+            if (message.type === 'function-call' || message.type === 'tool-calls') {
+                const callList = message.type === 'function-call' && message.functionCall 
+                    ? [message.functionCall] 
+                    : (message.toolWithToolCallList || message.toolCalls || []);
 
                 callList.forEach(item => {
                     const call = item.toolCall || item; 
@@ -243,35 +325,34 @@ class LunaresAgent {
                         this.guidedScrollTo(args.elementId);
                     }
 
-                    // Respond to Vapi so it doesn't hang!
-                    const resultText = `Se ha completado la acción ${name} hacia ${args.sectionId || args.elementId || ''}.`;
-                    
                     if (call.id) {
                         this.vapi.send({
                             type: 'tool-call-result',
-                            toolCallResult: { toolCallId: call.id, result: resultText }
-                        });
-                    } else {
-                        // Fallback for function-call
-                        this.vapi.send({
-                            type: 'add-message',
-                            message: { role: 'function', name: name, content: resultText }
+                            toolCallResult: { 
+                                toolCallId: call.id, 
+                                result: "Action executed successfully." 
+                            }
                         });
                     }
                 });
             }
         });
+
+        this.vapi.on('error', (err) => {
+            console.error('[Lunares Native] ❌ Vapi error:', err);
+            this.showBubble('😔 Algo ha fallado... ¿probamos otra vez? 🐾');
+        });
     }
 
     wireEvents() {
-        const { fab, container, micBtn, sendBtn, textInput, ccBtn, muteBtn, closeBtn } = this.elements;
+        const { fab, container, micBtn, sendBtn, textInput, closeBtn } = this.elements;
 
         fab.addEventListener('click', () => {
             const isOpen = container.classList.toggle('open');
             fab.classList.toggle('active', isOpen);
 
             if (isOpen) {
-                this.showBubble('Hola, soy Lunares. Soy la guardiana de Crestellina. Dime, ¿en qué puedo ayudarte?');
+                this.showBubble('Hola, soy Lunares, la mastina guardiana de Sierra Crestellina. Es un placer tenerte aquí. ¿En qué puedo ayudarte hoy?');
                 this.setTalking(true);
                 setTimeout(() => this.setTalking(false), 3000);
             } else {
@@ -285,33 +366,26 @@ class LunaresAgent {
             if (this.isActive || this.isConnecting) this.endCall();
         });
 
-        ccBtn.addEventListener('click', () => {
-            this.ccEnabled = !this.ccEnabled;
-            ccBtn.classList.toggle('active', this.ccEnabled);
-            this.elements.bubble.style.display = this.ccEnabled ? 'block' : 'none';
-        });
-
-        muteBtn.addEventListener('click', () => {
-            this.audioMuted = !this.audioMuted;
-            muteBtn.classList.toggle('active', this.audioMuted);
-            // Si estuviésemos en VAPI, silenciamos los audios
-            document.querySelectorAll('audio[data-participant-id]').forEach(audio => {
-                audio.muted = this.audioMuted;
-            });
-            muteBtn.innerHTML = this.audioMuted
-                ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>'
-                : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
-        });
-
-        micBtn.addEventListener('click', () => {
+        const micHandler = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.isConnecting || this.isActive) {
                 this.endCall();
             } else {
                 this.startVoiceCall();
             }
-        });
+        };
 
-        sendBtn.addEventListener('click', () => this.sendText());
+        micBtn.addEventListener('click', micHandler);
+        micBtn.addEventListener('touchstart', micHandler, { passive: false });
+
+        sendBtn.addEventListener('click', () => {
+             if (this.isActive) {
+                 this.endCall();
+             } else {
+                 this.sendText();
+             }
+        });
 
         textInput.addEventListener('input', () => {
             textInput.style.height = 'auto';
@@ -328,10 +402,11 @@ class LunaresAgent {
         });
     }
 
-    async startVoiceCall() {
+    async startVoiceCall(choice = null) {
         this.isConnecting = true;
         this.elements.container.classList.add('voice-mode');
-
+        document.body.classList.add('lunares-voice-active');
+        
         if (!this.vapi) {
             this.isConnecting = false;
             this.elements.container.classList.remove('voice-mode');
@@ -339,65 +414,60 @@ class LunaresAgent {
             return;
         }
 
+        const intros = {
+            nosotros: "Hola, es un placer saludarte. Acompáñame y te contaré la historia de mi familia.",
+            experiencias: "Claro que sí, déjame que te guíe por nuestras experiencias en la granja.",
+            tienda: "Vamos a la tienda, te voy a acompañar para que conozcas nuestros quesos artesanales."
+        };
+
+        const firstMessage = choice && intros[choice] ? intros[choice] : "Hola, soy Lunares, la mastina guardiana de Crestellina. Qué alegría tenerte de visita por aquí. ¿Te apetece conocer nuestra historia, nuestras experiencias o prefieres ver nuestros productos artesanos?";
+
+        if (choice) this.firstVoiceMessagePlayed = true;
+
         this.elements.micBtn.classList.add('recording');
-        this.elements.micBtn.style.opacity = '0.5';
 
         try {
             const assistantId = this.env.VAPI_ASSISTANT_ID;
 
-            // Build the override: local prompt prevails over dashboard
-            const fullPrompt = this.systemPrompt + (this.knowledge ? '\n\n---\nBASE DE CONOCIMIENTOS:\n' + this.knowledge : '');
+            // 2. Mensaje de Sistema de Alta Prioridad (Protocolo de Continuidad y Monólogo)
+            let priorityContext = "";
+            const interruptionRule = "GESTIÓN DE INTERRUPCIONES: Si el usuario te interrumpe con una pregunta, respóndela brevemente y utiliza una frase de transición (ej. 'Como te estaba contando...') para retomar el discurso EXACTAMENTE donde lo dejaste.";
+            const continuityRule = "PROTOCOLO DE CONTINUIDAD CRÍTICA: Tu respuesta debe ser un monólogo proactivo e ininterrumpido. NO esperes a que el usuario diga 'sigue' o 'continúa'. Al FINALIZAR el bloque de contenido completo de la página, debes preguntar al usuario si prefiere ver alguna de las secciones RESTANTES (omitiendo la actual).";
+            
+            if (choice === 'nosotros') {
+                priorityContext = `\n\n[INSTRUCCIÓN DE SISTEMA - PRIORIDAD CRÍTICA]:\n- El usuario acaba de entrar en 'NOSOTROS'.\n- ${continuityRule}\n- Presenta a TODA la familia (Ana Mateo, Juan hijo, Ana hija, Cristina, Juan Corbacho, Juan José mastín y Juan Ocaña Quirós) en ese orden exacto de forma fluida. Al terminar, pregunta si quieren saber de nuestras EXPERIENCIAS o la TIENDA artesana.\n- ${interruptionRule}\n- Inicia el monólogo proactivamente tras tu saludo inicial.`;
+            } else if (choice === 'experiencias') {
+                priorityContext = `\n\n[INSTRUCCIÓN DE SISTEMA - PRIORIDAD CRÍTICA]:\n- El usuario ha entrado en 'EXPERIENCIAS'.\n- ${continuityRule}\n- Actúa como guía turístico: primero explica la experiencia 'Cabrero y Quesero por un Día' detalladamente. Cuando termines ese bloque, di algo como 'Y ahora, pasaré a explicaros la segunda experiencia...' y describe 'Conoce los Chivitos de Crestellina'.\n- NO hagas pausas entre ambas experiencias.\n- Al terminar AMBAS, pregunta si quieren CONOCERNOS mejor o ver la TIENDA artesana.\n- ${interruptionRule}`;
+            } else if (choice === 'tienda') {
+                priorityContext = `\n\n[INSTRUCCIÓN DE SISTEMA - PRIORIDAD CRÍTICA]:\n- El usuario ha entrado en la 'TIENDA'.\n- ${continuityRule}\n- Guía al usuario por nuestros productos: primero destaca el 'Pack Degustación' como nuestra joya. Luego menciona nuestra variedad de quesos artesanales (fresco, semicurado, curado) y el legado familiar.\n- Al terminar, pregunta si quieren CONOCERNOS mejor o ver nuestras EXPERIENCIAS.\n- ${interruptionRule}`;
+            }
+
+            const fullPrompt = this.systemPrompt + (this.knowledge ? '\n\n---\nBASE DE CONOCIMIENTOS:\n' + this.knowledge : '') + priorityContext;
 
             const assistantOverrides = {
-                firstMessage: "¡Hola! Soy Lunares, soy la guardiana de mis hermanas las cabras y tu guía aquí en la web. Aquí es donde empieza tu experiencia en Crestellina. ¿Por dónde quieres empezar? ¿Quieres que te cuente más sobre nosotros e historia, llevarte a conocer nuestras experiencias para que sepas de qué se tratan, o prefieres ir a ver directamente nuestros quesos que huelen de maravilla?",
+                firstMessage: firstMessage,
                 model: {
                     provider: 'google',
-                    model: 'gemini-2.0-flash',
+                    model: 'gemini-3-flash-preview', 
+                    maxTokens: 3000, 
                     messages: [
                         { role: 'system', content: fullPrompt }
-                    ],
-                    tools: [
-                        {
-                            type: 'function',
-                            async: false,
-                            function: {
-                                name: 'navigate_to',
-                                description: 'Navega a la sección principal de la web solicitada',
-                                parameters: {
-                                    type: 'object',
-                                    properties: {
-                                        sectionId: { 
-                                            type: 'string', 
-                                            enum: ['inicio', 'nosotros', 'experiencias', 'tienda', 'contacto'],
-                                            description: 'ID de la sección' 
-                                        }
-                                    },
-                                    required: ['sectionId']
-                                }
-                            }
-                        },
-                        {
-                            type: 'function',
-                            async: false,
-                            function: {
-                                name: 'scroll_to_element',
-                                description: 'Desplaza la vista a un elemento específico dentro de una sección.',
-                                parameters: {
-                                    type: 'object',
-                                    properties: {
-                                        elementId: { 
-                                            type: 'string', 
-                                            enum: ['familia-juan-padre', 'familia-ana-mateo', 'familia-juan-hijo', 'familia-ana-hijo', 'familia-cristina', 'familia-juan-corbacho', 'historia', 'packs', 'catalogo', 'card-cabrero', 'card-chivitos'],
-                                            description: 'ID del elemento en la página' 
-                                        }
-                                    },
-                                    required: ['elementId']
-                                }
-                            }
-                        }
                     ]
-                }
+                },
+                silenceTimeoutSeconds: 60
             };
+
+            // Para que la IA continúe hablando proactivamente tras el saludo (sin ghost orders de usuario)
+            // inyectamos su propio primer mensaje en el historial. Así sabe que ya saludó y debe seguir el monólogo.
+            if (choice) {
+                assistantOverrides.model.messages.push({
+                    role: 'assistant',
+                    content: firstMessage
+                });
+            }
+
+            // Eliminada la inyección de "ghost orders" (role: user) para cumplir con el protocolo de seguridad.
+            // La proactividad se gestiona ahora vía firstMessage y el contexto de sistema de alta prioridad inyectado arriba.
 
             await this.vapi.start(assistantId, assistantOverrides);
         } catch (err) {
@@ -413,21 +483,42 @@ class LunaresAgent {
     onCallStart() {
         this.isConnecting = false;
         this.isActive = true;
-        this.elements.container.classList.add('voice-mode');
         this.elements.micBtn.classList.add('recording');
-        this.elements.micBtn.style.opacity = '1';
-        // The bubble is hidden in voice mode, but we prepare text for when it's closed, or we can just leave it.
-        this.elements.bubble.textContent = '📡 ¡Te escucho! Dime lo que necesitas.';
+        this.elements.bubble.textContent = 'Soy todo oídos, dime lo que necesites.';
+
+        // 🐾 PROTOCOLO DE AUTONARRACIÓN: 
+        // Si hay una elección previa (SPA), disparamos el monólogo automáticamente.
+        if (this.isNarrating) {
+            console.log('[Lunares Native] 🦜 Triggering autonomous narration loop...');
+            setTimeout(() => {
+                if (this.isActive && this.vapi) {
+                    this.vapi.send({
+                        type: 'add-message',
+                        message: {
+                            role: 'user',
+                            content: "(Instrucción interna: Comienza AHORA con el relato proactivo de esta sección. Tus amigos están listos para escucharte.)"
+                        }
+                    });
+                }
+            }, 500); // 🚀 Reducido a 500ms para arranque casi inmediato
+        }
     }
 
     onCallEnd() {
         this.isConnecting = false;
         this.isActive = false;
+        this.firstVoiceMessagePlayed = false;
         this.elements.container.classList.remove('voice-mode');
+        document.body.classList.remove('lunares-voice-active');
         this.elements.micBtn.classList.remove('recording');
-        this.elements.micBtn.style.opacity = '1';
+        
+        // Clear voice choices if they exist
+        this.elements.quickReplies.classList.remove('voice-choices');
+        this.elements.quickReplies.innerHTML = '';
+
+        // El hueso reaparece en su sitio original por CSS al quitar la clase voice-mode
         this.setTalking(false);
-        this.showBubble('¡Hasta pronto! Aquí me quedo patrullando la Sierra 🐾');
+        this.showBubble('Ha sido un placer. Aquí me quedo para lo que necesites mientras recorres la Sierra.');
         document.querySelectorAll('audio[data-participant-id]').forEach(el => el.remove());
     }
 
@@ -453,12 +544,14 @@ class LunaresAgent {
                     'apikey': this.env.SUPABASE_ANON_KEY,
                     'Authorization': `Bearer ${this.env.SUPABASE_ANON_KEY}`
                 },
-                body: JSON.stringify({ query: q })
+                body: JSON.stringify({ 
+                    query: q + " (IMPORTANTE: Tu respuesta debe ser breve, máximo 50 palabras)." 
+                })
             });
 
             const data = await res.json();
             const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || data?.error;
-            const finalReply = reply || '¡Guau! No sé qué pasó... 🐾';
+            const finalReply = reply || 'Vaya, parece que he perdido el rastro un momento. ¿Podrías repetir eso? 🐾';
 
             this.showBubble(finalReply);
             this.updateHistory(`Tú: ${q}`);
@@ -477,7 +570,8 @@ class LunaresAgent {
     }
 
     showBubble(text) {
-        if (!this.elements.bubble) return;
+        if (!this.elements.bubble || !text || text.trim() === '') return;
+        if (!this.ccEnabled && this.isActive) return; // Hide if CC disabled during active call
 
         // Premium behavior: the old text scrolls UP as new text is added
         this.elements.bubble.textContent = text;
@@ -487,32 +581,204 @@ class LunaresAgent {
         this.elements.bubble.scrollTop = this.elements.bubble.scrollHeight;
     }
 
-    showQuickReplies(replies) {
+    showQuickReplies(replies, isVoice = false) {
         const qrContainer = this.elements.quickReplies;
         if (!qrContainer) return;
         qrContainer.innerHTML = '';
-        replies.forEach(text => {
+        
+        if (isVoice) {
+            qrContainer.classList.add('voice-choices');
+        } else {
+            qrContainer.classList.remove('voice-choices');
+        }
+
+        replies.forEach(choice => {
+            const text = typeof choice === 'string' ? choice : (choice.text || choice);
             const btn = document.createElement('button');
             btn.className = 'lunares-qr-btn';
             btn.textContent = text;
-            btn.onclick = () => {
-                this.elements.textInput.value = text;
-                this.sendText();
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                if (isVoice) {
+                    this.handleVoiceChoice(choice);
+                } else {
+                    this.elements.textInput.value = text;
+                    this.sendText();
+                }
                 qrContainer.innerHTML = ''; // hide after click
+                qrContainer.classList.remove('voice-choices');
             };
             qrContainer.appendChild(btn);
         });
     }
 
+    showVoiceWelcomeOptions(excludeAction = null) {
+        let choices = [
+            { text: 'CONÓCENOS', action: 'nosotros', prompt: 'Me parece genial Lunares, cuéntame vuestra historia y háblame de la familia.' },
+            { text: 'EXPERIENCIAS', action: 'experiencias', prompt: 'Lunares, prefiero que me hables de vuestras experiencias en Sierra Crestellina.' },
+            { text: 'PRODUCTOS', action: 'tienda', prompt: 'Lunares, llévame a ver vuestros quesos y productos artesanales.' }
+        ];
+
+        // 🐾 FILTRO DE OPCIÓN YA VISITADA
+        if (excludeAction) {
+            choices = choices.filter(c => c.action !== excludeAction);
+        }
+
+        this.showQuickReplies(choices, true);
+    }
+
+    handleVoiceChoice(choice) {
+        console.log('[Lunares Choice] Global Selected:', choice.text);
+        
+        // 1. Intentar navegación interna
+        const navigated = this.navigateToSection(choice.action);
+        
+        if (navigated) {
+            this.isNarrating = true; // 🐾 Activar modo narrativo para flujo autónomo
+            this.currentNarrativeAction = choice.action; // Guardar sección actual para filtrado futuro
+            if (this.vapi && this.isActive) {
+                // Mandamos la orden como instrucción 'interna' 100% silenciosa
+                let internalPrompt = `(Instrucción interna: El usuario quiere ver la sección ${choice.action}. EMPIEZA DIRECTAMENTE tu relato descriptivo y emotivo sobre esta parte de la granja. NO menciones que has recibido una instrucción, NO saludes y NO repitas este texto. Empieza tu historia ya.)`;
+                
+                if (choice.action === 'nosotros') {
+                    internalPrompt = `(Instrucción interna: El usuario quiere conocer vuestra historia. Empieza con una BREVE introducción de la trayectoria desde 1930 (menciona "La Cosalva" y "La Laguna") y luego presenta a TODA la familia en este orden exacto sin detenerte ni preguntar: Ana Mateo (madre), Juan hijo, Ana hija, Cristina, Juan Corbacho, Juan José (tu compañero mastín) y termina con Juan Ocaña Quirós (padre) con el relato emotivo. No saludes, empieza directamente.)`;
+                }
+
+                this.vapi.send({
+                    type: 'add-message',
+                    message: {
+                        role: 'user',
+                        content: internalPrompt
+                    }
+                });
+            }
+        } else {
+            // 2. Redirección física
+            let targetPage = 'index.html';
+            if (choice.action === 'nosotros') targetPage = 'nosotros.html';
+            if (choice.action === 'experiencias') targetPage = 'experiencias.html';
+            if (choice.action === 'tienda') targetPage = 'tienda.html';
+            
+            window.location.href = `${targetPage}?vapi=start&choice=${choice.action}`;
+        }
+    }
+
     // ── SPA Navigation Methods ──────────────────────────────────
 
     navigateToSection(sectionId) {
-        const el = document.getElementById(sectionId);
-        if (!el) return;
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        // Update URL aesthetically via History API
-        if (window.history && window.history.pushState) {
-            window.history.pushState(null, '', '#' + sectionId);
+        console.log('[Lunares Native] Navigating to section:', sectionId);
+        
+        // Caso 1: Existe el elemento en la página actual (Scroll)
+        const targetId = sectionId.endsWith('-section') ? sectionId : sectionId + '-section';
+        const el = document.getElementById(targetId) || document.getElementById(sectionId);
+        
+        if (el) {
+            if (window.navToSection) {
+                window.navToSection(sectionId);
+            } else {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            // Pequeño hack para actualizar URL sin recargar
+            if (window.history.pushState) {
+                window.history.pushState(null, '', '#' + sectionId);
+            }
+            return true;
+        }
+
+        // Caso 2: Función global de navegación definida por el framework
+        if (window.navToSection) {
+            window.navToSection(sectionId);
+            return true;
+        }
+
+        return false;
+    }
+
+    autoScrollByTranscript(text) {
+        if (this.isScrollingLock) return;
+
+        let targetId = null;
+        let memberId = null;
+        text = text.toLowerCase();
+
+        // 1. Árbol Familiar y Trayectoria
+        if (text.includes('1930') || text.includes('historia') || text.includes('trayectoria') || text.includes('cosalva') || text.includes('laguna')) {
+            targetId = 'historia';
+        } else if (text.includes('familia') || text.includes('árbol')) {
+            targetId = 'equipo';
+        } else if (text.includes('ana mateo') || text.includes('la jefa') || text.includes('maestra quesera')) {
+            targetId = 'familia-ana-madre'; memberId = 'ana-madre';
+        } else if (text.includes('juan ocaña') && text.includes('hijo')) {
+            targetId = 'familia-juan-hijo'; memberId = 'juan-hijo';
+        } else if (text.includes('ana ocaña') || text.includes('la hija') || text.includes('nuestra hija')) {
+            targetId = 'familia-ana-hija'; memberId = 'ana-hija';
+        } else if (text.includes('cristina')) {
+            targetId = 'familia-cristina'; memberId = 'cristina';
+        } else if (text.includes('corbacho') || text.includes('cabrero')) {
+            targetId = 'familia-corbacho'; memberId = 'corbacho';
+        } else if (text.includes('juan josé') || text.includes('mastín')) {
+            targetId = 'juan-jose';
+        } else if (text.includes('juan ocaña') || text.includes('maestro quesero')) {
+            targetId = 'juan-padre';
+        } 
+        
+        // 🟢 NUEVOS TRIGGERS PARA EXPERIENCIAS
+        else if (text.includes('cabrero y quesero') || text.includes('por un día')) {
+            targetId = 'card-cabrero';
+        } else if (text.includes('los chivitos') || (text.includes('crestellina') && text.includes('experiencia'))) {
+            targetId = 'card-chivitos';
+        }
+        
+        // 🔵 NUEVOS TRIGGERS PARA TIENDA
+        else if (text.includes('pack degustación') || text.includes('selección destacada')) {
+            targetId = 'packs';
+        } else if (text.includes('nuestros quesos') || text.includes('productos artesanos') || text.includes('fresco') || text.includes('yogur')) {
+            targetId = 'catalogo';
+        }
+
+        if (targetId) {
+            console.log('[Lunares Native] 🎯 Triggering section interaction:', targetId);
+            
+            const element = document.getElementById(targetId);
+            if (element) {
+                // 1. Pre-clausura de cualquier modal abierto (solo si no es el mismo)
+                const currentModal = document.querySelector('[id^="modal-"]:not(.hidden)');
+                if (currentModal && currentModal.id !== `modal-${targetId}`) {
+                    const closeBtn = currentModal.querySelector('button');
+                    if (closeBtn) closeBtn.click();
+                }
+
+                // 2. Scroll suave al elemento
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                // 3. Acciones especiales según el ID
+                setTimeout(() => {
+                    // Árbol Genealógico (Modales)
+                    if (memberId) {
+                        const modalId = `modal-${memberId}`;
+                        const modal = document.getElementById(modalId);
+                        if (modal && modal.classList.contains('hidden')) {
+                            // Abrir con el delay táctico de 2.2s para que el usuario vea el scroll primero
+                            setTimeout(() => {
+                                if (this.isNarrating && this.isActive) {
+                                    modal.classList.remove('hidden');
+                                    modal.classList.add('flex');
+                                }
+                            }, 2200);
+                        }
+                    } 
+                    
+                    // Experiencias (Función selectExp natively available)
+                    if (targetId === 'card-cabrero') {
+                        if (typeof window.selectExp === 'function') window.selectExp('cabrero');
+                    } else if (targetId === 'card-chivitos') {
+                        if (typeof window.selectExp === 'function') window.selectExp('chivitos');
+                    }
+                }, 100);
+
+                this.isScrollingLock = true;
+                setTimeout(() => { this.isScrollingLock = false; }, 2500);
+            }
         }
     }
 
@@ -520,34 +786,42 @@ class LunaresAgent {
         const target = document.getElementById(elementId);
         if (!target) return;
 
-        const targetY = target.getBoundingClientRect().top + window.scrollY - 100; // 100px offset for header
-        const startY = window.scrollY;
-        const distance = targetY - startY;
-        const speed = 2; // px per frame
-        const totalFrames = Math.abs(distance) / speed;
-        let frame = 0;
+        // Check if we need to switch sections before scrolling
+        let sectionToShow = null;
+        if (elementId.startsWith('familia-') || elementId === 'historia' || elementId === 'equipo') {
+            sectionToShow = 'nosotros-section';
+        } else if (elementId === 'packs' || elementId === 'catalogo') {
+            sectionToShow = 'tienda-section';
+        } else if (elementId.startsWith('card-')) {
+            sectionToShow = 'experiencias-section';
+        }
 
-        if (this._scrollRAF) cancelAnimationFrame(this._scrollRAF);
+        const sectionEl = sectionToShow ? document.getElementById(sectionToShow) : null;
+        const isHidden = sectionEl && sectionEl.classList.contains('hidden');
 
-        const step = () => {
-            frame++;
-            const progress = Math.min(frame / totalFrames, 1);
-            // Ease-in-out cubic
-            const ease = progress < 0.5
-                ? 4 * progress * progress * progress
-                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-            window.scrollTo(0, startY + distance * ease);
+        if (isHidden) {
+            this.navigateToSection(sectionToShow);
+            // Give layout a bit of time to render block to calculate positions
+            setTimeout(() => this.performSmoothScroll(target, elementId), 200);
+        } else {
+            this.performSmoothScroll(target, elementId);
+        }
+    }
 
-            if (progress < 1) {
-                this._scrollRAF = requestAnimationFrame(step);
-            } else {
-                // Update URL aesthetically
-                if (window.history && window.history.pushState) {
-                    window.history.pushState(null, '', '#' + elementId);
-                }
-            }
-        };
-        this._scrollRAF = requestAnimationFrame(step);
+    performSmoothScroll(target, elementId) {
+        // Offset for sticky navigation headers
+        const yOffset = -120;
+        const targetY = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({
+            top: targetY,
+            behavior: 'smooth'
+        });
+
+        // Update URL aesthetically without jumping
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, '', '#' + elementId);
+        }
     }
 
     setTalking(t) {
