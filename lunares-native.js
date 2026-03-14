@@ -29,6 +29,7 @@ class LunaresAgent {
         this.isNarrating = false; // Bloqueo de UI para relatos largos
         this.currentNarrativeAction = null; // Seguimiento de la sección actual
         this.isScrollingLock = false;
+        this.lastTriggeredMember = null; // Evitar disparos duplicados en el mismo flujo
         
         // 🐾 Memoria de sesión
         this.sessionMemory = JSON.parse(localStorage.getItem('lunares_visited_sections') || '[]');
@@ -239,7 +240,6 @@ class LunaresAgent {
             
             // 🐾 NUDGE AUTÓNOMO: Solo si estamos narrando proactivamente
             if (this.isNarrating && this.isActive) {
-                // Si lo último que dijo parece una pregunta o invitación a elegir, no "empujamos"
                 const lastText = (this.lastAssistantTranscript || '').toLowerCase();
                 const looksLikeClosure = this.checkClosingPhrases(lastText);
 
@@ -247,7 +247,6 @@ class LunaresAgent {
                     console.log('[Lunares Native] 🌀 Silence detected. Nudging for continuity...');
                     setTimeout(() => {
                         if (!this.isTalking && this.isActive && this.isNarrating) {
-                            // Verificamos de nuevo antes de enviar para evitar colisiones
                             this.vapi.send({
                                 type: 'add-message',
                                 message: {
@@ -256,24 +255,19 @@ class LunaresAgent {
                                 }
                             });
                         }
-                    }, 1200); // 🚀 1.2s para dar margen a la IA
+                    }, 1200); 
                 } else {
                     console.log('[Lunares Native] 🛑 Closure detected in speech-end. Triggering options.');
                     this.isNarrating = false; 
-                    // 🐾 CIERRE QUIRÚRGICO DE MODAL AL TERMINAR EXPLICACIÓN
-                    if (typeof window.closeModal === 'function') window.closeModal();
                     this.showVoiceWelcomeOptions();
                 }
                 return;
             }
-
             if (this.isActive) {
                 this.firstVoiceMessagePlayed = true; 
                 setTimeout(() => {
                     // Acción inmediata solo si no está hablando y no estamos en modo narrativo bloqueado
                     if (!this.isTalking && this.isActive && !this.isNarrating) {
-                        // 🐾 CIERRE QUIRÚRGICO AL TERMINAR CUALQUIER BLOQUE DE HABLA NO NARRATIVA
-                        if (typeof window.closeModal === 'function') window.closeModal();
                         this.showVoiceWelcomeOptions(this.currentNarrativeAction);
                     }
                 }, 200); 
@@ -748,8 +742,13 @@ class LunaresAgent {
             targetId = 'catalogo';
         }
 
+        // 🐾 EVITAR REPETICIONES: Si ya estamos procesando a este miembro, ignoramos
+        const identifier = memberId || targetId;
+        if (this.lastTriggeredMember === identifier) return;
+        
         if (targetId) {
             console.log('[Lunares Native] 🎯 Triggering section interaction:', targetId);
+            this.lastTriggeredMember = identifier;
             
             const element = document.getElementById(targetId);
             if (element) {
@@ -776,6 +775,15 @@ class LunaresAgent {
                     else if (memberId) {
                         if (typeof window.openModal === 'function') {
                             window.openModal(memberId);
+                            
+                            // 🐾 SECUENCIA DE CIERRE: 2 segundos abierto y luego se cierra solo
+                            setTimeout(() => {
+                                if (typeof window.closeModal === 'function') {
+                                    window.closeModal();
+                                }
+                                // Limpiamos el rastro después de un tiempo para permitir volver a activarlo si se menciona de nuevo
+                                setTimeout(() => { this.lastTriggeredMember = null; }, 5000);
+                            }, 2000);
                         }
                     }
                 }, 1000);
