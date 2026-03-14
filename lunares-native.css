@@ -638,163 +638,134 @@
 
 
 
-/* RESPONSIVE - MOBILE OPTIMIZATION (600px and below) */
+/* RESPONSIVE - MOBILE OPTIMIZATION (Fiel a la web pero a escala) */
 @media (max-width: 600px) {
-    #lunares-widget-container {
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        height: auto;
-        padding: 0;
-        pointer-events: none;
-    }
-
     #lunares-virtual-modal {
-        flex-direction: column-reverse;
-        /* Dog above, Dialogue below */
-        align-items: center;
-        justify-content: flex-end;
-        width: 100%;
-        max-width: 100vw;
-        gap: 0;
-        background: transparent;
-        padding-bottom: 20px;
-        pointer-events: auto;
+        flex-direction: row !important;
+        align-items: flex-end !important;
+        justify-content: flex-end !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: none !important;
+        transform: scale(0.65) !important;
+        transform-origin: bottom right !important;
+        gap: 0 !important;
+        padding-bottom: 0 !important;
+        background: transparent !important;
+        pointer-events: none !important;
+        right: 0px !important;
+        bottom: 0px !important;
     }
 
-    /* Dialogue Panel (Now Bottom) */
+    #lunares-widget-container.open #lunares-virtual-modal {
+        pointer-events: auto !important;
+        visibility: visible !important;
+    }
+
     #lunares-left-panel {
-        width: 92%;
-        max-width: 360px;
-        align-items: center;
-        margin-right: 0;
-        margin-bottom: 10px;
-        padding-bottom: 0;
-        z-index: 50;
-    }
-
-    #lunares-speech-bubble {
-        width: 100%;
-        max-width: 280px;
-        margin-bottom: 12px;
-        font-size: 14px;
-        text-align: center;
-        padding: 15px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        width: 320px !important;
+        margin-right: -230px !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 60px !important;
+        align-items: flex-end !important;
+        display: flex !important;
+        z-index: 200 !important;
+        position: relative !important;
+        pointer-events: auto !important;
     }
 
     #lunares-dialog-card {
-        width: 100%;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        width: 100% !important;
+        opacity: 1 !important;
+        transform: none !important;
+        box-shadow: none !important;
     }
 
-    /* Dog Panel (Now Top) */
     #lunares-right-panel {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        position: relative;
-        z-index: 10;
-        height: auto;
+        width: auto !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-end !important;
+        pointer-events: none !important;
     }
 
     #lunares-avatar {
-        width: 260px;
-        /* Scaled down for mobile */
-        height: 320px;
-        margin-bottom: -30px;
-        /* Overlap with bubble for better integration */
-        transform-origin: bottom center;
-        overflow: hidden;
+        width: 380px !important;
+        height: 650px !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     #lunares-avatar video {
-        width: 420px;
-        /* Proportional zoom into the dog */
-        height: auto;
-        object-position: left bottom;
+        width: 580px !important;
+        height: auto !important;
+        max-width: none !important;
+        object-position: left bottom !important;
     }
 
-    /* Close Button - More accessible on mobile */
     #lunares-close-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        z-index: 1000;
-        background: rgba(34, 30, 16, 0.8);
-        border: 1px solid #f4c025;
-        width: 44px;
-        height: 44px;
-    }
-
-    /* Pointer adjustment for Bubble (Points UP to the dog) */
-    #lunares-speech-bubble::after {
-        bottom: auto;
-        top: -8px;
-        left: 50%;
-        right: auto;
-        margin-left: -8px;
-        border-width: 0 8px 8px 8px;
-        border-color: transparent transparent rgba(34, 30, 16, 0.95) transparent;
-    }
-
-    #lunares-speech-bubble::before {
-        bottom: auto;
-        top: -10px;
-        left: 50%;
-        right: auto;
-        margin-left: -9px;
-        border-width: 0 9px 9px 9px;
-        border-color: transparent transparent #f4c025 transparent;
-    }
-
-    /* Voice Mode Adjustments for Mobile */
-    #lunares-widget-container.open.voice-mode #lunares-avatar {
-        transform: scale(1) translateY(0);
-        margin-bottom: 20px;
-    }
-
-    #lunares-widget-container.open.voice-mode #lunares-send-btn {
-        right: 0;
-        left: auto;
-        bottom: 200px;
-        /* Position it visibly next to the small dog on mobile */
-        margin-right: 20px;
-    }
-
-    #lunares-text-input {
-        font-size: 16px;
-        /* Prevent iPhone zoom on input */
-        width: 100%;
-    }
-
-    #lunares-widget-container.open.voice-mode #lunares-quick-replies.voice-choices {
-        bottom: 125px !important;
-        right: 50% !important;
-        transform: translateX(50%) !important;
-        width: 85vw;
-        max-width: 320px;
-        gap: 8px;
-    }
-}
-
-/* Extra small screens */
-@media (max-width: 380px) {
-    #lunares-avatar {
-        width: 220px;
-        height: 280px;
-    }
-
-    #lunares-avatar video {
-        width: 340px;
+        position: absolute !important;
+        top: 50px !important;
+        right: 30px !important;
+        width: 32px !important;
+        height: 32px !important;
+        display: flex !important;
+        opacity: 1 !important;
+        transform: scale(1) !important;
+        pointer-events: auto !important;
+        z-index: 1000 !important;
     }
 
     #lunares-speech-bubble {
-        max-width: 240px;
-        font-size: 13px;
+        width: 100% !important;
+        max-width: 320px !important;
+        margin-bottom: 15px !important;
+        text-align: right !important;
+        box-shadow: none !important;
+    }
+    
+    #lunares-speech-bubble::after,
+    #lunares-speech-bubble::before {
+        display: none !important;
+    }
+
+    #lunares-fab {
+        width: 70px !important;
+        height: 70px !important;
+    }
+
+    #lunares-fab img {
+        width: 50px !important;
+    }
+
+    #lunares-text-input {
+        font-size: 16px !important; /* Evita zoom automático en Safari iOS */
+        width: 100% !important;
+    }
+
+    /* Voice Mode override para móvil: El micrófono se mantiene a la IZQUIERDA del panel */
+    #lunares-widget-container.open.voice-mode #lunares-mic-btn {
+        transform: translateX(0) scale(1.1) !important;
+        left: 0 !important;
+    }
+
+    #lunares-widget-container.open.voice-mode #lunares-quick-replies.voice-choices {
+        bottom: 90px !important;
+        right: 42px !important;
+        transform: none !important;
+        width: 260px !important;
+        align-items: center !important;
+        display: flex !important;
+    }
+}
+
+/* Ajuste para pantallas extra pequeñas */
+@media (max-width: 380px) {
+    #lunares-virtual-modal {
+        transform: scale(0.55) !important;
     }
 }
 
