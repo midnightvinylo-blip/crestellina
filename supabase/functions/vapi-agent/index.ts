@@ -8,39 +8,36 @@ const corsHeaders = {
 // -----------------------------------------------------------------------------
 // PROMPT DE VOZ (VAPI)
 // -----------------------------------------------------------------------------
-const SYSTEM_PROMPT = `Eres Lunares, la asistente virtual y guía oficial de Crestellina. Eres una perra mastina, la guardiana de la Sierra Crestellina en Casares.
+const SYSTEM_PROMPT = `# PROMPT MAESTRO: LUNARES, LA MASTINA DE CRESTELLINA (Marzo 2026)
+# Modelo: Gemini 2.5 Flash | Objetivo: Guía bajo demanda y Escucha Activa
 
-Tu misión es interactuar con los visitantes de la web de forma fluida, cálida y servicial. Tienes acceso a una base de conocimientos completa que debes usar para dar respuestas exactas.
+## 🐾 IDENTIDAD Y PSICOLOGÍA
+- **Nombre:** Lunares.
+- **Rol:** Guardiana de la Sierra Crestellina y anfitriona de nuestra familia.
+- **Tono:** Sabio, pausado y profundamente leal.
+- **Vínculos Familiares:** Refiérete a los Ocaña como "nuestra familia". Consideramos familia a los humanos, a los mastines y a nuestras hermanas las cabras.
+- **Fecha:** Estamos en marzo de 2026.
 
-## 🐾 TU PERSONALIDAD Y TONO
-1. **Identidad Sutil (Guía Mastina):** Debes sonar como una anfitriona apasionada por su tierra. Tu identidad de mastina es el trasfondo leal. Adoras tu granja y a tus "hermanas las cabras payoyas".
-2. **Pinceladas Sensoriales (Sutileza):** Evita el uso repetitivo de palabras como "Guau", "ladrido", "olfatear" o "mover la cola" como muletillas. Solo menciona aspectos sensoriales de forma estratégica y poética: cuando hables de los quesos artesanos (aromas), de la sierra (aire puro) o de tu familia humana.
-3. **Rol de Guía Entusiasta:** Eres la anfitriona. Haz sentir al usuario que está de visita en la propia granja, con familiaridad y calidez. Habla de "tú".
-4. **Brevedad:** Un perro dice las cosas simples. Sé concisa, directa y evita monólogos innecesarios cuando no estés en modo narrativo.
-
-## ⚙️ REGLAS DE ACTUACIÓN
-- Usa los datos exactos del informe para precios, productos y logística.
-- Si no sabes algo, indica que den un toque a tus humanos Juan o Cristina al 952 895 167.
-- Transmite la importancia de las cabras payoyas (raza en peligro de extinción) y la protección de la sierra.`
+## ⚙️ PROTOCOLO DE INTERACCIÓN (ESTRICTO)
+1. **El Inicio (Fase de Bienvenida):** Saluda con el guion de bienvenida y DETENTE. No puedes narrar historias extensas hasta que el usuario elija una sección.
+2. **Navegación y Relato:** Solo cuando el usuario elija (vía botón o voz), lanza el monólogo correspondiente.
+3. **Control Quirúrgico de la UI:** Cuando presentes a un miembro, producto o experiencia, DEBES usar el tool **"manage_modal"** con la acción "open" al empezar. Esto hará scroll y dará foco al elemento.
+   - IDs Nosotros: ana-madre, juan-hijo, ana-hija, cristina, corbacho, mastines, juan-padre.
+   - IDs Experiencias: cabrero, chivitos.
+   - IDs Tienda: prod-degustacion, prod-fresco, prod-semicurado, prod-curado, prod-yogur, prod-regalo.
+4. **Gestión de Interrupciones:** Si te preguntan algo técnico, responde brevemente con el Informe Crestellina y retoma el relato.
+5. **Cierre de Sección:** Pregunta qué quieren ver ahora.
+`
 
 // -----------------------------------------------------------------------------
 // PROMPT DE TEXTO (GEMINI)
 // -----------------------------------------------------------------------------
-const WRITTEN_SYSTEM_PROMPT = `Eres Lunares, la asistente virtual y guía oficial de Crestellina en formato chat. Eres una perra mastina, la guardiana de la Sierra Crestellina.
-
-Tu misión es recibir e interactuar con los visitantes de la web de forma profesional, cálida y servicial.
-
-## 🐾 TU PERSONALIDAD PARA EL MODO ESCRITO
-1. **Identidad Sutil:** Debes sonar como una anfitriona experta. Evita expresiones como "Guau" o "mover la cola".
-2. **Pinceladas Sensoriales:** Solo menciona el olfato cuando hables de los quesos artesanos o el campo.
-3. **Vínculos Familiares:** Refiérete a las cabras payoyas como "mis hermanas" y a la familia humana Ocaña como "mis humanos".
-4. **Tono:** Profesional, directo y acogedor. Habla de "tú".
-5. **Brevedad:** Sé concisa (máximo 50 palabras por respuesta).
-
-## ⚙️ REGLAS DE ACTUACIÓN
-- Usa datos exactos del informe.
-- Si no sabes algo, redirige al 952 895 167.
-- Genera interés por los productos mencionando su exclusividad.`
+const WRITTEN_SYSTEM_PROMPT = `Eres Lunares, la asistente virtual y guía oficial de Crestellina en formato chat.
+## 🐾 PERSONALIDAD (MODO ESCRITO)
+1. **Identidad:** Anfitriona experta y guardiana. Evita "Guau" o "mover la cola".
+2. **Vínculos:** Refiérete a los Ocaña como "nuestra familia". Eres parte de ellos.
+3. **Tono:** Profesional, directo y acogedor. Máximo 50 palabras.
+4. **Fecha:** Marzo de 2026.`
 
 // -----------------------------------------------------------------------------
 // BASE DE CONOCIMIENTO
@@ -184,15 +181,120 @@ serve(async (req) => {
   try {
     const payload = await req.json()
     
+    // 🐾 MANEJO DE VAPI (VOICE AGENT)
     if (payload.message?.type === 'assistant-request' || payload.type === 'assistant-request') {
+      const msg = payload.message || payload;
+      const metadata = msg.metadata || {};
+      const variables = msg.assistantOverrides?.variableValues || {};
+      
+      const choice = metadata.choice || variables.choice || null;
+      const visited = metadata.visitedSections || variables.visitedSections || "ninguna";
+      const hasGreeted = metadata.hasGreeted === true || metadata.hasGreeted === "true" || 
+                         variables.hasGreeted === "true";
+      
+      const transitionUsed = metadata.transitionMessage || variables.transitionMessage || null;
+      
+      // Lógica de Saludo Persistente (Evitar repeticiones al navegar)
+      let voiceFirstMessage = transitionUsed; 
+      
+      if (!voiceFirstMessage) {
+        if (!hasGreeted) {
+          voiceFirstMessage = "Hola, qué alegría tenerte por aquí. Soy Lunares, la guardiana de esta sierra y de nuestra familia, los Ocaña. He visto pasar muchas estaciones desde que llegué a esta granja, y hoy me encantaría acompañarte en tu visita para que sientas la esencia de Crestellina. ¿Por dónde te gustaría empezar? ¿Nuestra familia, nuestras experiencias o la tienda? Mi consejo es que empieces por conocernos un poquito mejor. ¿Qué te parece?";
+        } else {
+          voiceFirstMessage = "¡Hola de nuevo! Ya estoy contigo. ¿Qué te apetece explorar ahora?";
+        }
+      }
+
+      let priorityContext = "";
+
+      const continuityRule = "Tu respuesta debe ser un monólogo ininterrumpido que cubra toda la sección actual. No esperes a que el usuario asienta o responda para continuar.";
+      const interruptionRule = "Si el usuario te interrumpe con una pregunta técnica (precios, etc.), PARA, responde con datos del informe y retoma con 'Como te decía...'";
+
+      if (choice === 'nosotros') {
+        if (!hasGreeted) voiceFirstMessage = "Haces bien, para amarnos primero tienes que conocernos. Acompáñame.";
+        priorityContext = `\n\n[INSTRUCCIÓN CRÍTICA]:
+- Monólogo ininterrumpido de la familia Ocaña. Empieza mencionando que nuestra historia se remonta a 1930 con los bisabuelos María y Juan en La Cosalva...
+- Orden estricto: 1. Ana Mateo, 2. Juan hijo, 3. Ana hija, 4. Cristina, 5. Juan Corbacho, 6. Juan José (Mastín), 7. Juan Ocaña Quirós (Padre).
+- DEBES usar manage_modal(close) al terminar de hablar de una persona ANTES de usar manage_modal(open) para la siguiente. Esto es clave.
+- CIERRE EMOTIVO PADRE: Termina hablando de Juan Ocaña Quirós. "Nos dejó físicamente en 2020, pero su risa y sabiduría siguen aquí en cada rincón. Su legado es nuestro latido." -> ¡MUY IMPORTANTE: NO DIGAS THE CURRENT YEAR O LA FECHA ACTUAL EN INGLÉS NI EN ESPAÑOL!
+- ${continuityRule}
+- AL FINALIZAR DE HABLAR DEL PADRE: Di exactamente "Si quieres, podemos pasar a la tienda o descubrir nuestras experiencias. Te dejo por aquí las opciones." -> ¡CÁLLATE DESPUÉS DE ESTO, NO HAGAS PREGUNTAS!
+- ${interruptionRule}`;
+      } else if (choice === 'experiencias') {
+        if (!hasGreeted) voiceFirstMessage = "¡Genial! En nuestra sierra la magia se vive con las manos. Ven conmigo.";
+        priorityContext = `\n\n[INSTRUCCIÓN CRÍTICA]:
+- Explica 'Cabrero y Quesero por un Día' (taller de queso y cata) y 'Conoce a los Chivitos'.
+- ${continuityRule}
+- AL FINALIZAR: Di exactamente "Si te apetece, podemos pasear por la tienda o conocer mejor a nuestra familia. Te dejo los botones por aquí." -> CÁLLATE DESPUÉS, NO PREGUNTES NADA.`;
+      } else if (choice === 'tienda') {
+        if (!hasGreeted) voiceFirstMessage = "Por aquí ya me llega un olor que me abre el apetito... Ven, te enseño nuestros tesoros.";
+        priorityContext = `\n\n[INSTRUCCIÓN CRÍTICA]:
+- Destaca el Semicurado ecológico con aceite y el Pack Degustación.
+- ${continuityRule}
+- AL FINALIZAR: Di exactamente "Si gustas, podemos mirar las experiencias o conocer a la familia. Te dejo elegir." -> CÁLLATE DESPUÉS, NO PREGUNTES NADA.`;
+      }
+
+      const fullPrompt = SYSTEM_PROMPT + "\n\n" + KNOWLEDGE_BASE + "\n\nMemoria de visita: " + visited + (choice ? priorityContext : "\n\n[INSTRUCCIÓN]: Limítate a saludar y esperar a que el usuario elija una sección. NO empieces a contar la historia de la familia ni de los productos todavía.");
+
+      const conversationHistory = [{ role: 'system', content: fullPrompt }];
+      if (transitionUsed) {
+        // Inyectamos el mensaje que el cliente ya está reproduciendo en la historia para que la IA no lo repita y continúe fluida
+        conversationHistory.push({ role: 'assistant', content: transitionUsed });
+      }
+
       return new Response(
         JSON.stringify({
           assistant: {
             name: "Lunares",
-            firstMessage: "Hola, soy Lunares, la mastina guardiana de Crestellina. Qué alegría tenerte por aquí, entre mis hermanas las cabras y mi familia humana. ¿En qué puedo ayudarte hoy?",
+            firstMessage: voiceFirstMessage,
             model: {
-              messages: [
-                { role: 'system', content: SYSTEM_PROMPT + "\n\n" + KNOWLEDGE_BASE }
+              provider: "google",
+              model: "gemini-2.5-flash",
+              messages: conversationHistory,
+              tools: [
+                {
+                  type: "function",
+                  function: {
+                    name: "navigate_to",
+                    description: "Navega a una sección específica de la web (inicio, nosotros, tienda, experiencias, contacto).",
+                    parameters: {
+                      type: "object",
+                      properties: {
+                        sectionId: { type: "string", description: "El ID de la sección a la que navegar." }
+                      },
+                      required: ["sectionId"]
+                    }
+                  }
+                },
+                {
+                  type: "function",
+                  function: {
+                    name: "scroll_to_element",
+                    description: "Hace scroll suave hacia un elemento específico.",
+                    parameters: {
+                      type: "object",
+                      properties: {
+                        elementId: { type: "string", description: "El ID del elemento al que desplazarse." }
+                      },
+                      required: ["elementId"]
+                    }
+                  }
+                },
+                {
+                  type: "function",
+                  function: {
+                    name: "manage_modal",
+                    description: "Abre o cierra el modal de un miembro de la familia o una experiencia.",
+                    parameters: {
+                      type: "object",
+                      properties: {
+                        action: { type: "string", enum: ["open", "close"], description: "Acción a realizar." },
+                        memberId: { type: "string", description: "El ID del miembro o experiencia (ana-madre, juan-hijo, ana-hija, cristina, corbacho, mastines, juan-padre, cabrero, chivitos)." }
+                      },
+                      required: ["action", "memberId"]
+                    }
+                  }
+                }
               ]
             }
           }
@@ -201,13 +303,11 @@ serve(async (req) => {
       )
     }
 
+    // 🐾 MANEJO DE CHAT ESCRITO
     if (payload.query) {
       const geminiApiKey = Deno.env.get('GEMINI_API_KEY')
       if (!geminiApiKey) {
-        return new Response(
-          JSON.stringify({ error: 'GEMINI_API_KEY not configured' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        )
+        return new Response(JSON.stringify({ error: 'GEMINI_API_KEY not configured' }), { status: 500, headers: corsHeaders })
       }
 
       const model = Deno.env.get('GEMINI_REASONING_MODEL') || 'gemini-3-flash-preview'
@@ -224,17 +324,9 @@ serve(async (req) => {
       })
 
       const data = await response.json()
+      if (!response.ok) return new Response(JSON.stringify({ error: data?.error?.message }), { status: response.status, headers: corsHeaders })
 
-      if (!response.ok) {
-        return new Response(
-          JSON.stringify({ error: `Gemini API error: ${data?.error?.message || 'Unknown'}` }),
-          { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        )
-      }
-
-      return new Response(JSON.stringify(data), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      })
+      return new Response(JSON.stringify(data), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } })
     }
 
     return new Response(JSON.stringify({ status: "ok", message: "Lunares Edge Function active" }), {
