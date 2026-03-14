@@ -12,8 +12,8 @@ class LunaresAgent {
 
         // Claves públicas - Seguras para el cliente
         this.env = {
-            VAPI_PUBLIC_KEY: 'cf0cc954-9812-4f8f-9f77-221228c4411b',
-            VAPI_ASSISTANT_ID: '17e3214b-0a36-47d8-bac8-0407c88a36c5',
+            VAPI_PUBLIC_KEY: '65c361dc-b93d-443c-9a47-f209078c2326',
+            VAPI_ASSISTANT_ID: 'a1556102-2f01-401b-9aa6-b8ee89f1e8bd',
             SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlldXRudGZ1eWlzY2xiZnl4cXpwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMzQyOTksImV4cCI6MjA4ODcxMDI5OX0.2A2FngSJeNOiul0qAseNpdpyuqTXL_C9awxd_EJq7sM',
             ...(window.LUNARES_ENV || {})
         };
