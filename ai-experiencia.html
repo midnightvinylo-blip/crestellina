@@ -1,0 +1,2200 @@
+<!DOCTYPE html>
+<html class="dark" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Crestellina - Experiencia Lunares</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- Lucide Icons for better reliability -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4c025",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#221e10",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"],
+                        "sans": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass {
+            background: rgba(34, 30, 16, 0.5);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(244, 192, 37, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+    </style>
+    <!-- Vercel Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary selection:text-background-dark">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <!-- Navigation -->
+        <header class="fixed top-0 z-[100] w-full glass px-6 lg:px-20 py-4">
+            <div class="w-full flex items-center justify-between">
+                <a href="#inicio" onclick="window.navToSection('inicio'); return false;" class="flex items-center gap-4 hover:opacity-80 transition-opacity">
+                    <div class="text-primary">
+                        <svg class="w-12 h-12" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col items-start pt-1">
+                        <span
+                            class="text-[7px] uppercase tracking-[0.4em] text-slate-400 font-bold leading-none -mb-1">Desde
+                            1930</span>
+                        <h2 class="text-3xl font-black text-primary leading-none lowercase tracking-tighter">crestellina
+                        </h2>
+                        <span
+                            class="text-[7px] uppercase tracking-[0.1em] text-slate-400 font-bold mt-0.5 leading-none">Sencillos
+                            por Naturaleza</span>
+                    </div>
+                </a>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                        href="#inicio" onclick="window.navToSection('inicio'); return false;">Inicio</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="#experiencias" onclick="window.navToSection('experiencias'); return false;">Experiencias</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="#tienda" onclick="window.navToSection('tienda'); return false;">Tienda</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="#nosotros" onclick="window.navToSection('nosotros'); return false;">Nosotros</a>
+                    <a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                        href="#contacto" onclick="window.navToSection('contacto'); return false;">Contacto</a>
+                </nav>
+                <div class="flex items-center gap-4">
+                    <button class="p-2 rounded-full hover:bg-primary/10 text-slate-300 transition-colors">
+                        <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    </button>
+                    <div
+                        class="h-10 w-10 rounded-full border-2 border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-colors">
+                        <img class="h-full w-full object-cover"
+                            src="assets/media/avatar_usuario.webp"
+                            alt="Usuario" />
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div id="landing-home" class="w-full"><!-- Sección Hero -->
+        <section class="relative h-[90vh] w-full overflow-hidden mt-[80px]">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+                style="background-image: linear-gradient(to bottom, rgba(34,30,16,0.3), rgba(34,30,16,0.9)), url('assets/media/sl-quesos-artesanales-crestellina-3.webp');">
+            </div>
+            <div
+                class="relative h-full w-full px-6 lg:px-20 flex flex-col justify-center items-start animate-fade-in">
+                <span
+                    class="inline-block px-4 py-1 rounded-full bg-primary text-background-dark text-xs font-bold uppercase tracking-widest mb-6 border border-primary/50 shadow-lg shadow-primary/20">
+                    Tradición Artesanal
+                </span>
+                <h1 class="text-6xl lg:text-8xl font-black text-white leading-[1] mb-6 max-w-4xl tracking-tighter">
+                    El Sabor <br /> de Nuestra <span class="text-primary italic font-serif">Herencia</span>
+                </h1>
+                <p class="text-xl lg:text-2xl text-slate-200 max-w-2xl mb-12 leading-relaxed opacity-90 font-light">
+                    Descubre el alma de la Sierra de Casares en cada bocado. Quesos elaborados con pasión, respetando el
+                    ciclo natural de nuestro rebaño.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <a href="#tienda" onclick="window.navToSection('tienda'); return false;"
+                        class="inline-flex items-center justify-center gap-3 px-10 py-5 bg-primary text-background-dark font-black rounded-xl hover:scale-105 transition-all shadow-xl shadow-primary/20 text-lg group">
+                        Descubrir Nuestros Quesos <i data-lucide="arrow-right"
+                            class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#nosotros" onclick="window.navToSection('nosotros'); return false;"
+                        class="px-10 py-5 border-2 border-white/30 text-white font-bold rounded-xl hover:bg-white hover:text-background-dark hover:border-white transition-all backdrop-blur-sm">
+                        Nuestra Historia
+                    </a>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Sección 2: Vivir (Teaser Experiencias) -->
+        <section class="py-32 bg-background-light dark:bg-background-dark relative overflow-hidden">
+            <div class="w-full px-6 lg:px-20 flex flex-col items-center text-center">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4">El Oficio</span>
+                <h2 class="text-5xl lg:text-7xl font-black mb-8 tracking-tighter">Vivir la <span
+                        class="text-primary italic font-serif">Artesanía</span></h2>
+                <p
+                    class="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mb-12">
+                    Sumérgete en el taller donde el tiempo se detiene. Aprende a crear tu propio queso con las manos en
+                    la masa y descubre los secretos custodiados por nuestra sierra.
+                </p>
+                <div
+                    class="w-full aspect-video md:aspect-[21/9] rounded-[2.5rem] overflow-hidden shadow-2xl relative group mb-12">
+                    <img class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                        src="assets/media/cuajada_manual.webp" alt="Experiencia Quesera" />
+                    <div
+                        class="absolute inset-0 bg-background-dark/20 group-hover:bg-background-dark/10 transition-colors duration-500">
+                    </div>
+                </div>
+                <a href="#experiencias" onclick="window.navToSection('experiencias'); return false;"
+                    class="inline-flex items-center gap-4 px-10 py-5 bg-background-dark dark:bg-white text-white dark:text-background-dark font-black rounded-xl hover:scale-105 transition-all shadow-xl text-lg group">
+                    Ver Experiencias <i data-lucide="arrow-right"
+                        class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Sección de Reseñas / Voces del Valle -->
+        <section class="py-32 bg-background-light dark:bg-background-dark relative overflow-hidden">
+            <div class="w-full px-6 lg:px-20">
+                <div class="flex flex-col md:flex-row gap-12 items-center md:items-start justify-between mb-20">
+                    <div class="flex-1 text-center md:text-left">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4 block">Lo que dicen de nosotros</span>
+                        <h2 class="text-5xl lg:text-7xl font-black mb-6 tracking-tighter">Voces del <span class="text-primary italic font-serif">Valle</span></h2>
+                    </div>
+                    <div class="flex items-center gap-6 bg-slate-900/5 dark:bg-slate-50/5 rounded-3xl p-6 border border-primary/10">
+                        <div class="flex flex-col items-center justify-center bg-white dark:bg-slate-900 rounded-2xl w-24 h-24 shadow-xl">
+                            <span class="text-4xl font-black text-primary leading-none">4.8</span>
+                            <div class="flex text-primary text-xs mt-2">
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="font-bold text-lg mb-1">Excelente</p>
+                            <p class="text-sm opacity-70">Basado en más de 250<br/>reseñas reales en Google</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="w-5 h-5 mt-3 opacity-80" />
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reviews-carousel" class="flex overflow-x-auto pb-12 -mx-6 px-6 lg:mx-0 lg:px-0 gap-6 no-scrollbar cursor-grab active:cursor-grabbing">
+                    
+                    <!-- Reseña 1 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Irene+Gomez&background=0D8ABC&color=fff&rounded=true" alt="Irene Gomez" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Irene Gómez</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Maravillosa experiencia. Compramos el pack degustación de quesos y están espectaculares. El entorno es inmejorable y nos atendieron fenomenal explicando todo."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 2 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Javier+Ruiz&background=db2777&color=fff&rounded=true" alt="Javier Ruiz" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Javier Ruíz</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Una experiencia muy enriquecedora y educativa. El entorno de la sierra de Crestellina es precioso y los dueños muy amables y apasionados por lo que hacen."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 3 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Maria+Jose&background=10b981&color=fff&rounded=true" alt="Maria Jose" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">María José</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Compramos yogures ecológicos y el queso semicurado. El sabor es de los mejores que he probado, súper auténtico. Trato muy cercano."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 4 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=David+Garcia&background=f59e0b&color=fff&rounded=true" alt="David Garcia" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">David García</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Un rincón mágico. Poder interactuar con los animales y conocer la historia familiar que hay detrás de estos quesos no tiene precio. Recomendable 100%."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 5 -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Sonia+Torres&background=8b5cf6&color=fff&rounded=true" alt="Sonia Torres" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Sonia Torres</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Productos de una calidad brutal. El entorno de Casares y el trato tan amable te hacen sentir como en casa. Nos llevamos de todo. ¡Volveremos seguro!"
+                        </p>
+                    </div>
+
+                    <!-- Reseña 6 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Irene+Gomez&background=0D8ABC&color=fff&rounded=true" alt="Irene Gomez" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Irene Gómez</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Maravillosa experiencia. Compramos el pack degustación de quesos y están espectaculares. El entorno es inmejorable y nos atendieron fenomenal explicando todo."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 7 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Javier+Ruiz&background=db2777&color=fff&rounded=true" alt="Javier Ruiz" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Javier Ruíz</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Una experiencia muy enriquecedora y educativa. El entorno de la sierra de Crestellina es precioso y los dueños muy amables y apasionados por lo que hacen."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 8 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Maria+Jose&background=10b981&color=fff&rounded=true" alt="Maria Jose" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">María José</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Compramos yogures ecológicos y el queso semicurado. El sabor es de los mejores que he probado, súper auténtico. Trato muy cercano."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 9 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=David+Garcia&background=f59e0b&color=fff&rounded=true" alt="David Garcia" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">David García</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Un rincón mágico. Poder interactuar con los animales y conocer la historia familiar que hay detrás de estos quesos no tiene precio. Recomendable 100%."
+                        </p>
+                    </div>
+
+                    <!-- Reseña 10 (Loop) -->
+                    <div class="shrink-0 w-[85vw] md:w-[400px] flex flex-col bg-slate-900/5 dark:bg-slate-900/40 rounded-[2.5rem] p-8 border border-primary/10 hover:border-primary/30 transition-colors">
+                        <div class="flex items-center gap-4 mb-6">
+                            <img src="https://ui-avatars.com/api/?name=Sonia+Torres&background=8b5cf6&color=fff&rounded=true" alt="Sonia Torres" class="w-12 h-12 rounded-full shadow-md" />
+                            <div>
+                                <h4 class="font-bold font-sans">Sonia Torres</h4>
+                                <div class="flex text-primary text-[10px] mt-1 gap-0.5">
+                                    <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-300 flex-grow font-light leading-relaxed">
+                            "Productos de una calidad brutal. El entorno de Casares y el trato tan amable te hacen sentir como en casa. Nos llevamos de todo. ¡Volveremos seguro!"
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const carousel = document.getElementById('reviews-carousel');
+                if (!carousel) return;
+                let isPaused = false;
+                
+                // Adjust scroll speed (lower = slower)
+                const scrollSpeed = 1;
+                
+                const autoScroll = () => {
+                    if (!isPaused) {
+                        carousel.scrollLeft += scrollSpeed;
+                        // Reset if we reach the end to create a loop
+                        if (carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 1)) {
+                            // Go back to the start instantly (smooth makes it bounce visually)
+                            carousel.scrollTo({ left: 0, behavior: 'auto' });
+                        }
+                    }
+                };
+
+                // Run interval for smooth scrolling
+                let scrollInterval = setInterval(autoScroll, 20);
+
+                // Pause on manual interaction
+                carousel.addEventListener('mouseenter', () => isPaused = true);
+                carousel.addEventListener('mouseleave', () => isPaused = false);
+                carousel.addEventListener('touchstart', () => isPaused = true);
+                carousel.addEventListener('touchend', () => isPaused = false);
+            });
+        </script>
+
+        <!-- Sección 3: Nuestra Despensa (Teaser Tienda) -->
+        <section class="py-32 bg-primary/5 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-primary/10 blur-[150px] rounded-full"></div>
+            <div class="w-full px-6 lg:px-20">
+                <div class="flex flex-col items-center text-center mb-20">
+                    <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4">Directo de la Sierra</span>
+                    <h2 class="text-5xl lg:text-7xl font-black mb-6 tracking-tighter">Nuestra <span
+                            class="text-primary italic font-serif">Despensa</span></h2>
+                    <p class="text-xl text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto">Descubre nuestros quesos elaborados artesanalmente con leche de cabra payoya en pastoreo libre. Una tradición familiar directa a tu mesa.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
+                    <!-- Product 1 -->
+                    <div
+                        class="group relative bg-background-light dark:bg-slate-900/40 rounded-3xl overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                        <div class="h-80 overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src="assets/media/queso_fresco.webp"
+                                alt="Fresco" />
+                        </div>
+                        <div class="p-8 text-center">
+                            <h3 class="text-2xl font-black mb-2">Queso Fresco Ecológico</h3>
+                            <span class="text-primary font-black text-xl">€8.18</span>
+                        </div>
+                    </div>
+                    <!-- Product 2 -->
+                    <div
+                        class="group relative bg-background-light dark:bg-slate-900/40 rounded-3xl overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                        <div class="h-80 overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src="assets/media/queso_semicurado_romero.webp"
+                                alt="Semicurado" />
+                        </div>
+                        <div class="p-8 text-center">
+                            <h3 class="text-2xl font-black mb-2">Semicurado Ecológico</h3>
+                            <span class="text-primary font-black text-xl">€9.10</span>
+                        </div>
+                    </div>
+                    <!-- Product 3 -->
+                    <div
+                        class="group relative bg-background-light dark:bg-slate-900/40 rounded-3xl overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                        <div class="h-80 overflow-hidden">
+                            <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src="assets/media/queso_curado.webp"
+                                alt="Curado" />
+                        </div>
+                        <div class="p-8 text-center">
+                            <h3 class="text-2xl font-black mb-2">Queso Curado Ecológico</h3>
+                            <span class="text-primary font-black text-xl">€10.56</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <a href="#tienda" onclick="window.navToSection('tienda'); return false;"
+                        class="inline-flex items-center gap-4 px-10 py-5 bg-primary text-background-dark font-black rounded-xl hover:scale-105 transition-all shadow-xl shadow-primary/20 text-lg group">
+                        Visitar la Despensa <i data-lucide="arrow-right"
+                            class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4: La Familia (Teaser Equipo) -->
+        <section class="py-32 px-6 lg:px-20 relative overflow-hidden flex items-center justify-center min-h-[60vh]">
+            <div class="absolute inset-0 z-0">
+                <div class="absolute inset-0 bg-background-dark/80 backdrop-blur-sm z-10 transition-colors"></div>
+                <img class="w-full h-full object-cover opacity-60"
+                    src="assets/media/im-equipo-crestallina-1.webp" alt="Familia Crestellina" />
+            </div>
+            <div class="relative z-20 max-w-3xl mx-auto text-center">
+                <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4 block">4
+                    Generaciones</span>
+                <h2 class="text-5xl lg:text-7xl font-black text-white mb-6 tracking-tighter">La <span
+                        class="text-primary italic font-serif">Familia</span></h2>
+                <p class="text-xl text-slate-300 font-light leading-relaxed mb-10">Desde las manos de nuestro bisabuelo
+                    hasta hoy, cada cuña de queso encierra nuestra devoción. Conoce a las personas que maduran esta
+                    herencia.</p>
+                <a href="#nosotros" onclick="window.navToSection('nosotros'); return false;"
+                    class="inline-flex items-center gap-4 px-10 py-5 border-2 border-primary text-primary font-black rounded-xl hover:bg-primary hover:text-background-dark transition-all shadow-xl text-lg group">
+                    Nuestro Legado <i data-lucide="arrow-right"
+                        class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </section>
+        </div>
+    <!-- SECCIONES INTEGRADAS PARA DEMO IA -->
+    <div id="nosotros-section" class="hidden min-h-screen bg-background-dark">
+        <div class="w-full px-6 md:px-20">
+
+            <!-- ===== MISIÓN ===== -->
+            <div class="grid md:grid-cols-2 gap-20 items-center py-28">
+                <div class="space-y-10">
+                    <div class="space-y-5">
+                        <p class="text-primary text-xs font-black uppercase tracking-[0.4em]">Empresa familiar · Sierra
+                            de Casares</p>
+                        <h2 class="text-5xl font-black tracking-tighter leading-tight italic">Una Tradición que Desafía
+                            al Tiempo</h2>
+                        <p class="text-slate-400 text-lg leading-relaxed font-light">
+                            Desde que nuestra familia plantó raíces en la Sierra Crestellina en 1930, hemos vivido en
+                            perfecta armonía con este entorno privilegiado. Cada queso que elaboramos es un acto de amor
+                            a la tierra y un testimonio innegociable de que la excelencia no tiene atajos. Somos
+                            ganaderos, queseros y guardianes de una herencia que vale la pena preservar.
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <div
+                            class="flex items-start gap-5 p-7 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <i data-lucide="shield-check"
+                                class="w-9 h-9 text-primary mt-0.5 group-hover:scale-110 transition-transform flex-shrink-0"></i>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Herencia viva</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">Recetas ancestrales pasadas de mano a
+                                    mano durante cuatro generaciones, sin atajos ni compromisos.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-start gap-5 p-7 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <i data-lucide="leaf"
+                                class="w-9 h-9 text-primary mt-0.5 group-hover:scale-110 transition-transform flex-shrink-0"></i>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Cabras payoyas en sierra libre</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">Nuestras cabras pastan libres en los
+                                    riscos del Paraje Natural, aportando a la leche el sabor único del monte.</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex items-start gap-5 p-7 rounded-[2rem] bg-slate-900 border border-primary/10 hover:border-primary transition-colors group">
+                            <i data-lucide="heart"
+                                class="w-9 h-9 text-primary mt-0.5 group-hover:scale-110 transition-transform flex-shrink-0"></i>
+                            <div>
+                                <h4 class="text-lg font-bold text-white mb-1">Artesanía pura</h4>
+                                <p class="text-sm text-slate-400 leading-relaxed">Quesos volteados uno a uno, respetando
+                                    los tiempos naturales de maduración en bodega. Sin prisa, sin química.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group">
+                    <div
+                        class="relative rounded-[2rem] lg:rounded-[10rem_2rem_10rem_2rem] overflow-hidden aspect-[4/5] shadow-2xl transition-all duration-700 hover:scale-[1.02] border border-primary/10">
+                        <img class="w-full h-full object-cover" src="assets/media/im-equipo-crestallina-1.webp"
+                            alt="La familia Ocaña Mateo" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-background-dark/60 to-transparent"></div>
+                    </div>
+                    <div
+                        class="absolute -bottom-10 -left-10 w-60 h-60 bg-primary rounded-[3rem_0.5rem_3rem_0.5rem] flex flex-col items-center justify-center p-8 text-background-dark font-black text-4xl tracking-tighter leading-none shadow-2xl rotate-3 group-hover:rotate-0 transition-transform border-4 border-background-dark">
+                        <span class="text-xs uppercase tracking-[0.3em] mb-3 opacity-70">Nuestro Compromiso</span>
+                        100% Artesanal
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ÁRBOL GENEALÓGICO / EQUIPO ===== -->
+            <div class="py-24 relative overflow-hidden" id="equipo-ia">
+                <!-- Decoración de fondo -->
+                <div class="absolute inset-0 pointer-events-none opacity-5">
+                    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-full h-[1px] bg-primary"></div>
+                </div>
+
+                <div class="text-center mb-24 relative z-10 px-4">
+                    <p class="text-primary text-[10px] font-black uppercase tracking-[0.5em] mb-4">Herencia Viva</p>
+                    <h2 class="text-6xl font-black tracking-tighter leading-none italic uppercase">Nuestra <span
+                            class="text-primary">Familia</span></h2>
+                    <p class="text-slate-400 text-lg mt-6 max-w-2xl mx-auto font-light leading-relaxed">
+                        Un legado que fluye como la leche, de generación en generación, y un equipo que hoy es el latido
+                        de Crestellina.
+                    </p>
+                </div>
+
+                <!-- CONTENEDOR DEL ÁRBOL -->
+                <div class="max-w-6xl mx-auto px-4 relative pb-20">
+
+                    <!-- SVG Conectores (Wavy Lines) -->
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none hidden lg:block" style="z-index: 0;"
+                        viewBox="0 0 1200 800" preserveAspectRatio="none">
+                        <defs>
+                            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4"
+                                orient="auto">
+                                <path d="M 0 0 L 10 5 L 0 10 z" fill="#f4c025" />
+                            </marker>
+                        </defs>
+                        <!-- Línea recta y muy fina entre los centros de las fotos de los padres -->
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none" d="M 470 110 L 730 110" />
+
+                        <!-- Biológico: Padres (Centro 600, 110) a Hijos (150 y 450) - Ondulantes y Negritas -->
+                        <!-- Bajamos por el medio hasta y=250 para evitar los nombres de los padres -->
+                        <path class="outline-none stroke-primary stroke-[3] fill-none"
+                            d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 150 250, 150 320"
+                            marker-end="url(#arrow)" />
+                        <path class="outline-none stroke-primary stroke-[3] fill-none"
+                            d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 450 250, 450 320"
+                            marker-end="url(#arrow)" />
+
+                        <!-- No biológico: Padres (Centro 600, 110) a Equipo (750 y 1050) - Ondulante fina -->
+                        <path class="outline-none stroke-primary/30 stroke-1 fill-none"
+                            d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 750 250, 750 320"
+                            marker-end="url(#arrow)" />
+                        <path class="outline-none stroke-primary/30 stroke-1 fill-none"
+                            d="M 600 110 C 600 230, 600 230, 600 250 C 600 250, 1050 250, 1050 320"
+                            marker-end="url(#arrow)" />
+
+                        <!-- Líneas ondulantes finas para conectar las FOTOS del equipo (y=440) con los perros (y=620) -->
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none"
+                            d="M 150 440 C 150 540, 600 540, 600 620" />
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none"
+                            d="M 450 440 C 450 540, 600 540, 600 620" />
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none"
+                            d="M 750 440 C 750 540, 600 540, 600 620" />
+                        <path class="outline-none stroke-primary/20 stroke-[0.5] fill-none"
+                            d="M 1050 440 C 1050 540, 600 540, 600 620" />
+                    </svg>
+
+                    <!-- L1: LOS FUNDADORES -->
+                    <div class="flex flex-col items-center mb-20">
+                        <div class="flex flex-col sm:flex-row items-center justify-center gap-12 sm:gap-24 relative">
+                            <!-- Conector de Unión (reemplazado por SVG) -->
+                            <div
+                                class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent z-0">
+                            </div>
+
+                            <!-- Juan Ocaña Padre -->
+<div id="familia-juan-padre" style="height:1px; width:1px; position:relative; top:-150px;"></div>
+                            <div id="familia-juan-padre" class="relative group z-10 flex flex-col items-center">
+                                <button onclick="toggleAccordion('juan-padre')"
+                                    class="flex flex-col items-center gap-6 transition-all duration-500 hover:scale-105">
+                                    <div
+                                        class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-2 border-primary/20 p-2 bg-background-dark shadow-2xl group-hover:border-primary transition-all duration-700 relative overflow-hidden">
+                                        <img src="assets/media/im-equipo-juan-ocana-padre-1.webp"
+                                            alt="Juan Ocaña Quirós"
+                                            class="w-full h-full object-cover rounded-full grayscale transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="text-white font-black text-xl tracking-tighter italic">Juan Ocaña
+                                            Quirós</h3>
+                                        <p
+                                            class="text-primary/60 text-[10px] uppercase font-bold tracking-[0.3em] mt-1">
+                                            Fundador · In Memoriam</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Ana Mateo -->
+<div id="familia-ana-mateo" style="height:1px; width:1px; position:relative; top:-150px;"></div>
+                            <div id="familia-ana-madre" class="relative group z-10 flex flex-col items-center">
+                                <button onclick="toggleAccordion('ana-madre')"
+                                    class="flex flex-col items-center gap-6 transition-all duration-500 hover:scale-105">
+                                    <div
+                                        class="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-2 border-primary/20 p-2 bg-background-dark shadow-2xl group-hover:border-primary transition-all duration-700 relative overflow-hidden">
+                                        <img src="assets/media/im-equipo-ana-mateo-2.webp" alt="Ana Mateo Quiñones"
+                                            class="w-full h-full object-cover rounded-full transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h3 class="text-white font-black text-xl tracking-tighter italic">Ana Mateo
+                                            Quiñones</h3>
+                                        <p
+                                            class="text-primary/60 text-[10px] uppercase font-bold tracking-[0.3em] mt-1">
+                                            Maestra Quesera</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Conector central placeholder (mantenemos para mobile) -->
+                        <div class="h-16 w-px bg-primary/20 mt-8 mb-4 lg:hidden"></div>
+                    </div>
+
+                    <!-- L2: HIJOS Y EQUIPO CORE -->
+                    <div class="relative">
+                        <!-- Conectores mobile -->
+                        <div class="h-px w-full bg-primary/10 absolute top-0 lg:hidden"></div>
+
+                        <div class="pt-20 grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+
+                            <!-- Juan Hijo -->
+<div id="familia-juan-hijo" style="height:1px; width:1px; position:relative; top:-150px;"></div>
+                            <div id="familia-juan-hijo" class="relative flex flex-col items-center z-20">
+                                <button onclick="toggleAccordion('juan-hijo')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-primary/20 p-1 bg-background-dark rotate-3 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary">
+                                        <img src="assets/media/im-equipo-juan-ocana-1.webp" alt="Juan Ocaña Mateo"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Juan Ocaña
+                                            Mateo</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">Dirección
+                                            & Ventas</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <!-- Ana Hija -->
+<div id="familia-ana-hija" style="height:1px; width:1px; position:relative; top:-150px;"></div>
+                            <div id="familia-ana-hija" class="relative flex flex-col items-center z-20">
+                                <button onclick="toggleAccordion('ana-hija')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-primary/20 p-1 bg-background-dark -rotate-3 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary">
+                                        <img src="assets/media/im-equipo-ana-ocana-1.webp" alt="Ana Ocaña Mateo"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Ana Ocaña
+                                            Mateo</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">Producción
+                                            & Detalle</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div id="familia-cristina" class="relative flex flex-col items-center">
+                                <button onclick="toggleAccordion('cristina')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-white/5 p-1 bg-background-dark rotate-6 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary/40">
+                                        <img src="assets/media/im-equipo-cristina-rodriguez-2.webp"
+                                            alt="Cristina Rodríguez"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Cristina
+                                            Rodríguez</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">
+                                            Experiencias</p>
+                                    </div>
+                                </button>
+                            </div>
+
+                            <div id="familia-corbacho" class="relative flex flex-col items-center">
+                                <button onclick="toggleAccordion('corbacho')"
+                                    class="flex flex-col items-center gap-4 group transition-all duration-500 hover:-translate-y-2">
+                                    <div
+                                        class="w-24 h-24 sm:w-36 sm:h-36 rounded-3xl border border-white/5 p-1 bg-background-dark -rotate-6 group-hover:rotate-0 transition-all duration-500 shadow-xl overflow-hidden group-hover:border-primary/40">
+                                        <img src="assets/media/im-equipo-juan-corbacho-1.webp" alt="Juan Corbacho"
+                                            class="w-full h-full object-cover rounded-2xl transition-all duration-700" />
+                                    </div>
+                                    <div class="text-center">
+                                        <h4 class="text-white font-black text-sm uppercase tracking-tighter">Juan
+                                            Corbacho</h4>
+                                        <p class="text-primary/70 text-[9px] font-bold tracking-[0.2em] mt-1">El Cabrero
+                                        </p>
+                                    </div>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- L3: LOS MASTINES (UNIÓN DEL EQUIPO) -->
+                    <div id="familia-mastines" class="mt-24 flex justify-center relative z-10 w-full mb-12 px-4">
+                        <div class="relative w-full max-w-sm group flex justify-center">
+                            <!-- Marco único dimensionado coherentemente a las otras fotos, totalmente limpio -->
+                            <button onclick="openModal('mastines')"
+                                class="relative rounded-[2rem] sm:rounded-[3rem] bg-transparent w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden group/mastines">
+                                <img src="assets/media/mastines.webp" alt="Lunares y Juan José"
+                                    class="w-full h-full object-cover transition-transform duration-1000 group-hover/mastines:scale-110" />
+
+                                <!-- Etiquetas de nombres sutiles -->
+                                <div
+                                    class="absolute top-4 left-4 sm:top-6 sm:left-6 bg-background-dark/40 text-[7px] sm:text-[9px] font-bold text-white/80 uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none">
+                                    ↖ Juan José
+                                </div>
+                                <div
+                                    class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-background-dark/40 text-[7px] sm:text-[9px] font-bold text-white/80 uppercase tracking-widest px-3 py-1.5 rounded-full backdrop-blur-sm pointer-events-none">
+                                    Lunares ↘
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== NUESTRO ENTORNO ===== -->
+            <div class="py-24 bg-slate-900/40 relative overflow-hidden">
+                <div class="w-full px-6 lg:px-20 relative z-10">
+                    <div class="grid lg:grid-cols-2 gap-20 items-center">
+                        <div class="order-2 lg:order-1 relative">
+                            <div class="absolute -inset-10 bg-primary/5 rounded-[4rem] blur-3xl"></div>
+                            <div
+                                class="relative rounded-[3rem] overflow-hidden border border-white/5 aspect-[4/5] lg:aspect-square group">
+                                <img src="assets/media/im-equipo-crestellina-2.webp"
+                                    alt="Sierra Crestellina Paraje Natural"
+                                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100" />
+                                <div
+                                    class="absolute inset-x-8 bottom-8 p-8 bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                    <p class="text-white font-black text-xl italic uppercase tracking-tighter">Paraje
+                                        Natural protegido desde 1989</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order-1 lg:order-2 space-y-10">
+                            <div>
+                                <p class="text-primary text-[10px] font-black uppercase tracking-[0.5em] mb-4">El Origen
+                                    del Carácter</p>
+                                <h2
+                                    class="text-5xl lg:text-6xl font-black tracking-tighter leading-none italic uppercase">
+                                    Sierra <br /><span class="text-primary italic">Crestellina</span></h2>
+                                <p class="text-slate-400 text-lg mt-8 font-light leading-relaxed">
+                                    Nuestra quesería no existiría sin este enclave privilegiado. Situada en Casares, la
+                                    Sierra Crestellina es un macizo calizo que emerge con verticalidad, un refugio donde
+                                    el tiempo parece haberse detenido y donde nuestras cabras pastan en total libertad.
+                                </p>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-6">
+                                <div
+                                    class="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-primary/20 transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+                                        <i data-lucide="mountain"></i>
+                                    </div>
+                                    <h4 class="text-white font-black text-sm uppercase tracking-widest mb-2">Refugio
+                                        Calizo</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed font-light">Paredes escarpadas de
+                                        hasta 812m que definen un microclima único.</p>
+                                </div>
+                                <div
+                                    class="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-primary/20 transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+                                        <i data-lucide="bird"></i>
+                                    </div>
+                                    <h4 class="text-white font-black text-sm uppercase tracking-widest mb-2">Buitre
+                                        Leonado</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed font-light">Resguardo de una de las
+                                        colonias más importantes de Andalucía.</p>
+                                </div>
+                                <div
+                                    class="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-primary/20 transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+                                        <i data-lucide="flame-kindling"></i>
+                                    </div>
+                                    <h4 class="text-white font-black text-sm uppercase tracking-widest mb-2">Manejo de
+                                        Montes</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed font-light">Red Pasto-Cortafuegos:
+                                        nuestras cabras protegen la sierra del fuego.</p>
+                                </div>
+                                <div
+                                    class="p-6 rounded-3xl bg-white/5 border border-white/5 hover:border-primary/20 transition-colors">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+                                        <i data-lucide="droplets"></i>
+                                    </div>
+                                    <h4 class="text-white font-black text-sm uppercase tracking-widest mb-2">Leche de
+                                        Pastor</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed font-light">Flora mediterránea
+                                        (tomillo, romero) que aromatiza cada pieza.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== STORYTELLING / CRONOLOGÍA ===== -->
+            <div class="py-24" id="historia">
+                <div class="text-center mb-20">
+                    <p class="text-primary text-xs font-black uppercase tracking-[0.4em] mb-4">La historia completa</p>
+                    <h2 class="text-5xl font-black tracking-tighter leading-none">Nuestra <span
+                            class="text-primary italic">Trayectoria</span></h2>
+                    <p class="text-slate-400 text-lg mt-6 max-w-2xl mx-auto font-light">Cuatro generaciones, una sola
+                        historia de amor por la sierra y el queso artesanal.</p>
+                </div>
+
+                <div class="relative max-w-3xl mx-auto">
+                    <!-- Línea vertical -->
+                    <div
+                        class="absolute left-7 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/30 to-transparent hidden md:block">
+                    </div>
+
+                    <div class="space-y-0">
+
+                        <!-- 1930 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-background-dark font-black text-xs shadow-lg shadow-primary/30">
+                                    1930</div>
+                            </div>
+                            <div class="pt-2 pb-2">
+                                <h3 class="text-xl font-black text-white mb-2">El Origen: La Cosalva</h3>
+                                <p class="text-slate-400 leading-relaxed">María Bravo Calderón y Juan Ocaña Quirós
+                                    compran La Cosalva, una finca a las faldas de la Sierra Crestellina. Allí inician un
+                                    intercambio humilde pero lleno de dignidad: sus quesos artesanales, comercializados
+                                    mediante trueque. Una semilla que tardaría décadas en florecer por completo.</p>
+                            </div>
+                        </div>
+
+                        <!-- 1945 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-slate-800 border-2 border-primary/40 flex items-center justify-center text-primary font-black text-xs">
+                                    1945</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">La Laguna: el hogar definitivo</h3>
+                                <p class="text-slate-400 leading-relaxed">Nace Juan Ocaña Bravo, que daría continuidad a
+                                    la actividad quesera. Ese mismo año, la familia se instala en la granja actual —La
+                                    Laguna— donde hoy siguen elaborando quesos. Una mudanza que marcaría el destino de
+                                    todo lo que vendría después.</p>
+                            </div>
+                        </div>
+
+                        <!-- 1981 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-slate-800 border-2 border-primary/40 flex items-center justify-center text-primary font-black text-xs">
+                                    1981</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">Una sociedad de por vida</h3>
+                                <p class="text-slate-400 leading-relaxed">Se casan Juan Ocaña Quirós y Ana Mateo
+                                    Quiñones. Juntos, e impulsados por el empuje familiar, inician su propia explotación
+                                    caprina. Dos personas, una misma visión: criar las mejores cabras payoyas de
+                                    Andalucía.</p>
+                            </div>
+                        </div>
+
+                        <!-- 1982 & 1987 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-slate-800 border-2 border-primary/40 flex items-center justify-center text-primary font-black text-xs leading-none text-center">
+                                    82/87</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">Nace la 4ª generación</h3>
+                                <p class="text-slate-400 leading-relaxed">En 1982 llega Juan Ocaña Mateo y en 1987, Ana
+                                    Ocaña Mateo. Dos niños que crecen entre quesos, cabras y sierra, sin saber todavía
+                                    que algún día llevarían el apellido Crestellina al mundo. El relevo generacional ya
+                                    estaba en marcha.</p>
+                            </div>
+                        </div>
+
+                        <!-- 1997 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-slate-800 border-2 border-primary/40 flex items-center justify-center text-primary font-black text-xs">
+                                    1997</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">Nace la quesería</h3>
+                                <p class="text-slate-400 leading-relaxed">Por iniciativa de Juan Ocaña padre, se crea
+                                    formalmente la quesería. Ana Mateo, la maestra quesera, toma las riendas de la
+                                    elaboración. Sus manos, su olfato y su amor por el proceso harán del queso
+                                    Crestellina un producto único en toda Andalucía.</p>
+                            </div>
+                        </div>
+
+                        <!-- 2004 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-slate-800 border-2 border-primary/40 flex items-center justify-center text-primary font-black text-xs">
+                                    2004</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">El maestro quesero toma el timón</h3>
+                                <p class="text-slate-400 leading-relaxed">Juan Ocaña Mateo finaliza sus estudios en
+                                    ganadería caprina y elaboración artesanal de quesos. El conocimiento universitario
+                                    se suma a la experiencia de tres generaciones. La cuarta generación está lista para
+                                    asumir el reto de modernizar sin perder la esencia.</p>
+                            </div>
+                        </div>
+
+                        <!-- 2020 -->
+                        <div class="relative flex gap-8 pb-12 timeline-item">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-slate-800 border-2 border-primary/30 flex items-center justify-center text-primary/70 font-black text-xs">
+                                    2020</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">El año más duro</h3>
+                                <p class="text-slate-400 leading-relaxed">La pandemia sacude los cimientos del negocio.
+                                    Ese mismo año, Juan Ocaña padre fallece en febrero. Un golpe doble que pone a prueba
+                                    todos los valores que él había sembrado a lo largo de décadas. Pero en los momentos
+                                    de crisis es donde la familia Ocaña siempre resurge con más fuerza.</p>
+                                <p class="text-slate-400 leading-relaxed mt-3">Toman la difícil decisión de reducir el
+                                    rebaño para apostar por la calidad del queso sobre la cantidad de leche. Una
+                                    decisión valiente que marcaría el rumbo del nuevo Crestellina.</p>
+                            </div>
+                        </div>
+
+                        <!-- 2021 -->
+                        <div class="relative flex gap-8 pb-4">
+                            <div class="flex-shrink-0 relative z-10">
+                                <div
+                                    class="w-14 h-14 rounded-full bg-primary flex items-center justify-center text-background-dark font-black text-xs shadow-lg shadow-primary/30">
+                                    2021</div>
+                            </div>
+                            <div class="pt-2">
+                                <h3 class="text-xl font-black text-white mb-2">Nace Crestellina tal y como la conoces
+                                </h3>
+                                <p class="text-slate-400 leading-relaxed">Cambian de nombre: de "Quesos Sierra
+                                    Crestellina" a simplemente <strong class="text-white">Crestellina</strong>. Nueva
+                                    imagen de marca, nuevos quesos con sello ecológico y un propósito claro: llevar a
+                                    cada mesa un pedazo de la sierra, de la familia y de la historia que empezó en 1930.
+                                </p>
+                                <p class="text-primary text-sm font-bold mt-4">Hoy, la historia sigue escribiéndose. →
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== MANIFIESTO ===== -->
+            <div class="py-10 mb-24">
+                <div
+                    class="p-16 lg:p-24 rounded-[3.5rem] bg-gradient-to-br from-primary to-amber-600 text-background-dark relative overflow-hidden shadow-2xl group">
+                    <div class="absolute top-0 left-0 w-full h-full opacity-10 group-hover:scale-110 transition-transform duration-[5s]"
+                        style="background-image: url('assets/media/sl-quesos-artesanales-crestellina-3.webp'); background-size: cover; background-position: center;">
+                    </div>
+                    <div class="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <p class="text-background-dark/60 text-sm font-black uppercase tracking-[0.4em] mb-4">
+                                Nuestro Manifiesto</p>
+                            <h2 class="text-5xl lg:text-6xl font-black tracking-tighter leading-none italic mb-8">
+                                En Crestellina no vendemos quesos.<br /><span class="text-white">Vendemos campo.</span>
+                            </h2>
+                            <p class="text-background-dark/80 text-lg font-light leading-relaxed">
+                                Los quesos son nuestra excusa para que reconectes con la naturaleza y seas feliz.
+                                Compartimos con pasión y humildad el legado de nuestra familia. Crestellina es un canto
+                                a la vida rural, una llamada a parar, ser consciente y vivir con gratitud.
+                            </p>
+                            <p class="mt-6 font-bold text-background-dark text-lg">"Sencillos por Naturaleza."</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-4 bg-background-dark/10 rounded-2xl p-5">
+                                <i data-lucide="trees" class="w-6 h-6 text-background-dark mt-0.5 flex-shrink-0"></i>
+                                <p class="text-background-dark/80 text-sm leading-relaxed font-medium">Cabras en
+                                    pastoreo extensivo · Prevención de incendios · Red Pasto-Cortafuegos de Andalucía
+                                </p>
+                            </div>
+                            <div class="flex items-start gap-4 bg-background-dark/10 rounded-2xl p-5">
+                                <i data-lucide="sun" class="w-6 h-6 text-background-dark mt-0.5 flex-shrink-0"></i>
+                                <p class="text-background-dark/80 text-sm leading-relaxed font-medium">Energía solar
+                                    propia · Envases reciclables y compostables · Gestión circular de residuos</p>
+                            </div>
+                            <div class="flex items-start gap-4 bg-background-dark/10 rounded-2xl p-5">
+                                <i data-lucide="graduation-cap"
+                                    class="w-6 h-6 text-background-dark mt-0.5 flex-shrink-0"></i>
+                                <p class="text-background-dark/80 text-sm leading-relaxed font-medium">Talleres
+                                    educativos para escolares · Programas de inclusión · Apoyo a la economía local</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CTA ===== -->
+            <div class="text-center pb-24 space-y-8">
+                <h2 class="text-4xl font-black tracking-tighter">¿Quieres <span class="text-primary italic">vivir</span>
+                    la experiencia?</h2>
+                <p class="text-slate-400 text-lg max-w-xl mx-auto font-light">Visítanos en la sierra. Haz tu propio
+                    queso. Lleva a casa algo real.</p>
+                <div class="flex flex-wrap justify-center gap-6">
+                    <a href="experiencias.html"
+                        class="px-10 py-5 bg-primary text-background-dark font-black rounded-2xl hover:scale-105 transition-transform flex items-center gap-3 text-lg shadow-2xl shadow-primary/20">
+                        Reservar Experiencia <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                    </a>
+                    <a href="tienda.html"
+                        class="px-10 py-5 bg-slate-900 text-white font-black rounded-2xl border border-primary/20 hover:border-primary transition-colors text-lg flex items-center gap-3">
+                        Ver Productos <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        
+    </div>
+    <div id="tienda-section" class="hidden min-h-screen bg-background-dark">
+        <div class="w-full px-6 md:px-20 py-20 mt-[80px]">
+            <!-- Sección Hero -->
+            <div
+                class="flex flex-col md:flex-row justify-between items-start md:items-end gap-10 mb-20 animate-fade-in">
+                <div class="flex flex-col gap-6 max-w-2xl">
+                    <h1 class="text-6xl font-black leading-none tracking-tighter">Joyas <br /><span
+                            class="text-primary italic">Gastronómicas</span></h1>
+                    <p class="text-slate-600 dark:text-slate-400 text-xl font-light leading-relaxed">Queso de cabra
+                        artesanal desde el corazón de Casares. Elaborado a mano con métodos que desafían el tiempo.</p>
+                </div>
+                <div class="flex gap-4">
+                    <!-- Botón de favoritos eliminado -->
+                </div>
+            </div>
+
+            <!-- Pestañas de Categoría eliminadas -->
+
+            <!-- Sección Destacada: Pack Degustación -->
+            <section id="packs" class="mb-32">
+                <div
+                    class="relative overflow-hidden rounded-[2.5rem] bg-slate-900 border border-primary/10 p-12 lg:p-20 shadow-2xl">
+                    <div class="absolute top-0 right-0 w-full h-full opacity-20 pointer-events-none"
+                        style="background-image: radial-gradient(circle at top right, #f4c025, transparent);"></div>
+                    <div class="flex flex-col md:flex-row gap-20 items-center relative z-10">
+                        <div class="w-full md:w-1/2 flex flex-col gap-8">
+                            <div
+                                class="inline-flex px-4 py-1 rounded-full bg-primary text-background-dark text-[10px] font-black uppercase tracking-[0.2em] w-fit shadow-lg shadow-primary/20">
+                                Selección Destacada</div>
+                            <h2 class="text-5xl lg:text-6xl font-black text-white leading-none tracking-tighter">Pack
+                                <br />Degustación <br /><span class="text-primary italic">Crestellina</span>
+                            </h2>
+                            <p class="text-xl text-slate-300 font-light leading-relaxed">Un viaje sensorial a través de
+                                los sabores de Casares. Incluye nuestras piezas más galardonadas, desde la suavidad del
+                                fresco hasta la intensidad del reserva.</p>
+
+                            <div class="grid grid-cols-2 gap-6">
+                                <div
+                                    class="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                                    <i data-lucide="wind" class="w-8 h-8 text-primary"></i>
+                                    <div>
+                                        <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">
+                                            Aroma</p>
+                                        <p class="text-sm font-bold text-white">Bosque mediterráneo</p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="flex items-center gap-4 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
+                                    <i data-lucide="utensils" class="w-8 h-8 text-primary"></i>
+                                    <div>
+                                        <p class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-1">
+                                            Textura</p>
+                                        <p class="text-sm font-bold text-white">Evolución artesana</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-8 mt-6">
+                                <span class="text-4xl font-black text-primary">€45.00</span>
+                                <button
+                                    class="flex-1 flex items-center justify-center gap-3 rounded-2xl h-16 bg-primary text-background-dark hover:scale-[1.02] transition-all font-black text-lg shadow-2xl shadow-primary/20">
+                                    <i data-lucide="shopping-cart" class="w-6 h-6"></i> Comprar Ahora
+                                </button>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2">
+                            <div class="aspect-square w-full rounded-3xl bg-cover bg-center shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-700 hover:scale-105"
+                                style='background-image: url("assets/media/pack_degustacion.webp");'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cuadrícula de Productos -->
+            <div id="catalogo" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+                <!-- Product Card 1: Queso Fresco -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/queso_fresco.webp");'>
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Queso Fresco Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo
+                                </p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€8.18</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Artesano</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Ecológico</span>
+                        </div>
+                        <button
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-primary text-background-dark hover:bg-white transition-all font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/10">
+                            <i data-lucide="plus" class="w-5 h-5"></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 2: Semicurado (Agotado) -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 opacity-90">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/queso_semicurado_romero.webp");'>
+                        </div>
+                        <div class="absolute inset-0 bg-background-dark/20 backdrop-blur-[2px]"></div>
+                        <div
+                            class="absolute top-6 left-6 py-1.5 px-4 bg-background-dark/80 backdrop-blur-md rounded-xl text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                            Agotado
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Semicurado Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo
+                                </p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€9.10</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Equilibrado</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Ecológico</span>
+                        </div>
+                        <button disabled
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-slate-700/50 text-slate-400 cursor-not-allowed font-black text-sm uppercase tracking-[0.2em]">
+                            Próximamente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 3: Curado (Agotado) -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 opacity-90">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/queso_curado.webp");'>
+                        </div>
+                        <div class="absolute inset-0 bg-background-dark/20 backdrop-blur-[2px]"></div>
+                        <div
+                            class="absolute top-6 left-6 py-1.5 px-4 bg-background-dark/80 backdrop-blur-md rounded-xl text-white text-[10px] font-black uppercase tracking-[0.2em]">
+                            Agotado
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Queso Curado Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo
+                                </p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€10.56</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Intenso</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Ecológico</span>
+                        </div>
+                        <button disabled
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-slate-700/50 text-slate-400 cursor-not-allowed font-black text-sm uppercase tracking-[0.2em]">
+                            Próximamente
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 4: Yogur -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/Yogur-tres-tamanos_1.webp");'>
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Yogur Natural Ecológico</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">Cabra Payoya en Pastoreo
+                                </p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€2.50</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Natural</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">En
+                                Tarro</span>
+                        </div>
+                        <button
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-primary text-background-dark hover:bg-white transition-all font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/10">
+                            <i data-lucide="plus" class="w-5 h-5"></i> Añadir
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 5: Tarjeta Regalo -->
+                <div
+                    class="group flex flex-col bg-background-light dark:bg-slate-900/40 rounded-[2.5rem] overflow-hidden border border-primary/5 transition-all hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
+                    <div class="relative h-96 overflow-hidden">
+                        <div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700"
+                            style='background-image: url("assets/media/prd-gift-quesos-crestellina-1.webp");'>
+                        </div>
+                        <div
+                            class="absolute top-6 right-6 h-12 w-12 bg-background-dark/50 backdrop-blur-md rounded-full flex items-center justify-center text-white cursor-pointer hover:bg-primary hover:text-background-dark transition-all">
+                            <i data-lucide="heart" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <div class="p-10 flex flex-col gap-6 flex-grow">
+                        <div class="flex justify-between items-start">
+                            <div class="space-y-1">
+                                <h3 class="text-2xl font-black">Tarjeta Regalo</h3>
+                                <p class="text-sm text-primary font-bold italic tracking-wide">El Regalo Perfecto</p>
+                            </div>
+                            <span class="text-2xl font-black text-primary">€10.00</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Regalable</span>
+                            <span
+                                class="px-3 py-1 rounded-lg bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest">Digital</span>
+                        </div>
+                        <button
+                            class="w-full mt-auto flex items-center justify-center gap-3 rounded-2xl h-14 bg-primary text-background-dark hover:bg-white transition-all font-black text-sm uppercase tracking-[0.2em] shadow-lg shadow-primary/10">
+                            <i data-lucide="gift" class="w-5 h-5"></i> Elegir Importe
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div id="experiencias-section" class="hidden min-h-screen bg-background-dark">
+        <div class="w-full mt-[80px] overflow-x-hidden">
+            <!-- ===== SCROLL EXPANSION HERO ===== -->
+            <div id="scroll-hero">
+                <section class="relative flex flex-col items-center justify-start min-h-[100dvh]">
+                    <div class="relative w-full flex flex-col items-center min-h-[100dvh]">
+
+                        <!-- Background image that fades as video expands -->
+                        <div id="hero-bg-wrapper" class="absolute inset-0 z-0 h-full">
+                            <img src="assets/media/tt1920x1080-crestellina-nuestros-productos-1.webp"
+                                alt="Background" class="w-screen h-screen object-cover object-center" />
+                            <div class="absolute inset-0 bg-black/50"></div>
+                        </div>
+
+                        <div class="container mx-auto flex flex-col items-center justify-start relative z-10">
+                            <div class="flex flex-col items-center justify-center w-full h-[100dvh] relative">
+
+                                <!-- Video Container - expands on scroll -->
+                                <div id="video-container"
+                                    class="absolute z-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl overflow-hidden"
+                                    style="width:300px;height:400px;max-width:95vw;max-height:85vh;box-shadow:0 0 50px rgba(0,0,0,0.4);transition:border-radius 0.3s;">
+                                    <video id="hero-video" src="assets/media/quesos.webm" autoplay loop muted playsinline
+                                        class="w-full h-full object-cover"></video>
+                                    <!-- Dark overlay on video -->
+                                    <div id="video-overlay" class="absolute inset-0 bg-black/60 pointer-events-none">
+                                    </div>
+                                    <!-- Mute/Unmute button -->
+                                    <button id="mute-btn"
+                                        class="absolute top-4 right-4 z-30 bg-black/60 hover:bg-black/90 text-white hover:text-primary backdrop-blur-md border border-white/10 w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                                        aria-label="Silenciar/Activar sonido">
+                                        <i data-lucide="volume-2" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Hero Titles that slide apart on scroll -->
+                                <div
+                                    class="flex flex-col items-center justify-center text-center gap-2 w-full relative z-10 pointer-events-none px-4">
+                                    <h1 id="hero-t1"
+                                        class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none"
+                                        style="transition:none;">
+                                        S&eacute; <span class="text-primary italic font-serif">Quesero</span>
+                                    </h1>
+                                    <p id="hero-t2"
+                                        class="text-5xl md:text-7xl lg:text-8xl font-black text-white uppercase tracking-tighter leading-none"
+                                        style="transition:none;">
+                                        Por un D&iacute;a
+                                    </p>
+                                    <p id="hero-hint"
+                                        class="mt-8 text-sm uppercase tracking-[0.4em] text-white/60 font-bold transition-opacity duration-300">
+                                        — Scroll para descubrir —
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- ===== FIN SCROLL EXPANSION HERO ===== -->
+
+            <!-- Contenedor Detalles y Reservas (hidden until hero is expanded) -->
+            <div id="hero-content" class="max-w-7xl mx-auto w-full px-6 md:px-20 py-20 flex flex-col gap-16"
+                style="opacity:0;pointer-events:none;transition:opacity 0.7s;">
+
+                <!-- Selección de Experiencias -->
+                <div class="flex flex-col gap-12 mb-4">
+                    <div class="text-center max-w-2xl mx-auto">
+                        <span class="text-primary font-black uppercase tracking-[0.4em] text-xs mb-4 block">Para todos los públicos</span>
+                        <h2 class="text-4xl lg:text-6xl font-black tracking-tighter">Dos <span class="text-primary italic font-serif">Caminos</span> a Elegir</h2>
+                    </div>
+
+                                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Experiencia 1: Cabrero y Quesero -->
+                        <div id="card-cabrero" onclick="selectExp('cabrero')" class="group relative bg-slate-900 border-2 border-white/5 hover:border-primary/40 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all cursor-pointer">
+                            <div class="h-80 overflow-hidden relative">
+                                <img id="img-cabrero" src="assets/media/cabrero_quesero_exp.webp" alt="Cabrero y Quesero por un Día" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-6 left-8 right-8 flex justify-between items-end pointer-events-none">
+                                    <span class="bg-primary text-background-dark font-black px-4 py-2 rounded-xl text-sm shadow-xl shadow-primary/20">Desde 40€ / Pers.</span>
+                                </div>
+                            </div>
+                            <div class="p-8 pt-6 flex flex-col gap-4">
+                                <h3 class="text-3xl font-black text-white leading-tight">Cabrero y Quesero <span class="text-primary block italic font-serif">por un Día</span></h3>
+                                <div class="flex gap-4">
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300"><i data-lucide="clock" class="w-4 h-4 text-primary"></i> 3 Horas</span>
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300"><i data-lucide="users" class="w-4 h-4 text-primary"></i> Todos los públicos</span>
+                                </div>
+                            </div>
+                            <!-- Seleccionado badge -->
+                            <div id="badge-cabrero" class="hidden absolute top-6 right-6 bg-primary text-background-dark text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg">Seleccionada</div>
+                            <div id="overlay-cabrero" class="hidden absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                        </div>
+
+                        <!-- Experiencia 2: Chivitos -->
+                        <div id="card-chivitos" onclick="selectExp('chivitos')" class="group relative bg-slate-900 border-2 border-white/5 hover:border-primary/40 rounded-[2.5rem] overflow-hidden hover:shadow-2xl hover:shadow-primary/10 transition-all cursor-pointer">
+                            <div class="h-80 overflow-hidden relative">
+                                <img id="img-chivitos" src="assets/media/chivitos_exp.webp" alt="Conoce los Chivitos de Crestellina" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                                <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent pointer-events-none"></div>
+                                <div class="absolute bottom-6 left-8 right-8 flex justify-between items-end pointer-events-none">
+                                    <span class="bg-white text-background-dark font-black px-4 py-2 rounded-xl text-sm shadow-xl hover:bg-primary transition-colors">Desde 24€ / Pers.</span>
+                                </div>
+                            </div>
+                            <div class="p-8 pt-6 flex flex-col gap-4">
+                                <h3 class="text-3xl font-black text-white leading-tight">Conoce los Chivitos <span class="text-slate-400 block italic font-serif opacity-80">de Crestellina</span></h3>
+                                <div class="flex gap-4 cursor-pointer">
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300 transition-colors"><i data-lucide="clock" class="w-4 h-4 text-slate-400"></i> 2 Horas</span>
+                                    <span class="flex items-center gap-1.5 text-xs font-bold text-slate-300 transition-colors"><i data-lucide="users" class="w-4 h-4 text-slate-400"></i> Ideal Familias</span>
+                                </div>
+                            </div>
+                            <!-- Seleccionado badge -->
+                            <div id="badge-chivitos" class="hidden absolute top-6 right-6 bg-primary text-background-dark text-xs font-black uppercase px-4 py-1.5 rounded-full shadow-lg">Seleccionada</div>
+                            <div id="overlay-chivitos" class="hidden absolute inset-0 bg-primary/5 pointer-events-none"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contenedor dinámico (oculto por defecto) -->
+                <div id="exp-config-area" class="hidden flex-col gap-12 mt-8 opacity-0 transition-opacity duration-700">
+                    
+                    <hr class="border-white/5 w-full max-w-3xl mx-auto my-4" />
+
+                    <!-- Desglose de Experiencia a todo ancho -->
+                    <div class="w-full relative">
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-5 gap-16 relative z-10">
+                            <div class="lg:col-span-3 flex flex-col gap-8">
+                                <h3 id="dyn-title" class="text-4xl lg:text-5xl font-black tracking-tighter leading-tight">Título <span class="text-primary italic font-serif">Dinámico</span></h3>
+                                <div id="dyn-desc" class="text-slate-400 text-lg font-light leading-relaxed space-y-4">
+                                    Descripción...
+                                </div>
+                            </div>
+                            <div class="lg:col-span-2 flex flex-col gap-8">
+                                <!-- Grid Info -->
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="p-6 rounded-3xl bg-background-dark/80 border border-primary/10 flex flex-col gap-2">
+                                        <i data-lucide="clock" class="w-6 h-6 text-primary"></i>
+                                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Duración</span>
+                                        <span id="dyn-duration" class="text-white font-bold text-lg">-</span>
+                                    </div>
+                                    <div class="p-6 rounded-3xl bg-background-dark/80 border border-primary/10 flex flex-col gap-2">
+                                        <i data-lucide="users" class="w-6 h-6 text-primary"></i>
+                                        <span class="text-[10px] text-slate-500 uppercase font-black tracking-widest">Capacidad</span>
+                                        <span id="dyn-capacity" class="text-white font-bold text-lg">-</span>
+                                    </div>
+                                </div>
+                                <!-- Qué Incluye -->
+                                <div class="bg-primary/5 rounded-3xl p-8 border border-primary/20">
+                                    <h4 class="font-bold text-white mb-6 uppercase tracking-widest text-xs border-b border-primary/10 pb-4">¿Qué incluye?</h4>
+                                    <ul id="dyn-includes" class="space-y-4 text-sm text-slate-300">
+                                        <!-- Dinámico -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración Reserva -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mt-8">
+                        <!-- Selector de Asistentes -->
+                        <div class="flex flex-col gap-6" id="tickets-container">
+                        </div>
+
+                        <!-- Tarjeta de Reserva -->
+                    <!-- Contenedor Reserva -->
+                    <div class="flex flex-col gap-8 w-full mt-4">
+                        <h4 class="text-2xl font-black flex items-center justify-between tracking-tighter">
+                            Reserva tu Plaza
+                            <span class="text-sm text-primary font-black uppercase tracking-widest">Abril
+                                2024</span>
+                        </h4>
+                        <div
+                            class="grid grid-cols-7 gap-3 text-center text-[10px] font-black uppercase tracking-widest text-slate-500 opacity-70">
+                            <div>LU</div>
+                            <div>MA</div>
+                            <div>MI</div>
+                            <div>JU</div>
+                            <div>VI</div>
+                            <div>SA</div>
+                            <div>DO</div>
+                            <!-- Marcador de Cuadrícula de Calendario -->
+                            <div class="py-3 text-slate-700">29</div>
+                            <div class="py-3 text-slate-700">30</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white">
+                                1</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                2</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                3</div>
+                            <div
+                                class="py-3 rounded-xl bg-primary text-background-dark font-black cursor-pointer shadow-lg shadow-primary/20">
+                                4</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold border border-primary/20">
+                                5</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white">
+                                6</div>
+                            <div
+                                class="py-3 rounded-xl bg-primary/5 border border-primary/20 text-primary cursor-pointer font-black">
+                                7</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white">
+                                8</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                9</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                10</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold border border-primary/20">
+                                11</div>
+                            <div
+                                class="py-3 rounded-xl hover:bg-primary/10 cursor-pointer transition-colors text-white font-bold">
+                                12</div>
+                        </div>
+                        <div class="space-y-4">
+                            <button
+                                class="w-full bg-primary hover:bg-white text-background-dark font-black py-5 rounded-2xl transition-all shadow-xl shadow-primary/20 flex items-center justify-center gap-3 text-sm uppercase tracking-widest">
+                                <i data-lucide="ticket" class="w-5 h-5"></i> Confirmar Reserva
+                            </button>
+                            <button
+                                class="w-full bg-transparent border-2 border-primary/30 text-primary hover:bg-primary/10 font-black py-5 rounded-2xl transition-all text-sm uppercase tracking-widest">
+                                Regalar Experiencia
+                            </button>
+                        </div>
+                        <p
+                            class="text-[10px] text-center text-slate-500 font-bold uppercase tracking-widest opacity-60 italic">
+                            Cancelación flexible hasta 48h antes.</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer id="contacto" class="bg-background-dark text-slate-400 py-24 px-6 lg:px-20 border-t border-primary/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <svg class="w-14 h-14 text-primary" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                        <div class="flex flex-col items-start pt-1">
+                            <span
+                                class="text-[8px] uppercase tracking-[0.4em] text-slate-500 font-bold leading-none -mb-1">Desde
+                                1930</span>
+                            <h2 class="text-4xl font-black text-white leading-none lowercase tracking-tighter">
+                                crestellina</h2>
+                            <span
+                                class="text-[8px] uppercase tracking-[0.1em] text-slate-500 font-bold mt-0.5 leading-none">Sencillos
+                                por Naturaleza</span>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Desde 1930, elaboramos los quesos más puros de Andalucía. Un compromiso innegociable con el
+                        bienestar animal y la herencia artesana.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/Crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Explorar</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="index.html">Inicio</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="tienda.html">Nuestros Quesos</a></li>
+                        <li><a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                                href="experiencias.html">Experiencias</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="nosotros.html">Nuestra Historia</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Contacto y Horario</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="opacity-70">Telf. 952 895 167</li>
+                        <li class="opacity-70 mt-4 block leading-relaxed">Abierto todos los días:<br />- Mañanas
+                            10:00-14:00<br />- Tardes 15:00-19:00 h.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">Contacto</h4>
+                    <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="block h-40 w-full relative rounded-2xl overflow-hidden border border-primary/20 grayscale hover:grayscale-0 transition-all duration-700 group">
+                        <div
+                            class="absolute inset-0 z-10 bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" class="pointer-events-none" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="max-w-7xl mx-auto mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-bold opacity-50">
+                <p>© 2024 Quesería Crestellina. Elaborado con pasión en la Sierra.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-primary">Cookies</a>
+                    <a href="#" class="hover:text-primary">Privacidad</a>
+                    <a href="#" class="hover:text-primary">Términos</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    
+    </div>
+<!-- Footer -->
+        <footer id="contacto" class="bg-background-dark text-slate-400 py-24 px-6 lg:px-20 border-t border-primary/10">
+            <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-20">
+                <div class="space-y-8">
+                    <div class="flex items-center gap-4">
+                        <svg class="w-14 h-14 text-primary" fill="none" stroke="currentColor" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M12 3a9 9 0 1 0 9 9h-9Z" />
+                            <path d="M16 1.5a9 9 0 0 1 7 7h-7Z" />
+                        </svg>
+                        <div class="flex flex-col items-start pt-1">
+                            <span
+                                class="text-[8px] uppercase tracking-[0.4em] text-slate-500 font-bold leading-none -mb-1">Desde
+                                1930</span>
+                            <h2 class="text-4xl font-black text-white leading-none lowercase tracking-tighter">
+                                crestellina</h2>
+                            <span
+                                class="text-[8px] uppercase tracking-[0.1em] text-slate-500 font-bold mt-0.5 leading-none">Sencillos
+                                por Naturaleza</span>
+                        </div>
+                    </div>
+                    <p class="text-sm leading-relaxed opacity-70">
+                        Desde 1930, elaboramos los quesos más puros de Andalucía. Un compromiso innegociable con el
+                        bienestar animal y la herencia artesana.
+                    </p>
+                    <div class="flex gap-4">
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                            </svg>
+                        </a>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/Crestellina/" target="_blank" rel="noopener noreferrer"
+                            aria-label="Facebook de Crestellina"
+                            class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-background-dark transition-all text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Explorar</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a class="text-sm font-semibold text-primary underline underline-offset-8 decoration-primary decoration-2"
+                                href="#inicio" onclick="window.navToSection('inicio'); return false;">Inicio</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="#tienda" onclick="window.navToSection('tienda'); return false;">Nuestros Quesos</a></li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="#experiencias" onclick="window.navToSection('experiencias'); return false;">Experiencias</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="#nosotros" onclick="window.navToSection('nosotros'); return false;">Nuestra Historia</a>
+                        </li>
+                        <li><a class="text-sm font-medium text-white hover:text-primary transition-colors"
+                                href="#contacto" onclick="window.navToSection('contacto'); return false;">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">
+                        Contacto y Horario</h4>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li class="opacity-70">Telf. 952 895 167</li>
+                        <li class="opacity-70 mt-4 block leading-relaxed">Abierto todos los días:<br />- Mañanas
+                            10:00-14:00<br />- Tardes 15:00-19:00 h.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4
+                        class="text-white font-bold mb-8 uppercase tracking-widest text-xs decoration-primary decoration-2 underline-offset-8">Contacto</h4>
+                    <p class="text-sm mb-6 opacity-70">Ctra. Manilva-Gaucín, Km 13.5<br />Casares (Málaga)</p>
+                    <a href="https://www.google.com/maps/place/Crestellina/@36.4530061,-5.2918023,17z/data=!3m1!4b1!4m6!3m5!1s0xd0cd8de5eeda237:0x379b1b9934f36b9!8m2!3d36.4530061!4d-5.2918023!16s%2Fg%2F11c328qk4c?entry=ttu"
+                        target="_blank"
+                        class="block h-40 w-full relative rounded-2xl overflow-hidden border border-primary/20 grayscale hover:grayscale-0 transition-all duration-700 group">
+                        <div
+                            class="absolute inset-0 z-10 bg-black/10 group-hover:bg-transparent transition-colors duration-500">
+                        </div>
+                        <iframe
+                            src="https://maps.google.com/maps?q=Queser%C3%ADa+Crestellina,+Casares&t=&z=12&ie=UTF8&iwloc=&output=embed"
+                            width="100%" height="100%" style="border:0;" class="pointer-events-none" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </a>
+                </div>
+            </div>
+            <div
+                class="w-full mt-24 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6 text-[10px] uppercase tracking-[0.2em] font-bold opacity-50">
+                <p>© 2024 Quesería Crestellina. Elaborado con pasión en la Sierra.</p>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-primary">Cookies</a>
+                    <a href="#" class="hover:text-primary">Privacidad</a>
+                    <a href="#" class="hover:text-primary">Términos</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="lunares-native.js"></script>
+
+    <!-- MODAL GLOBAL SISTEMA -->
+    <div id="global-modal"
+        class="fixed inset-0 z-[1000] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-500 bg-background-dark/80 backdrop-blur-md"
+        onclick="closeModal()">
+        <div class="modal-content w-full max-w-2xl bg-slate-900/95 border border-primary/30 rounded-[3rem] p-8 sm:p-12 shadow-[0_0_50px_rgba(0,0,0,0.5)] transform scale-90 transition-all duration-500 relative max-h-[90vh] flex flex-col"
+            onclick="event.stopPropagation()">
+            <button onclick="closeModal()"
+                class="absolute top-8 right-8 text-slate-500 hover:text-primary transition-colors">
+                <i data-lucide="x" class="w-8 h-8"></i>
+            </button>
+            <div id="modal-body"
+                class="overflow-y-auto custom-scrollbar pr-4 text-slate-300 text-sm sm:text-base space-y-4">
+            </div>
+        </div>
+    </div>
+
+<script>
+// Objeto con los textos completos (Recovered long texts)
+        const teamData = {
+            'juan-padre': `
+                <div class="flex items-center gap-4 mb-6 border-b border-primary/20 pb-6">
+                    <img src="assets/media/im-equipo-juan-ocana-padre-1.webp" class="w-20 h-20 rounded-full object-cover border-2 border-primary" />
+                    <div>
+                        <h3 class="text-2xl font-black italic uppercase text-white">Juan Ocaña Quirós</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-widest">Fundador · In Memoriam</p>
+                    </div>
+                </div>
+                <p>Nuestro padre Juan Ocaña Quirós nos dejó en febrero de 2020 pero a día de hoy su legado se deja notar en cada esquina de nuestra granja.</p>
+                <p>Genio y figura, su autenticidad, su hospitalidad y sus chistes serán difícilmente olvidables por los amigos que a día de hoy pasan por aquí y añoran su presencia junto a la lumbre de nuestra antigua cocina.</p>
+                <p>Sin su visión y trabajo duro, hoy no estaríamos donde estamos, ni mantendríamos los valores de antaño. En nuestra ganadería seguimos criando nuestras cabras tal y como nuestro padre aprendió de su padre y su abuelo. Crestellina es una de las pocas ganaderías que a día de hoy, no separa a los chivitos de sus madres y les permiten que se alimenten de leche materna, aprendan y se críen con ellas hasta el momento del destete. Destete que hacemos con "botijos" como se hace desde hace siglos. Todo eso es legado de nuestro padre.</p>
+                <p>2020 fue un año duro para todo el mundo por la pandemia, pero a nosotros nos azotó doblemente e hizo temblar todos los cimientos de nuestro negocio hasta el punto de tener ganas de dejarlo todo... Pero es en los momentos de crisis donde se resurge con más fuerza, y eso es algo que aprendimos de nuestro padre.</p>
+                <p class="text-primary italic font-bold">Pronto sacaremos un queso muy especial que llevará su nombre: Juan Ocaña. ¡Va por ti, papá!</p>
+            `,
+            'ana-madre': `
+                <div class="flex items-center gap-4 mb-6 border-b border-primary/20 pb-6">
+                    <img src="assets/media/im-equipo-ana-mateo-2.webp" class="w-20 h-20 rounded-full object-cover border-2 border-primary" />
+                    <div>
+                        <h3 class="text-2xl font-black italic uppercase text-white">Ana Mateo Quiñones</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-widest">Maestra Quesera</p>
+                    </div>
+                </div>
+                <p>Ana Mateo es la Maestra quesera en mayúsculas de Crestellina. Ana y Juan han heredado de su madre el buen hacer. Desde que nacieron ha sido la responsable de elaborar los quesos y de enseñar a sus hijos cada detalle del proceso.</p>
+                <p>Su habilidad para elaborar quesos es asombrosa, a ella no le hacen falta artilugios electrónicos para controlar la temperatura o el PH, con su simple olfato ya sabe cuándo hay que dar el próximo paso. Esa precisión se ha labrado queso a queso a lo largo de 40 años.</p>
+                <p>A ella le debemos el sabor de Crestellina. Y no sólo en forma de quesos, sino en forma de recetas tradicionales: chivo casareño, gazpacho caliente... Ella es la encargada de alegrar los estómagos de todos.</p>
+                <p>Trabajadora incansable, constante y comprometida. Está próxima a su merecidísimo descanso, pero conociéndola, dudamos que no deje de asomar su infalible olfato por las cubas.</p>
+            `,
+            'juan-hijo': `
+                <div class="flex items-center gap-4 mb-6 border-b border-primary/20 pb-6">
+                    <img src="assets/media/im-equipo-juan-ocana-1.webp" class="w-20 h-20 rounded-full object-cover border-2 border-primary" />
+                    <div>
+                        <h3 class="text-2xl font-black italic uppercase text-white">Juan Ocaña Mateo</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-widest">Dirección & Ventas</p>
+                    </div>
+                </div>
+                <p>Juan Ocaña es el cuarto de su familia en abrazar este nombre con orgullo. Nacido en 1982, es la encarnación del espíritu emprendedor en Crestellina.</p>
+                <p>No puede parar de crear. Cuando está detrás del mostrador, ¡los quesos se los quitan de las manos!. Es capaz de venderte hasta una piedra y es el más mediático de todo el equipo.</p>
+                <p>Su sueño es sembrar la semillita en los cientos de escolares que pasan por aquí para que en el futuro haya muchos queseros y cabreros como él.</p>
+            `,
+            'ana-hija': `
+                <div class="flex items-center gap-4 mb-6 border-b border-primary/20 pb-6">
+                    <img src="assets/media/im-equipo-ana-ocana-1.webp" class="w-20 h-20 rounded-full object-cover border-2 border-primary" />
+                    <div>
+                        <h3 class="text-2xl font-black italic uppercase text-white">Ana Ocaña Mateo</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-widest">Producción & Detalle</p>
+                    </div>
+                </div>
+                <p>Ana es la menor de los hermanos y encargada de la producción diaria. Sus manos dan vida a quesos, requesones y yogures con una eficiencia asombrosa.</p>
+                <p>Mima cada detalle, desde el cuajo hasta el etiquetado. Su gusto por la estética se nota en los caterings de la granja: cada tabla es una obra de arte.</p>
+                <p>La excelencia es para ella una herencia familiar innegociable.</p>
+            `,
+            'cristina': `
+                <div class="flex items-center gap-4 mb-6 border-b border-primary/20 pb-6">
+                    <img src="assets/media/im-equipo-cristina-rodriguez-2.webp" class="w-20 h-20 rounded-full object-cover border-2 border-white/20" />
+                    <div>
+                        <h3 class="text-2xl font-black italic uppercase text-white">Cristina Rodríguez</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-widest">Experiencias</p>
+                    </div>
+                </div>
+                <p>Cristina es natural de Benalauría y el corazón de las experiencias en Crestellina. Su camino se cruzó con el de Juan y desde entonces caminan juntos.</p>
+                <p>Terapeuta ocupacional de formación, es paciente, observadora y responsable de que cada visita a la granja sea inolvidable.</p>
+                <p>Gestiona la atención al cliente y coordina eventos con una sensibilidad única, conociendo cada rincón de Crestellina al detalle.</p>
+            `,
+            'corbacho': `
+                <div class="flex items-center gap-4 mb-6 border-b border-primary/20 pb-6">
+                    <img src="assets/media/im-equipo-juan-corbacho-1.webp" class="w-20 h-20 rounded-full object-cover border-2 border-white/20" />
+                    <div>
+                        <h3 class="text-2xl font-black italic uppercase text-white">Juan Corbacho</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-widest">El Cabrero</p>
+                    </div>
+                </div>
+                <p>Juan el Cabrero es agilidad pura. Capaz de moverse por los riscos de la sierra como si sus piernas hubieran sido diseñadas para la montaña.</p>
+                <p>Llegó a Crestellina siendo adolescente y hoy es un hermano para Juan y Ana. Es un todoterreno: elabora quesos, atiende la tienda y cuida el huerto familiar.</p>
+                <p>Preciso con la honda y leal por naturaleza, es parte fundamental de nuestra familia.</p>
+            `,
+            'mastines': `
+                <div class="flex items-center gap-6 mb-8 border-b border-primary/20 pb-8">
+                    <div class="w-32 h-20 rounded-2xl overflow-hidden border border-primary/30">
+                        <img src="assets/media/mastines.webp" class="w-full h-full object-cover" />
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-black italic uppercase text-white tracking-tighter">Lunares y Juan José</h3>
+                        <p class="text-primary text-[10px] uppercase font-bold tracking-[0.3em] mt-1">Guardianes del Legado</p>
+                    </div>
+                </div>
+                <div class="space-y-6 text-slate-300 leading-relaxed">
+                    <p class="text-lg font-medium text-white italic">"Son mucho más que mastines: son el alma guardiana de nuestra sierra."</p>
+                    <p>En realidad, son <strong>mitad perros y mitad cabras</strong>; se pasan el día entero con ellas, integrados totalmente en el rebaño. Son nuestros ojos en la montaña cuando no estamos y los que mantienen lejos cualquier peligro que pueda acechar a sus hermanas cabras.</p>
+                    <p>Tienen un instinto especial para cuidarlas, siempre vigilantes en la retaguardia, asegurándose de que todas permanecen juntas. Mientras las cabras pastan, ellos se tumban a descansar, pero siempre con medio ojo abierto para mantener el orden y la seguridad en la Sierra Crestellina.</p>
+                </div>
+            `
+        };
+
+        async function openModal(id) {
+            const modal = document.getElementById('global-modal');
+            const body = document.getElementById('modal-body');
+            body.innerHTML = teamData[id] || '<p>Contenido no disponible.</p>';
+            modal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            lucide.createIcons();
+
+            if (id === 'lunares') {
+                setupLunaresVoice();
+            }
+        }
+
+        function setupLunaresVoice() {
+            const btn = document.getElementById('call-lunares-btn');
+            const status = document.getElementById('lunares-status');
+            if (btn) {
+                btn.onclick = () => {
+                    // Centralizamos en el FAB global
+                    const fab = document.getElementById('lunares-fab');
+                    if (fab) fab.click();
+                    status.innerHTML = '¡Abriendo línea con Lunares!';
+                };
+            }
+        }
+
+        // Cerrar modal con la tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Cerrar modal al hacer clic fuera (Backdrop)
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('global-modal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        function closeModal() {
+            const modal = document.getElementById('global-modal');
+            if (modal) {
+                modal.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+        }
+
+        function toggleAccordion(id) {
+            // Re-mapeamos la llamada antigua al nuevo sistema de modal más profesional
+            openModal(id);
+        }
+
+        lucide.createIcons();
+    
+</script>
+<script>
+// ===== SCROLL EXPANSION HERO LOGIC (experiencias.html only) =====
+            (function () {
+                var videoCont = document.getElementById('video-container');
+                var bgWrapper = document.getElementById('hero-bg-wrapper');
+                var overlay = document.getElementById('video-overlay');
+                var video = document.getElementById('hero-video');
+                var muteBtn = document.getElementById('mute-btn');
+                var t1 = document.getElementById('hero-t1');
+                var t2 = document.getElementById('hero-t2');
+                var hint = document.getElementById('hero-hint');
+                var content = document.getElementById('hero-content');
+
+                if (!videoCont) return; // only run on experiencias.html
+
+                var scrollProg = 0;
+                var expanded = false;
+                var touchStartY = 0;
+                var isMobile = window.innerWidth < 768;
+
+                // Start muted by default to not interrupt SPA AI experience
+                video.muted = true;
+                video.play().catch(function(){});
+                muteBtn.innerHTML = '<i data-lucide="volume-x" class="w-4 h-4"></i>';
+                function updateUI() {
+                    var vw = window.innerWidth;
+                    var vh = window.innerHeight;
+
+                    var maxW = isMobile ? vw * 0.95 : vw;
+                    var maxH = isMobile ? vh * 0.85 : vh;
+
+                    var baseW = 300, baseH = 400;
+                    var w = baseW + scrollProg * (maxW - baseW);
+                    var h = baseH + scrollProg * (maxH - baseH);
+
+                    videoCont.style.width = w + 'px';
+                    videoCont.style.height = h + 'px';
+
+                    // Expand to full → remove border-radius
+                    var br = (1 - scrollProg) * 16;
+                    videoCont.style.borderRadius = br + 'px';
+
+                    // Fade bg
+                    bgWrapper.style.opacity = Math.max(0, 1 - scrollProg * 1.5);
+
+                    // Lighten video overlay as it expands
+                    var overlayAlpha = 0.6 - scrollProg * 0.45;
+                    overlay.style.opacity = Math.max(0.05, overlayAlpha);
+
+                    // Slide titles apart
+                    var tx = scrollProg * (isMobile ? 160 : 120);
+                    t1.style.transform = 'translateX(-' + tx + 'vw)';
+                    t2.style.transform = 'translateX(' + tx + 'vw)';
+
+                    // Hint fade out
+                    hint.style.opacity = Math.max(0, 1 - scrollProg * 3);
+
+                    // Fully expanded
+                    if (scrollProg >= 1 && !expanded) {
+                        expanded = true;
+                        content.style.opacity = '1';
+                        content.style.pointerEvents = 'auto';
+                    } else if (scrollProg < 0.98 && expanded) {
+                        expanded = false;
+                        content.style.opacity = '0';
+                        content.style.pointerEvents = 'none';
+                    }
+                }
+
+                // Mute toggle
+                muteBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    video.muted = !video.muted;
+                    muteBtn.innerHTML = video.muted
+                        ? '<i data-lucide="volume-x" class="w-4 h-4"></i>'
+                        : '<i data-lucide="volume-2" class="w-4 h-4"></i>';
+                    if (window.lucide) lucide.createIcons();
+                });
+
+                // Wheel handler
+                window.addEventListener('wheel', function (e) {
+                    if (expanded && e.deltaY > 0) return; // normal scroll down after expand
+                    if (expanded && e.deltaY < 0 && window.scrollY <= 5) {
+                        expanded = false; e.preventDefault(); return;
+                    }
+                    if (!expanded) {
+                        e.preventDefault();
+                        window.scrollTo(0, 0);
+                        scrollProg = Math.min(1, Math.max(0, scrollProg + e.deltaY * 0.001));
+                        updateUI();
+                    }
+                }, { passive: false });
+
+                // Touch handlers
+                window.addEventListener('touchstart', function (e) {
+                    touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                window.addEventListener('touchmove', function (e) {
+                    if (!touchStartY) return;
+                    var dy = touchStartY - e.touches[0].clientY;
+                    if (expanded && dy > 0) return;
+                    if (expanded && dy < -20 && window.scrollY <= 5) {
+                        expanded = false; e.preventDefault(); return;
+                    }
+                    if (!expanded) {
+                        e.preventDefault();
+                        window.scrollTo(0, 0);
+                        var factor = dy < 0 ? 0.008 : 0.005;
+                        scrollProg = Math.min(1, Math.max(0, scrollProg + dy * factor));
+                        updateUI();
+                        touchStartY = e.touches[0].clientY;
+                    }
+                }, { passive: false });
+
+                // Lock scroll until expanded
+                window.addEventListener('scroll', function () {
+                    // Only lock if we are at the very top and not expanded
+                    if (!expanded && window.scrollY > 10) window.scrollTo(0, 0);
+                });
+
+                window.forceExpandHero = function() {
+                    if (expanded) return;
+                    scrollProg = 1;
+                    // Forzamos visibilidad de elementos antes de updateUI si es posible
+                    if (content) {
+                        content.style.opacity = '1';
+                        content.style.pointerEvents = 'auto';
+                    }
+                    expanded = true; 
+                    updateUI();
+                };
+
+                window.addEventListener('resize', function () {
+                    isMobile = window.innerWidth < 768;
+                    updateUI();
+                });
+
+                // Initial render
+                updateUI();
+            })();
+    
+</script>
+
+<script>
+window.navToSection = function(sectionId) {
+    console.log("[SPA] Navigating to:", sectionId);
+    const sections = ['nosotros-section', 'tienda-section', 'experiencias-section', 'landing-home'];
+    
+    // Normalize sectionId
+    let targetSectionId = '';
+    if (sectionId === 'nosotros') targetSectionId = 'nosotros-section';
+    else if (sectionId === 'tienda' || sectionId === 'catalogo' || sectionId === 'packs') targetSectionId = 'tienda-section';
+    else if (sectionId === 'experiencias') targetSectionId = 'experiencias-section';
+    else if (sectionId === 'inicio') targetSectionId = 'landing-home';
+    else {
+        // Find which section contains the given element ID
+        const el = document.getElementById(sectionId);
+        if (el) {
+            sections.forEach(s => {
+                const secEl = document.getElementById(s);
+                if (secEl && secEl.contains(el)) targetSectionId = s;
+            });
+        }
+    }
+
+    if (!targetSectionId) {
+        // Fallback search
+        const el = document.getElementById(sectionId);
+        if (el) {
+             const parent = sections.find(s => {
+                 const secEl = document.getElementById(s);
+                 return secEl && secEl.contains(el);
+             });
+             if (parent) targetSectionId = parent;
+        }
+    }
+
+    // Hide all sections, show target
+    sections.forEach(s => {
+        const el = document.getElementById(s);
+        if (el) el.classList.add('hidden');
+    });
+
+    if (targetSectionId) {
+        document.getElementById(targetSectionId).classList.remove('hidden');
+        if (window.lucide) lucide.createIcons();
+    }
+
+    // Scroll handling
+    if (sectionId === 'inicio' || sectionId === 'landing-home') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        const el = document.getElementById(sectionId);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            window.scrollTo({ top: 0, behavior: 'instant' });
+        }
+    }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const vapiStart = urlParams.get('vapi') === 'start';
+    
+    const landing = document.getElementById('landing-home');
+    if (landing) landing.classList.remove('hidden');
+
+    if (window.location.hash) {
+        const hashId = window.location.hash.substring(1);
+        setTimeout(() => window.navToSection(hashId), 300);
+    }
+    
+    if (vapiStart) {
+        // Wait briefly for UI to draw, then trigger Lunares
+        setTimeout(() => {
+            if (window.LunaresInstance) {
+                 window.LunaresInstance.startVoiceCall();
+            }
+        }, 300);
+    }
+});
+</script>
+
+</body>
+
+</html>

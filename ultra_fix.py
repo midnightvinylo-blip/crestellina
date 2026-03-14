@@ -10,7 +10,7 @@ def line_search_replace(filepath, marker, new_content):
     for line in lines:
         if marker in line:
             # Replace the whole line while keeping indentation if possible
-            indent = line[:len(line) - len(line.lstrip())]
+            indent = line.replace(line.lstrip(), "", 1)
             if marker == 'firstMessage:': # special case for JSON-like indentation
                 new_lines.append(f'{indent}{new_content}\n')
             else:
