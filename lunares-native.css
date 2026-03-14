@@ -746,10 +746,9 @@
         width: 100% !important;
     }
 
-    /* Voice Mode override para móvil: El micrófono se mantiene a la IZQUIERDA del panel */
-    #lunares-widget-container.open.voice-mode #lunares-mic-btn {
-        transform: translateX(0) scale(1.1) !important;
-        left: 0 !important;
+    /* Voice Mode en móvil: Sigue la lógica de desktop (micrófono viaja a la derecha) */
+    #lunares-widget-container.open.voice-mode #lunares-left-panel {
+        margin-right: -220px !important;
     }
 
     #lunares-widget-container.open.voice-mode #lunares-quick-replies.voice-choices {
