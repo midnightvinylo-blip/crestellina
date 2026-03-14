@@ -755,9 +755,9 @@ class LunaresAgent {
         }
 
         // 🟢 NUEVOS TRIGGERS PARA EXPERIENCIAS
-        else if (text.includes('cabrero y quesero') || text.includes('por un día') || text.includes('ser quesero') || text.includes('taller de queso') || text.includes('ordeñar')) {
+        else if (text.includes('cabrero y quesero') || text.includes('por un día') || text.includes('ser quesero') || text.includes('taller de queso') || text.includes('taller de quesos') || text.includes('ordeñar') || text.includes('el ordeño')) {
             targetId = 'card-cabrero';
-        } else if (text.includes('los chivitos') || text.includes('chivitos de crestellina') || text.includes('biberón')) {
+        } else if (text.includes('los chivitos') || text.includes('chivito') || text.includes('pequeñines') || text.includes('bebés') || text.includes('biberón') || text.includes('biberones') || text.includes('niños') || text.includes('familias') || text.includes('conoce los chivitos')) {
             targetId = 'card-chivitos';
         }
 
