@@ -98,7 +98,7 @@
                     <div
                         class="h-10 w-10 rounded-full border-2 border-primary/30 overflow-hidden cursor-pointer hover:border-primary transition-colors">
                         <img class="h-full w-full object-cover"
-                            src="https://lh3.googleusercontent.com/aida-assets/media/AB6AXuCKvB73Rt43KHgiQbG9L5cHnUeNfEc0Og0xAiR7KuQ-6Woho7LUaLEizZWsC3JCau26HfOAqFjRcO5e4Gvb1MGP9BPc-LAZvO12jWwSyq_82UZGnPzYT2rgLZ2pg0iIW3511I_-Yz6lDa9FRID76ZxLAHy9tYrceuG1t9IxHRB_0hcRfMfoxGqgeQGvDhT-wm-vNiI_-Nm76grd9bIiCSuOicI0detkyN-_lI49gqQwHf3iNRvpFpSjQRNf0I0-Kjl0aMwGuvg0SFTP"
+                            src="assets/media/avatar_usuario.webp"
                             alt="Usuario" />
                     </div>
                 </div>
@@ -567,8 +567,21 @@
 
                 // Lock scroll until expanded
                 window.addEventListener('scroll', function () {
-                    if (!expanded) window.scrollTo(0, 0);
+                    // Only lock if we are at the very top and not expanded
+                    if (!expanded && window.scrollY > 10) window.scrollTo(0, 0);
                 });
+
+                window.forceExpandHero = function() {
+                    if (expanded) return;
+                    scrollProg = 1;
+                    // Forzamos visibilidad de elementos antes de updateUI si es posible
+                    if (content) {
+                        content.style.opacity = '1';
+                        content.style.pointerEvents = 'auto';
+                    }
+                    expanded = true; 
+                    updateUI();
+                };
 
                 window.addEventListener('resize', function () {
                     isMobile = window.innerWidth < 768;

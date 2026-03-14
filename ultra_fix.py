@@ -9,9 +9,8 @@ def line_search_replace(filepath, marker, new_content):
     found = False
     for line in lines:
         if marker in line:
-            import re
-            match = re.match(r'^\s*', line)
-            indent = match.group(0) if match else ''
+            # Replace the whole line while keeping indentation if possible
+            indent = line[:len(line) - len(line.lstrip())]
             if marker == 'firstMessage:': # special case for JSON-like indentation
                 new_lines.append(f'{indent}{new_content}\n')
             else:

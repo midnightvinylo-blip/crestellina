@@ -16,7 +16,7 @@ def replace_exact(filepath, search, replace):
         print(f"Updated {os.path.basename(filepath)}")
     else:
         # Try without the special characters to find it
-        simple_search = "".join([str(c) for c in search if (isinstance(c, int) and c < 128) or (isinstance(c, str) and ord(c) < 128)])
+        simple_search = "".join([c for c in search if ord(c) < 128])
         print(f"Exact match not found in {os.path.basename(filepath)}. Searching for simplified: {simple_search}")
 
 # Files

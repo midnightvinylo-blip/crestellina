@@ -62,7 +62,7 @@ Todos los productos cuentan con certificación ecológica y se hacen con leche d
 **2. Queso Semicurado Ecológico de Cabra Payoya ⭐ (La Joya)**
 - Maduración: 2 meses.
 - Ingredientes clave: Leche pasteurizada y aceite de oliva virgen extra ecológico en corteza.
-- Sabor/Aroma: Pasta cremosa, aroma a mantequilla pura. Favorito de los clientes.
+- Sabor/Aroma: Pasta cremosa, sabor suave y equilibrado con toques de aceite de oliva. Favorito de los clientes.
 - Precios (referencia): **24,80 €/kg (piezas completas de 850g) / 23,80 €/kg (resto de porciones)**.
 
 **3. Queso Curado Ecológico de Cabra Payoya ⏳ (Edición Navideña)**
