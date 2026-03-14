@@ -252,7 +252,7 @@ class LunaresAgent {
                                 type: 'add-message',
                                 message: {
                                     role: 'user',
-                                    content: "(Relato en curso: Continúa con el siguiente bloque de la sección sin pausas. Sigue adelante.)"
+                                    content: "(Relato en curso: Continúa con el siguiente integrante o bloque sin pausas. Sigue adelante.)"
                                 }
                             });
                         }
@@ -260,6 +260,8 @@ class LunaresAgent {
                 } else {
                     console.log('[Lunares Native] 🛑 Closure detected in speech-end. Triggering options.');
                     this.isNarrating = false; 
+                    // 🐾 CIERRE QUIRÚRGICO DE MODAL AL TERMINAR EXPLICACIÓN
+                    if (typeof window.closeModal === 'function') window.closeModal();
                     this.showVoiceWelcomeOptions();
                 }
                 return;
@@ -270,6 +272,8 @@ class LunaresAgent {
                 setTimeout(() => {
                     // Acción inmediata solo si no está hablando y no estamos en modo narrativo bloqueado
                     if (!this.isTalking && this.isActive && !this.isNarrating) {
+                        // 🐾 CIERRE QUIRÚRGICO AL TERMINAR CUALQUIER BLOQUE DE HABLA NO NARRATIVA
+                        if (typeof window.closeModal === 'function') window.closeModal();
                         this.showVoiceWelcomeOptions(this.currentNarrativeAction);
                     }
                 }, 200); 
@@ -759,7 +763,7 @@ class LunaresAgent {
                 // 2. Scroll suave al elemento
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-                // 3. Acciones especiales: Espera de 2 segundos antes de abrir el modal
+                // 3. Acciones especiales: Espera de 1 segundo exacto antes de abrir el modal (Solicitud usuario Mar-26)
                 setTimeout(() => {
                     if (!this.isActive || !this.isNarrating) return;
 
@@ -770,18 +774,11 @@ class LunaresAgent {
                     } 
                     // Si es un miembro de la familia
                     else if (memberId) {
-                        // Cerrar cualquier modal abierto antes de abrir el nuevo
-                        const currentModal = document.querySelector('[id^="modal-"]:not(.hidden), #experiencia-modal:not(.hidden)');
-                        if (currentModal) {
-                            const closeBtn = currentModal.querySelector('button, .modal-close');
-                            if (closeBtn) closeBtn.click();
-                        }
-
                         if (typeof window.openModal === 'function') {
                             window.openModal(memberId);
                         }
                     }
-                }, 2000);
+                }, 1000);
 
                 this.isScrollingLock = true;
                 setTimeout(() => { this.isScrollingLock = false; }, 2500);
@@ -854,7 +851,7 @@ class LunaresAgent {
                 element.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 50);
             
-            // 2. Espera de 1.8 segundos para que la persona divise el árbol antes de que el modal lo tape
+            // 2. Espera de 1 segundo para que la persona divise el árbol antes de que el modal lo tape
             setTimeout(() => {
                 if (!this.isActive) return; // Si la llamada terminó, no abrimos nada
                 
@@ -865,7 +862,7 @@ class LunaresAgent {
                         window.openModal(memberId);
                     }
                 }
-            }, 1800);
+            }, 1000);
         } else if (action === 'close') {
             // Cerrar cualquier modal abierto de forma quirúrgica
             const currentModal = document.querySelector('[id^="modal-"]:not(.hidden), #experiencia-modal:not(.hidden)');
